@@ -1,0 +1,39 @@
+<divclass="apiDetail">
+<div>
+	<h2><span>Array(String)</span><spanclass="path">setting.async.</span>autoParam</h2>
+	<h3>概述<spanclass="h3_info">[依赖<spanclass="highlight_green">jquery.ztree.core</span>核心js]</span></h3>
+	<divclass="desc">
+		<p></p>
+		<divclass="longdesc">
+			<p>异步加载时需要自动提交父节点属性的参数。<spanclass="highlight_red">[setting.async.enable=true时生效]</span></p>
+			<p>默认值：[]</p>
+		</div>
+	</div>
+	<h3>Array(String)格式说明</h3>
+	<divclass="desc">
+	<p>1、将需要作为参数提交的属性名称，制作成Array即可，例如：["id","name"]</p>
+	<p>2、可以设置提交时的参数名称，例如server只接受zId:["id=zId"]</p>
+	</div>
+	<h3>setting举例</h3>
+	<h4>1.设置id属性为自动提交的参数</h4>
+	<prexmlns=""><code>varsetting={
+	async:{
+		enable:true,
+		url:"http://host/getNode.php",
+		autoParam:["id"]
+	}
+};
+假设异步加载父节点(node={id:1,name:"test"})的子节点时，将提交参数id=1
+......</code></pre>
+	<h4>2.设置id属性作为zId成为自动提交的参数</h4>
+	<prexmlns=""><code>varsetting={
+	async:{
+		enable:true,
+		url:"http://host/getNode.php",
+		autoParam:["id=zId"]
+	}
+};
+假设对父节点node={id:1,name:"test"}，进行异步加载时，将提交参数zId=1
+......</code></pre>
+</div>
+</div>

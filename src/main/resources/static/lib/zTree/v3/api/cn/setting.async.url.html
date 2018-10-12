@@ -1,0 +1,50 @@
+<divclass="apiDetail">
+<div>
+	<h2><span>String/Function(treeId,treeNode)</span><spanclass="path">setting.async.</span>url</h2>
+	<h3>概述<spanclass="h3_info">[依赖<spanclass="highlight_green">jquery.ztree.core</span>核心js]</span></h3>
+	<divclass="desc">
+		<p></p>
+		<divclass="longdesc">
+			<p>Ajax获取数据的URL地址。<spanclass="highlight_red">[setting.async.enable=true时生效]</span></p>
+			<p>默认值：""</p>
+		</div>
+	</div>
+	<h3>String格式说明</h3>
+	<divclass="desc">
+	<p>设置固定的异步加载url字符串，请注意地址的路径，确保页面能正常加载</p>
+	<pclass="highlight_red">url内也可以带参数，这些参数就只能是通过get方式提交了，并且请注意进行转码</p>
+	</div>
+	<h3>Function参数说明</h3>
+	<divclass="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>对应zTree的<bclass="highlight_red">treeId</b>，便于用户操控</p>
+	<h4class="topLine"><b>treeNode</b><span>JSON</span></h4>
+	<p>需要异步加载子节点的的父节点JSON数据对象</p>
+	<pclass="highlight_red">针对根进行异步加载时，treeNode=null</p>
+	<h4class="topLine"><b>返回值</b><span>String</span></h4>
+	<p>返回值同String格式的数据</p>
+	</div>
+	<h3>setting&function举例</h3>
+	<h4>1.设置异步获取节点的URL为nodes.php</h4>
+	<prexmlns=""><code>varsetting={
+	async:{
+		enable:true,
+		url:"nodes.php",
+		autoParam:["id","name"]
+	}
+};
+......</code></pre>
+	<h4>2.设置异步获取节点的URL为function动态获取</h4>
+	<prexmlns=""><code>functiongetAsyncUrl(treeId,treeNode){
+returntreeNode.isParent?"nodes1.php":"nodes2.php";
+};
+varsetting={
+	async:{
+		enable:true,
+		url:getAsyncUrl,
+		autoParam:["id","name"]
+	}
+};
+......</code></pre>
+</div>
+</div>

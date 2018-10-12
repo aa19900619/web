@@ -1,0 +1,47 @@
+<div class="page-container">
+
+	<form method="post" class="form form-horizontal" id="form-dictionary-edit">
+		<input type="hidden" value="$!obj.id" id="id" name="id" />
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>字典类型：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<select class="select select-box" id="dicCode" name="dicCode">
+					#foreach($!item in $!type)
+					<option value="$!item.key" #if( "$!item.key" == "$!obj.dicCode" ) selected #end >$!item.value</option>
+					#end
+				</select>
+			</div>
+		</div>
+		
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>字典值：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="$!obj.dicVal" placeholder="字典值" id="dicVal" name="dicVal">
+			</div>
+		</div>
+		
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>是否有效：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<select class="select select-box" id="status" name="status">
+					<option value="0" #if( "$!obj.status" == "0" ) selected #end >有效</option>
+					<option value="1" #if( "$!obj.status" == "1" ) selected #end >无效</option>
+				</select>
+			</div>
+		</div>
+		
+	</form>
+</div>
+
+<script>
+$(function(){
+	$("#form-dictionary-edit").validate({
+		rules:{
+			"dicVal":{
+				maxlength:100,
+				required:true
+			}
+		}
+	});
+});
+</script>

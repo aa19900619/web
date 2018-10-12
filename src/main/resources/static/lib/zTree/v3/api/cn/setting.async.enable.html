@@ -1,0 +1,30 @@
+<divclass="apiDetail">
+<div>
+	<h2><span>Boolean</span><spanclass="path">setting.async.</span>enable</h2>
+	<h3>概述<spanclass="h3_info">[依赖<spanclass="highlight_green">jquery.ztree.core</span>核心js]</span></h3>
+	<divclass="desc">
+		<p></p>
+		<divclass="longdesc">
+			<p>设置zTree是否开启异步加载模式</p>
+			<p>默认值：false</p>
+		</div>
+	</div>
+	<h3>Boolean格式说明</h3>
+	<divclass="desc">
+	<p>true表示开启异步加载模式</p>
+	<p>false表示关闭异步加载模式</p>
+	<pclass="highlight_red">如果设置为true，请务必设置setting.async内的其它参数。</p>
+	<pclass="highlight_red">如果需要根节点也异步加载，初始化时treeNodes参数设置为null即可。</p>
+	</div>
+	<h3>setting举例</h3>
+	<h4>1.需要开启异步加载模式</h4>
+	<prexmlns=""><code>varsetting={
+	async:{
+		enable:true,
+		url:"http://host/getNode.php",
+		autoParam:["id","name"]
+	}
+};
+......</code></pre>
+</div>
+</div>

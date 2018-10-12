@@ -1,0 +1,35 @@
+<divclass="apiDetail">
+<div>
+	<h2><span>Function(treeId,treeNode)</span><spanclass="path">setting.callback.</span>beforeMouseDown</h2>
+	<h3>概述<spanclass="h3_info">[依赖<spanclass="highlight_green">jquery.ztree.core</span>核心js]</span></h3>
+	<divclass="desc">
+		<p></p>
+		<divclass="longdesc">
+			<p>用于捕获zTree上鼠标按键按下之前的事件回调函数，并且根据返回值确定触发onMouseDown事件回调函数</p>
+			<p>默认值：null</p>
+		</div>
+	</div>
+	<h3>Function参数说明</h3>
+	<divclass="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>对应zTree的<bclass="highlight_red">treeId</b>，便于用户操控</p>
+	<h4class="topLine"><b>treeNode</b><span>JSON</span></h4>
+	<p>鼠标按键按下时所在节点的JSON数据对象</p>
+	<pclass="highlight_red">如果不在节点上，则返回null</p>
+	<h4class="topLine"><b>返回值</b><span>Boolean</span></h4>
+	<p>返回值是true/false</p>
+	<pclass="highlight_red">如果返回false，将仅仅无法触发onMouseDown事件回调函数，对其他操作无任何影响</p>
+	</div>
+	<h3>setting&function举例</h3>
+	<h4>1.禁止onMouseDown事件</h4>
+	<prexmlns=""><code>functionzTreeBeforeMouseDown(treeId,treeNode){
+returnfalse;
+};
+varsetting={
+	callback:{
+		beforeMouseDown:zTreeBeforeMouseDown
+	}
+};
+......</code></pre>
+</div>
+</div>

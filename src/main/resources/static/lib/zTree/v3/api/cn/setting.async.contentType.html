@@ -1,0 +1,29 @@
+<divclass="apiDetail">
+<div>
+	<h2><span>String</span><spanclass="path">setting.async.</span>contentType</h2>
+	<h3>概述<spanclass="h3_info">[依赖<spanclass="highlight_green">jquery.ztree.core</span>核心js]</span></h3>
+	<divclass="desc">
+		<p></p>
+		<divclass="longdesc">
+			<p>Ajax提交参数的数据类型。<spanclass="highlight_red">[setting.async.enable=true时生效]</span></p>
+			<p>默认值："application/x-www-form-urlencoded"</p>
+		</div>
+	</div>
+	<h3>String格式说明</h3>
+	<divclass="desc">
+	<p>contentType="application/x-www-form-urlencoded"可以满足绝大部分请求，按照标准的Form格式提交参数</p>
+	<p>contentType="application/json"可以满足.Net的编程需要，按照JSON格式提交参数</p>
+	</div>
+	<h3>setting举例</h3>
+	<h4>1.设置Ajax提交参数的数据类型为JSON格式</h4>
+	<prexmlns=""><code>varsetting={
+	async:{
+		enable:true,
+		contentType:"application/json",
+		url:"http://host/getNode.php",
+		autoParam:["id","name"]
+	}
+};
+......</code></pre>
+</div>
+</div>

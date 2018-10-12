@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xml>
+<!-- status=debug 可以查看log4j的装配过程 monitorInterval="1800" 指log4j2每隔1800秒（半小时），自动监控该配置文件是否有变化，如果变化，则自动根据文件内容重新配置 -->
+<configuration status="DEBUG" monitorInterval="30">
+	<properties>
+
+		<!-- 日志根目录 -->
+		<property name="LOG_HOME">d:/logs</property>
+		<!-- 日志备份目录 -->
+		<property name="LOG_BACKUP_HOME">${LOG_HOME}/backup</property>
+		<!-- 日志名称 -->
+		<property name="LOG_NAME">web</property>
+
+	</properties>
+
+	<appenders>
+
+		<!-- 定义控制台输出 -->
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
+			<!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+			<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout charset="UTF-8" pattern="[%date{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%X{name}][%thread][%class{36}.%M][%L]:%msg%xEx%n" />
+		</Console>
+
+		<RollingRandomAccessFile name="FileLog" fileName="${LOG_HOME}/${LOG_NAME}.log" filePattern="${LOG_BACKUP_HOME}/$${date:yyyy-MM}/${LOG_NAME}-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout charset="UTF-8">
+				<Pattern>[%date{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%X{name}][%thread][%class{36}.%M][%L]:%msg%xEx%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="50MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="2000" />
+		</RollingRandomAccessFile>
+	</appenders>
+	<loggers>
+
+		<logger name="com.alibaba.dubbo" level="info" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" />
+		</logger>
+
+		<logger name="org.apache.zookeeper" level="info" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" />
+		</logger>
+
+		<logger name="org.springframework" level="info" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" />
+		</logger>
+
+		<logger name="com.molbase" level="debug" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" />
+		</logger>
+
+		<root level="debug">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" />
+		</root>
+	</loggers>
+</configuration> 

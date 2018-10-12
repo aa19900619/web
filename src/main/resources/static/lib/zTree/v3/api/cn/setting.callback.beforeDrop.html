@@ -1,0 +1,48 @@
+<divclass="apiDetail">
+<div>
+	<h2><span>Function(treeId,treeNodes,targetNode,moveType,isCopy)</span><spanclass="path">setting.callback.</span>beforeDrop</h2>
+	<h3>概述<spanclass="h3_info">[依赖<spanclass="highlight_green">jquery.ztree.exedit</span>扩展js]</span></h3>
+	<divclass="desc">
+		<p></p>
+		<divclass="longdesc">
+			<p>用于捕获节点拖拽操作结束之前的事件回调函数，并且根据返回值确定是否允许此拖拽操作</p>
+			<p>默认值：null</p>
+			<pclass="highlight_red">如未拖拽到有效位置，则不触发此回调函数，直接将节点恢复原位置</p>
+		</div>
+	</div>
+	<h3>Function参数说明</h3>
+	<divclass="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>目标节点targetNode所在zTree的<bclass="highlight_red">treeId</b>，便于用户操控</p>
+	<h4class="topLine"><b>treeNodes</b><span>Array(JSON)</span></h4>
+	<p>被拖拽的节点JSON数据集合</p>
+	<pclass="highlight_red">无论拖拽操作为复制还是移动，treeNodes都是当前被拖拽节点的数据集合。</p>
+	<h4class="topLine"><b>targetNode</b><span>JSON</span></h4>
+	<p>treeNodes被拖拽放开的目标节点JSON数据对象。</p>
+	<pclass="highlight_red">如果拖拽成为根节点，则targetNode=null</p>
+	<h4class="topLine"><b>moveType</b><span>String</span></h4>
+	<p>指定移动到目标节点的相对位置</p>
+	<pclass="highlight_red">"inner"：成为子节点，"prev"：成为同级前一个节点，"next"：成为同级后一个节点</p>
+	<h4class="topLine"><b>isCopy</b><span>Boolean</span></h4>
+	<p>拖拽节点操作是复制或移动</p>
+	<pclass="highlight_red">true：复制；false：移动</p>
+	<h4class="topLine"><b>返回值</b><span>Boolean</span></h4>
+	<p>返回值是true/false</p>
+	<pclass="highlight_red">如果返回false，zTree将恢复被拖拽的节点，也无法触发onDrop事件回调函数</p>
+	</div>
+	<h3>setting&function举例</h3>
+	<h4>1.禁止将节点拖拽成为根节点</h4>
+	<prexmlns=""><code>functionzTreeBeforeDrop(treeId,treeNodes,targetNode,moveType){
+return!(targetNode==null||(moveType!="inner"&&!targetNode.parentTId));
+};
+varsetting={
+	edit:{
+		enable:true
+	},
+	callback:{
+		beforeDrop:zTreeBeforeDrop
+	}
+};
+......</code></pre>
+</div>
+</div>

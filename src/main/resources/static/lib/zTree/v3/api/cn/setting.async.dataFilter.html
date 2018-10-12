@@ -1,0 +1,45 @@
+<divclass="apiDetail">
+<div>
+	<h2><span>Function(treeId,parentNode,responseData)</span><spanclass="path">setting.async.</span>dataFilter</h2>
+	<h3>概述<spanclass="h3_info">[依赖<spanclass="highlight_green">jquery.ztree.core</span>核心js]</span></h3>
+	<divclass="desc">
+		<p></p>
+		<divclass="longdesc">
+			<p>用于对Ajax返回数据进行预处理的函数。<spanclass="highlight_red">[setting.async.enable=true时生效]</span></p>
+			<p>默认值：null</p>
+		</div>
+	</div>
+	<h3>Function参数说明</h3>
+	<divclass="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>对应zTree的<bclass="highlight_red">treeId</b>，便于用户操控</p>
+	<h4class="topLine"><b>parentNode</b><span>JSON</span></h4>
+	<p>进行异步加载的父节点JSON数据对象</p>
+	<pclass="highlight_red">对根进行异步加载时，parentNode=null</p>
+	<h4class="topLine"><b>responseData</b><span>Array(JSON)/JSON/String</span></h4>
+	<p>异步加载获取到的数据转换后的Array(JSON)/JSON/String数据对象</p>
+	<pclass="highlight_red">v3.4开始支持XML数据格式的String</p>
+	<h4class="topLine"><b>返回值</b><span>Array(JSON)/JSON</span></h4>
+	<p>返回值是zTree支持的JSON数据结构即可。</p>
+	<pclass="highlight_red">v3.x支持单个JSON节点数据进行加载</p>
+	</div>
+	<h3>setting&function举例</h3>
+	<h4>1.修改异步获取到的节点name属性</h4>
+	<prexmlns=""><code>functionajaxDataFilter(treeId,parentNode,responseData){
+if(responseData){
+for(vari=0;i<responseData.length;i++){
+responseData[i].name+="_filter";
+}
+}
+returnresponseData;
+};
+varsetting={
+	async:{
+		enable:true,
+		url:"http://host/getNode.php",
+		dataFilter:ajaxDataFilter
+	}
+};
+......</code></pre>
+</div>
+</div>
