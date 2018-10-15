@@ -258,7 +258,7 @@ function errorMsg(XMLHttpRequest){
 //异步ajax返回json
 function queryDataAsync(url,param)
 { 
-	var data = {};
+	var data = {"code":1,"msg":"错误"};
 	jQuery.support.cors = true;
 	$.ajax({
 		async : false,
@@ -335,6 +335,30 @@ function toJson(url, para, callback, errcallback) {
     });
 }
 
+
+function toAjax(url, para, callback, errcallback) {
+    url = url.replace(/#/g,"%23");
+	$.ajax({
+        type: "get",
+        url: url,
+        data: para,
+        cache:false,
+        dataType: 'json',
+        success: function (data, textStatus) {
+            if (callback != null) {
+                callback(data);
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (errcallback != null) {
+            	var result = eval("(" + XMLHttpRequest.responseText + ")");
+                errcallback(result);
+            }else{
+            	errorMsg(XMLHttpRequest);
+            }
+        }
+    });
+}
 
 /**
  * 注册template格式化日期数据

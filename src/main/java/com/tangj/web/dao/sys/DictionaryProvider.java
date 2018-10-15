@@ -2,7 +2,6 @@ package com.tangj.web.dao.sys;
 
 import org.apache.ibatis.jdbc.SQL;
 
-import com.tangj.web.pojo.sys.DictionaryInfo;
 import com.tangj.web.util.TableConstanst;
 
 public class DictionaryProvider {
@@ -17,7 +16,7 @@ public class DictionaryProvider {
 		return sql.toString();
 	}
 
-	public String add(DictionaryInfo info){
+	public String add(){
 		SQL sql = new SQL();
 		sql.INSERT_INTO(TableConstanst.TB_DICTIONARY);
 		sql.INTO_COLUMNS("dic_code").INTO_VALUES("#{dicCode}");
@@ -26,7 +25,7 @@ public class DictionaryProvider {
 		return sql.toString();
 	}
 	
-	public String update(DictionaryInfo info){
+	public String update(){
 		SQL sql = new SQL();
 		sql.UPDATE(TableConstanst.TB_DICTIONARY);
 		sql.SET("dic_code = #{dicCode}");

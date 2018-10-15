@@ -113,3 +113,199 @@ a:active{
 		<input type="file" multiple id="$!id" class="input-file" onchange="upload('$!id',$fn,'$!accept','$!type')" #if( "$!accept" != "" ) accept="$!accept" #end>
 	</span>
 #end
+
+#macro(detail $detail)
+	#set($formId = "modify-form")
+	#if( "$!detail.id" != "" )
+		#set($formId = "$!detail.id")
+	#end
+	<div class="page-container">
+		<form method="post" class="form form-horizontal" id="$formId">
+			#if( "$!detail.hiddens" != "" )
+				#foreach($item in $!detail.hiddens)
+					<input type="hidden" id="$!item.name" name="$!item.name" value="$!item.value" />
+				#end
+			#end
+			#foreach($_row in $!detail.rows)
+				<div class="row cl">
+					#foreach($!_col in $!_row.cols)
+						#set($col_length = 4)
+						#if( "$!_col.length" != "" )
+							#set($col_length = "$!_col.length")
+						#end
+						#if( "$!_col.colType" == "label" )
+							<label class="form-label col-xs-$!col_length col-sm-$!col_length">#if( "$!_col.colRequired" == "true" )<span class="c-red">*</span>#end $!_col.text:</label>
+						#elseif( "$!_col.colType" == "text" )	
+							<div class="formControls col-xs-$!col_length col-sm-$!col_length">
+								#if( "$!_col.readonly" == "true" )
+									$!_col.value
+								#else
+									<input type="text" class="input-text" value="$!_col.value" placeholder="$!_col.placeholder" id="$!_col.name" name="$!_col.name">
+								#end
+							</div>
+						#elseif( "$_col.colType" == "date" )
+							<div class="formControls col-xs-$!col_length col-sm-$!col_length">
+								#if( "$!_col.readonly" == "true" )
+									$date.format($!_col.value,$!_col.dateformat)
+								#else
+									<input type="text" class="input-text Wdate" value="$!date.formate($!_col.value,'$!_col.formate')" placeholder="$!_col.placeholder" id="$!_col.name" name="$!_col.name" onfocus="WdatePicker()">
+								#end
+							</div>	
+						#elseif( "$!_col.colType" == "select" )	
+							<div class="formControls col-xs-$!col_length col-sm-$!col_length">
+								#if( "$!_col.readonly" == "true" )
+									#if( "$!_col.options" != "" )
+										#foreach($!opt in $!_col.options)
+											#if( "$!_col.value" == "$!opt.value" ) $!opt.text #end
+										#end
+									#end
+									
+									#if( "$!_col.dataSource" != "" )
+										#foreach($opt in $!_col.dataSource)
+											#set($datasuurcevalue = "")
+											#set($datasuurcevalue = $!opt.getClass().getMethod("$!_col.getValueMethod", null).invoke($!opt, null))
+											#if("$!_col.value" == "$!datasuurcevalue") $!opt.getClass().getMethod("$!_col.getNameMethod", null).invoke($!opt, null) #end
+										#end
+									#end
+								#else
+									<select class="select select-box" id="$!_col.name" name="$!_col.name">
+										<option value="">--请选择--</option>
+										#if( "$!_col.options" != "" )
+											#foreach($!opt in $!_col.options)
+												<option value="$!opt.value" #if( "$!_col.value" == "$!opt.value" ) selected #end >$!opt.text</option>
+											#end
+										#end
+										
+										#if( "$!_col.dataSource" != "" )
+											#foreach($opt in $!_col.dataSource)
+												#set($datasuurcevalue = "")
+												#set($datasuurcevalue = $!opt.getClass().getMethod("$!_col.getValueMethod", null).invoke($!opt, null))
+												<option value="$!datasuurcevalue" #if("$!_col.value" == "$!datasuurcevalue") selected #end>
+			            							$!opt.getClass().getMethod("$!_col.getNameMethod", null).invoke($!opt, null)
+			            						</option>
+											#end
+										#end
+									</select>
+								#end
+							</div>	
+						#elseif( "$!_col.colType" == "checkbox" )	
+							<div class="formControls col-xs-$!col_length col-sm-$!col_length skin-minimal">
+								#set($valsp = $!_col.value.split(","))
+								#set($seq = 0)
+								#if( "$!_col.options" != "" )
+									#foreach( $!opt in $!_col.options )
+										#set($bool = false)
+										#foreach($!v in $!valsp)
+											#if( "$!v" == "$!opt.value" )
+												#set($bool = true)
+											#end
+										#end
+										<div class="check-box">
+											<input type="checkbox" id="$!_col.name$!seq" name="$!_col.name" value="$!opt.value" #if( $!bool ) checked #end #if("$!_col.readonly" == "true") disabled #end>
+											<label for="$!_col.name$!seq">$!opt.text</label>
+										</div>
+										#set($seq = $seq + 1)
+									#end
+								#end
+								
+								#if( "$!_col.dataSource" != "" )
+									#set($seq = 0)
+									#foreach($opt in $!_col.dataSource)
+										#set($datasuurcevalue = "")
+										#set($datasuurcevalue = $!opt.getClass().getMethod("$!_col.getValueMethod", null).invoke($!opt, null))
+										#set($bool = false)
+										#foreach($!v in $!valsp)
+											#if( "$!v" == "$!datasuurcevalue" )
+												#set($bool = true)
+											#end
+										#end
+										<div class="radio-box">
+											<input type="checkbox" id="$!_col.name$!seq" name="$!_col.name" value="$!datasuurcevalue" #if( $!bool ) checked #end #if("$!_col.readonly" == "true") disabled #end>
+											<label for="$!_col.name$!seq">$!opt.getClass().getMethod("$!_col.getNameMethod", null).invoke($!opt, null)</label>
+										</div>
+										#set($seq = $seq + 1)
+									#end
+								#end
+							</div>
+						#elseif( "$!_col.colType" == "radiobox" )
+							<div class="formControls col-xs-$!col_length col-sm-$!col_length skin-minimal">
+								#if( "$!_col.options" != "" )
+									#set($seq = 0)
+									#foreach( $opt in $!_col.options )
+										<div class="radio-box">
+											<input type="radio" id="$!_col.name$!seq" name="$!_col.name" value="$!opt.value" #if( "$!_col.value" == "$!opt.value" ) checked #end #if("$!_col.readonly" == "true") disabled #end>
+											<label for="$!_col.name$!seq">$!opt.text</label>
+										</div>
+										#set($seq = $seq + 1)
+									#end
+								#end
+								
+								#if( "$!_col.dataSource" != "" )
+									#set($seq = 0)
+									#foreach($opt in $!_col.dataSource)
+										#set($datasuurcevalue = "")
+										#set($datasuurcevalue = $!opt.getClass().getMethod("$!_col.getValueMethod", null).invoke($!opt, null))
+										<div class="radio-box">
+											<input type="radio" id="$!_col.name$!seq" name="$!_col.name" value="$!datasuurcevalue" #if( "$!_col.value" == "$!datasuurcevalue" ) checked #end #if("$!_col.readonly" == "true") disabled #end>
+											<label for="$!_col.name$!seq">$!opt.getClass().getMethod("$!_col.getNameMethod", null).invoke($!opt, null)</label>
+										</div>
+										#set($seq = $seq + 1)
+									#end
+								#end
+							</div>
+						#elseif( "$!_col.colType" == "textarea" )
+							<div class="formControls col-xs-$!col_length col-sm-$!col_length">
+								#if("$!_col.readonly" == "true")  
+									$!_col.value
+								#else
+									#set($maxlength = 200)
+									#if( "$!_col.maxlength" != "")
+										#set($maxlength = $!_col.maxlength)
+									#end
+									<textarea id="$!_col.name" name="$!_col.name" class="textarea" placeholder="$!_col.placeholder" datatype="*0-$!maxlength" dragonfly="true" onkeyup="textarealength(this,$!maxlength)">$!_col.value</textarea>
+									#set($textarea-numberbar=0)
+									#if( "$!_col.value" != "" )
+										#set($textarea-numberbar=$!_col.value.length())
+									#end
+									<p class="textarea-numberbar"><em class="textarea-length">$textarea-numberbar</em>/$!maxlength</p>
+								#end
+							</div>
+						#elseif( "$!_col.colType" == "button" )
+							#if( "$!_col.readonly" != "true" )
+								<div class="formControls col-xs-$!col_length col-sm-$!col_length">
+									#set($bool = true)
+									#if( "$!_col.hasPermission" != "" )
+										#set($bool = $!shiro.hasPermission("$!_col.hasPermission"))
+									#end
+									
+									#if( $!bool )
+										#set($buttonClass="btn btn-success radius")
+										#if( "$!_col.classes" != "" )
+											#set($buttonClass="$!_col.classes")
+										#end
+										<button type="button" class="$!buttonClass" onclick="$!_col.clickFun"><i class="Hui-iconfont $!_col.iclass"></i>$!_col.value</button>
+									#end
+								</div>
+							#end
+						#end
+					#end
+				</div>
+			#end
+		</form>
+	</div>
+
+	<script>
+	$(function(){
+		$('.skin-minimal input').iCheck({
+			checkboxClass: 'icheckbox-blue',
+			radioClass: 'iradio-blue',
+			increaseArea: '20%'
+		});
+	});
+	</script>
+#end
+
+
+
+
+

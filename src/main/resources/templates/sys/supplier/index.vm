@@ -4,14 +4,9 @@
 
 <div class="page-container">
 	<div class="cl mt-20">
-		字典类型：
-		<select class="select select-box" size="1" id="code" style="width:200px">
-			<option value="">全部</option>
-			#foreach( $!item in $!type)
-				<option value="$!item.key">$!item.value</option>
-			#end
-		</select>
+		供应商名称：<input type="text" class="input-text" id="name" name="name" placeholder="供应商名称" style="width:150px;"/>
 		<button onclick="query()" class="btn btn-success radius"><i class="Hui-iconfont Hui-iconfont-search2"></i>查询</button>
+		&nbsp;<button type="button" onclick="addData()" class="btn btn-primary size-M radius" style="float:right;"><i class="Hui-iconfont Hui-iconfont-add"></i>新增供应商</button>
 		
 		<div class="mt-20" id="show">
 		
@@ -19,10 +14,10 @@
 		
 	</div>
 </div>	
+
 #footer
 
 <script>
-
 var param = {};
 
 $(function(){
@@ -30,7 +25,7 @@ $(function(){
 });
 
 function query(){
-	param["code"] = $("#code").val();
+	param["name"] = $("#name").val();
 	page(1);
 }
 
@@ -47,7 +42,7 @@ function page(pageNum){
 }
 
 function addData(){
-	Jq.open({"url":"$!base/supplier/add","title":"新增","height":"250px"},{},function(index){
+	Jq.open({"url":"$!base/supplier/add","title":"新增","height":"550px"},{},function(index){
 		
 		if( !parent.$("#form-supplier-edit").valid() ){
 			return;
@@ -68,14 +63,14 @@ function addData(){
 }
 
 function updateData(id){
-	Jq.open({"url":"$!base/supplier/edit","title":"修改","height":"300px"},{"id":id},function(index){
+	Jq.open({"url":"$!base/supplier/edit","title":"修改","height":"550px"},{"id":id},function(index){
 	
 		if( !parent.$("#form-supplier-edit").valid() ){
 			return;
 		}
 	
 		Jq.MessageBox.confirm("您确定保存该供应商信息吗？",function(){
-			toSaved("$!base/dictionary/edit",parent.$("#form-supplier-edit").serialize(),function(result){
+			toSaved("$!base/supplier/edit",parent.$("#form-supplier-edit").serialize(),function(result){
 				if( result["code"] == 0 ){
 					Jq.closeLoading(index);
 					Jq.msg.success("操作成功");
@@ -96,9 +91,12 @@ function updateData(id){
 	<thead>
 		<tr class="text-c">
 			<th width="60px">编号</th>
-			<th>类型</th>
-			<th>字典值</th>
-			<th width="120px">状态</th>
+			<th>供应商名称</th>
+			<th>创建时间</th>
+			<th>联系人</th>
+			<th>联系电话</th>
+			<th>职务</th>
+			<th>地区</th>
 			<th width="120px">操作</th>
 		</tr>
 	</thead>
@@ -107,22 +105,20 @@ function updateData(id){
 			{{each list as obj i}}
 				<tr>
 					<td class="text-c">{{obj.id}}</td>
-					<td class="text-c">{{obj.dicCode}}</td>
-					<td class="text-c">{{obj.dicVal}}</td>
+					<td class="text-c">{{obj.name}}</td>
+					<td class="text-c">{{obj.createTime | dateFormat : 'yyyy-MM-dd hh:mm:ss'}}</td>
+					<td class="text-c">{{obj.linkName}}</td>
+					<td class="text-c">{{obj.linkTelephone}}</td>
+					<td class="text-c">{{obj.linkPosition}}</td>
+					<td class="text-c">{{obj.provinceName}} {{obj.cityName}} {{obj.areaName}} {{obj.address}}</td>
 					<td class="text-c">
-						{{if obj["status"] == 0}}有效{{/if}}
-						{{if obj["status"] == 1}}无效{{/if}}
-					</td>
-					<td class="text-c">
-						#if( $!shiro.hasPermission("dictionary:update") )
-							<a href="javascript:void(0)" onclick="updateData('{{obj.id}}')">编辑</a>
-						#end
+						<a href="javascript:void(0)" onclick="updateData('{{obj.id}}')">编辑</a>
 					</td>
 				</tr>
 			{{/each}}
 		{{else}}
 			<tr>
-				<td colspan="5" class="text-c">没有查询到结果</td>
+				<td colspan="7" class="text-c">没有查询到结果</td>
 			</tr>
 		{{/if}}
 	</tbody>

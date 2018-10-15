@@ -16,8 +16,7 @@
 			<i class="Hui-iconfont Hui-iconfont-search2"></i>查询</button>
 		
 		#if( $!shiro.hasPermission("dictionary:add") )
-			&nbsp;<button type="button" onclick="addData()" class="btn btn-primary size-M radius" style="float:right;">
-			<i class="Hui-iconfont Hui-iconfont-add"></i>新增字典</button>
+			&nbsp;<button type="button" onclick="addData()" class="btn btn-primary size-M radius" style="float:right;"><i class="Hui-iconfont Hui-iconfont-add"></i>新增字典</button>
 		#end 
 		
 		<div class="mt-20" id="show">

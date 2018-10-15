@@ -1,8 +1,14 @@
 package com.tangj.web.controller.base;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.tangj.web.Exception.BaseException;
+import com.tangj.web.pojo.sys.RegionInfo;
+import com.tangj.web.service.sys.IRegionService;
 import com.tangj.web.util.ApiCommonResultVo;
 
 import net.sf.oval.ConstraintViolation;
@@ -10,6 +16,9 @@ import net.sf.oval.Validator;
 
 public class BaseController {
 
+	@Autowired
+	protected IRegionService regionService;
+	
 	/**
 	 * 操作成功！
 	 * @param obj
@@ -51,5 +60,44 @@ public class BaseController {
 		throw new BaseException(validate.get(0).getMessage());
 	}
 	
+	
+	/**
+	 * 初始化省份
+	 * @param view
+	 */
+	protected void initProvince(ModelAndView view){
+		List<RegionInfo> list = regionService.getTopRegion();
+		view.addObject("provinces", list);
+	}
+	
+	/**
+	 * 初始化城市
+	 * @param view
+	 * @param provinceId
+	 */
+	protected void initCity(ModelAndView view,Long provinceId){
+		List<RegionInfo> list = null;
+		if( provinceId == null ){
+			list = Arrays.asList();
+		}else{
+			list = regionService.getChildRegion(provinceId);
+		}
+		view.addObject("citys", list);
+	}
+	
+	/**
+	 * 初始化城市
+	 * @param view
+	 * @param cityId
+	 */
+	protected void initArea(ModelAndView view,Long cityId){
+		List<RegionInfo> list = null;
+		if( cityId == null ){
+			list = Arrays.asList();
+		}else{
+			list = regionService.getChildRegion(cityId);
+		}
+		view.addObject("areas", list);
+	}
 	
 }

@@ -11,5 +11,6 @@ public class TableConstanst {
 	//区域表
 	public static final String TB_REGION = "tb_region";
 	
-	
+	//供应商表
+	public static final String TB_SUPPLIERS = "tb_suppliers";
 }
