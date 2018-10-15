@@ -12,12 +12,8 @@
 				<option value="$!item.key">$!item.value</option>
 			#end
 		</select>
-		<button onclick="query()" class="btn btn-success radius">
-			<i class="Hui-iconfont Hui-iconfont-search2"></i>查询</button>
-		
-		#if( $!shiro.hasPermission("dictionary:add") )
-			&nbsp;<button type="button" onclick="addData()" class="btn btn-primary size-M radius" style="float:right;"><i class="Hui-iconfont Hui-iconfont-add"></i>新增字典</button>
-		#end 
+		<button onclick="query()" class="btn btn-success radius"><i class="Hui-iconfont Hui-iconfont-search2"></i>查询</button>
+		&nbsp;<button type="button" onclick="addData()" class="btn btn-primary size-M radius" style="float:right;"><i class="Hui-iconfont Hui-iconfont-add"></i>新增字典</button>
 		
 		<div class="mt-20" id="show">
 		</div>
@@ -119,9 +115,7 @@ function updateData(id){
 						{{if obj["status"] == 1}}无效{{/if}}
 					</td>
 					<td class="text-c">
-						#if( $!shiro.hasPermission("dictionary:update") )
-							<a href="javascript:void(0)" onclick="updateData('{{obj.id}}')">编辑</a>
-						#end
+						<a href="javascript:void(0)" onclick="updateData('{{obj.id}}')">编辑</a>
 					</td>
 				</tr>
 			{{/each}}
