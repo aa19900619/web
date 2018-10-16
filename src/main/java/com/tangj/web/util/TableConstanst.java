@@ -13,4 +13,9 @@ public class TableConstanst {
 	
 	//供应商表
 	public static final String TB_SUPPLIERS = "tb_suppliers";
+	
+	//商品表
+	public static final String TB_GOODS = "tb_goods";
+	
+	
 }

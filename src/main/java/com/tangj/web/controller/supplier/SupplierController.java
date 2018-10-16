@@ -47,6 +47,7 @@ public class SupplierController extends BaseController{
 	@RequestMapping(value = "add" , method = RequestMethod.POST)
 	public ApiCommonResultVo add(SupplierInfo obj){
 		super.validator(obj, SupplierInfo.ADD);
+		super.initInfo(obj);
 		supplierService.add(obj);
 		return success("操作成功！");
 	}
@@ -68,6 +69,7 @@ public class SupplierController extends BaseController{
 	@RequestMapping(value = "edit" , method = RequestMethod.POST)
 	public ApiCommonResultVo edit(SupplierInfo obj){
 		super.validator(obj, SupplierInfo.MODIFY);
+		super.initInfo(obj);
 		supplierService.update(obj);
 		return success("操作成功！");
 	}

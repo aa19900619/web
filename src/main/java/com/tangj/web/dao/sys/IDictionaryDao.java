@@ -3,6 +3,7 @@ package com.tangj.web.dao.sys;
 import java.util.List;
 
 import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 
@@ -18,11 +19,10 @@ public interface IDictionaryDao {
 	public DictionaryInfo getDictionaryInfoBy(Long id);
 	
 	@InsertProvider(type = DictionaryProvider.class , method = "add")
+	@Options(useGeneratedKeys = true , keyProperty = "id" , keyColumn = "id")
 	public void add(DictionaryInfo info);
 	
 	@InsertProvider(type = DictionaryProvider.class , method = "update")
 	public void update(DictionaryInfo info);
-	
-	
 	
 }

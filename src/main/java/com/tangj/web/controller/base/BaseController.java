@@ -1,15 +1,19 @@
 package com.tangj.web.controller.base;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tangj.web.Exception.BaseException;
+import com.tangj.web.pojo.base.BaseInfo;
 import com.tangj.web.pojo.sys.RegionInfo;
+import com.tangj.web.pojo.sys.UserInfo;
 import com.tangj.web.service.sys.IRegionService;
 import com.tangj.web.util.ApiCommonResultVo;
+import com.tangj.web.util.SessionUtils;
 
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
@@ -99,5 +103,15 @@ public class BaseController {
 		}
 		view.addObject("areas", list);
 	}
+	
+	
+	protected void initInfo(BaseInfo obj){
+		UserInfo user = SessionUtils.getSessionUser();
+		obj.setCreateUserId(user.getId());
+		obj.setCreateTime(new Date());
+		obj.setUpdateUserId(user.getId());
+		obj.setUpdateTime(new Date());
+	}
+	
 	
 }

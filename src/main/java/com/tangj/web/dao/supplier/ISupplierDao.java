@@ -3,6 +3,7 @@ package com.tangj.web.dao.supplier;
 import java.util.List;
 
 import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
@@ -20,6 +21,7 @@ public interface ISupplierDao {
 	public List<SupplierInfo> getList(String name);
 	
 	@InsertProvider(type = SupplierProvider.class , method = "add")
+	@Options(useGeneratedKeys = true , keyProperty = "id" , keyColumn = "id")
 	public void add(SupplierInfo obj);
 	
 	@UpdateProvider(type = SupplierProvider.class , method = "update")

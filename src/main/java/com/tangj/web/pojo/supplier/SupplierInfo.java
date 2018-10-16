@@ -1,8 +1,7 @@
 package com.tangj.web.pojo.supplier;
 
-import java.util.Date;
-
 import com.tangj.web.oval.TelephoneCheckImpl;
+import com.tangj.web.pojo.base.BaseInfo;
 
 import net.sf.oval.constraint.CheckWith;
 import net.sf.oval.constraint.Max;
@@ -11,7 +10,7 @@ import net.sf.oval.constraint.Min;
 import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.constraint.NotNull;
 
-public class SupplierInfo {
+public class SupplierInfo extends BaseInfo{
 
 	public static final String ADD = "ADD";
 	public static final String MODIFY = "MODIFY";
@@ -50,14 +49,6 @@ public class SupplierInfo {
 	
 	@MaxLength(value = 250 , message = "备注最大长度为250个字符" , profiles = {ADD, MODIFY})
 	private String remark;
-	
-	private Long createUserId;
-	
-	private Date createTime;
-	
-	private Long updateUserId;
-	
-	private Date updateTime;
 	
 	//非表字段
 	private String provinceName;
@@ -145,30 +136,6 @@ public class SupplierInfo {
 	}
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
-	}
-	public Long getCreateUserId() {
-		return createUserId;
-	}
-	public void setCreateUserId(Long createUserId) {
-		this.createUserId = createUserId;
-	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	public Long getUpdateUserId() {
-		return updateUserId;
-	}
-	public void setUpdateUserId(Long updateUserId) {
-		this.updateUserId = updateUserId;
-	}
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
 	}
 	
 }

@@ -1,6 +1,5 @@
 package com.tangj.web.service.sys.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +8,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.tangj.web.dao.supplier.ISupplierDao;
 import com.tangj.web.pojo.supplier.SupplierInfo;
-import com.tangj.web.pojo.sys.UserInfo;
 import com.tangj.web.service.sys.ISupplierService;
-import com.tangj.web.util.SessionUtils;
 import com.tangj.web.util.UIPage;
 import com.tangj.web.vo.sys.supplier.QueryVO;
 
@@ -35,21 +32,11 @@ public class SupplierServiceImpl implements ISupplierService{
 
 	@Override
 	public void add(SupplierInfo obj) {
-		UserInfo user = SessionUtils.getSessionUser();
-		obj.setCreateTime(new Date());
-		obj.setCreateUserId(user.getId());
-		obj.setUpdateUserId(user.getId());
-		obj.setUpdateTime(new Date());
 		supplierDao.add(obj);
 	}
 
 	@Override
 	public void update(SupplierInfo obj) {
-		UserInfo user = SessionUtils.getSessionUser();
-		obj.setCreateTime(new Date());
-		obj.setCreateUserId(user.getId());
-		obj.setUpdateUserId(user.getId());
-		obj.setUpdateTime(new Date());
 		supplierDao.update(obj);
 	}
 
