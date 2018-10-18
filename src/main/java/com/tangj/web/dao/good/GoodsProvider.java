@@ -8,6 +8,7 @@ public class GoodsProvider {
 
 	public String getList(Map<String,Object> param){
 		SQL sql = new SQL();
+		sql.SELECT("*");
 		sql.FROM(TableConstanst.TB_GOODS);
 		if( param.get("name") != null && !"".equals(param.get("name"))){
 			sql.WHERE("goods_name like  concat('%',#{name},'%')");

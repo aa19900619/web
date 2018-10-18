@@ -1,6 +1,6 @@
 #header
 
-#nav("供应商管理" "供应商管理")
+#nav([{"title":"供应商管理"},{"title":"供应商管理"}])
 
 <div class="page-container">
 	<div class="cl mt-20">

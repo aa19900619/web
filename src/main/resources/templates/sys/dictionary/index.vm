@@ -1,6 +1,6 @@
 #header
 
-#nav("系统管理" "字典管理")
+#nav([{"title":"系统管理"},{"title":"字典管理"}])
 
 <div class="page-container">
 	<div class="cl mt-20">

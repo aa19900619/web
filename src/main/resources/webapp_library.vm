@@ -87,21 +87,19 @@ a:active{
 <script type="text/javascript" src="$!base/static/upload/uploadHelper.js"></script> 
 #end
 
-#macro(nav $title1 $title2 $title3)
+#macro(nav $nav)
 <nav class="breadcrumb">
 	<i class="Hui-iconfont"></i> 
 	<a class="maincolor" href="javascript:void(0)">首页</a>
-	#if( "$!title1" != "" )
+	#foreach($!obj in $!nav)
 		<span class="c-999 en">&gt;</span>
-		<span class="c-666">$!title1</span>
-	#end
-	#if( "$!title2" != "" )
-		<span class="c-999 en">&gt;</span>
-		<span class="c-666">$!title2</span>
-	#end
-	#if( "$!title3" != "" )
-		<span class="c-999 en">&gt;</span>
-		<span class="c-666">$!title3</span>
+		<span class="c-666">
+			#if( "$!obj.href" != "" )
+				<a href="$!base/$!obj.href">$!obj.title</a>
+			#else
+				$!obj.title
+			#end
+		</span>
 	#end
 </nav>
 #end
@@ -306,6 +304,194 @@ a:active{
 #end
 
 
+#macro(queryDetail $param)
 
+#set($rand = $!date.getDate().getTime())
+#if( "$!param.showHeader" == "true" )	
+	#header
+#end
+
+#if( "$!param.nav" != "" )
+	#nav($!param.nav)
+#end
+
+<div class="page-container">
+	#if( "$!param.query" != "" )
+		<div class="cl mt-20">
+			#foreach($!obj in $!param.query)
+				#if( "$!obj.label" != "" )
+					$!obj.label
+				#end
+				#if( "$!obj.type" == "selected" )
+					<select class="select select-box" size="1" id="$!obj.id" name="$!obj.name" placeholder="$!obj.placeholder" style="$!obj.style">
+						<option value="">--请选择--</option>
+						#if( "$!obj.options" != "" )
+							#foreach($!opt in $!obj.options)
+								<option value="$!opt.value" #if( "$!obj.value" == "$!opt.value" ) selected #end >$!opt.text</option>
+							#end
+						#end
+						
+						#if( "$!obj.dataSource" != "" )
+							#foreach($opt in $!obj.dataSource)
+								#set($datasuurcevalue = "")
+								#set($datasuurcevalue = $!opt.getClass().getMethod("$!obj.getValueMethod", null).invoke($!opt, null))
+								<option value="$!datasuurcevalue" #if("$!obj.value" == "$!datasuurcevalue") selected #end>
+            						$!opt.getClass().getMethod("$!_col.getNameMethod", null).invoke($!opt, null)
+            					</option>
+							#end
+						#end
+					</select>
+				#end
+				
+				#if( "$!obj.type" == "text" )
+					<input type="text" class="input-text" id="$!obj.id" name="$!obj.name" placeholder="$!obj.placeholder" style="$!obj.style"/>
+				#end
+				
+				#if( "$!obj.type" == "date" )
+					<input type="text" class="input-text Wdate" id="$!obj.id" name="$!obj.name" onfocus="WdatePicker()" placeholder="$!obj.placeholder" style="$!obj.style" />
+				#end
+				
+				#if( "$!obj.type" == "button" )
+					#set($bool = true)
+					#if( "$!obj.hasPermission" != "" )
+						#set($bool = $!shiro.hasPermission("$!obj.hasPermission"))
+					#end
+					#if( $!bool )
+						#set($buttonClass="btn btn-success radius")
+						#if( "$!obj.classes" != "" )
+							#set($buttonClass="$!obj.classes")
+						#end
+						#set($clickFun = "query()")
+						#if( "$!obj.clickFun" != "" )
+							#set($clickFun = "$!obj.clickFun")	
+						#end
+						<button id="$!obj.id" name="$!obj.name" class="$!buttonClass" onclick="$clickFun"><i class="Hui-iconfont $!obj.iclass"></i>$!obj.value</button>
+					#end
+				#end
+			#end
+		</div>
+		
+		<div class="mt-20" id="show$!rand">
+		
+		
+		</div>
+	#end
+</div>
+
+#if( "$!param.showHeader" == "true" )	
+	#footer
+#end
+
+<script>
+#set($key = "parameter$!rand")
+var $!key = {};
+
+$(function(){
+	query();
+});
+
+function query(){
+	#foreach($!obj in $!param.query)
+		#if( "$!obj.type" != "button" )
+			$!{key}["$!obj.id"] = $("#$!obj.id").val();
+		#end	
+	#end
+	page(1);
+}
+function page(pageNum){
+	$!{key}["pageNum"] = pageNum;
+	queryData("$!base/$!param.url",$!key,function(result){
+		if( result.code == 0 ){
+			#if( "$!param.queryResultFun" != "" )
+				$!{param.queryResultFun}(result);
+			#end
+			var html = template("tpl$!rand",result["data"]);
+			$("#show$!rand").html(html);
+		}else{
+			Jq.MessageBox.error(result.msg);
+		}
+	});
+}
+function reloadData(){
+	var pageNum = $!{key}["pageNum"];
+	page(pageNum);
+}
+</script>
+
+<script id="tpl$!rand" type="text/html">
+<table class="table table-border table-bordered table-hover table-bg table-sort">
+	<thead>
+		<tr class="text-c">
+			#foreach($!obj in $!param.colums)
+				<th width="$!obj.width">$!obj.text</th>
+			#end
+			#if( "$!param.operations" != "")
+				<th width="90px">操作</th>
+			#end
+		</tr>
+	</thead>
+	<tbody>
+		{{if list.length > 0}}
+			{{each list as obj i}}
+				<tr>
+					#foreach($!obj in $!param.colums)
+						#set($cls = "text-c")
+						#if( "$!obj.cls" != "" )
+							#set($cls = "$!obj.cls")
+						#end
+						<td class="$!cls">
+							#if( "$!obj.type" == "date" )
+								{{obj.$!obj.key | dateFormat : '$!obj.col_type'}}
+							#elseif( "$!obj.type" == "number" )	
+								{{obj.$!obj.key | numberFormat : $!obj.col_type}}
+							#else
+								#if( "$!obj.property" != "" )
+									{{$!{obj.property}[obj.$!obj.key]}}
+								#else
+									{{obj.$!obj.key}}
+								#end
+							#end
+						</td>
+					#end
+					
+					#if( "$!param.operations" != "")
+						<td class="text-c">
+						#foreach( $!operation in $!param.operations)
+							#set($bool = true)
+							#if( "$!operation.hasPermission" != "" )
+								#set($bool = $!shiro.hasPermission("$!operation.hasPermission"))
+							#end
+							#if( $bool )
+								<a href="javascript:void(0)" onclick="$!operation.click"
+									#if( "$!operation.property" != "" )
+										#foreach( $!pro in $!operation.property )
+											#if( "$!pro.custom" == "true" )
+												$!pro.key="$!pro.value"
+											#else
+												$!pro.key="{{obj.$!pro.value}}"
+											#end
+										#end
+									#end
+								>$!operation.text</a>
+							#end
+						#end
+						</td>
+					#end
+				</tr>
+			{{/each}}
+		{{else}}
+			<tr>
+				#set($columslength = $!param.colums.size())
+				#if( "$!param.operations" != "")
+					#set($columslength = $columslength + 1)
+				#end
+				<td colspan="$columslength" class="text-c">没有查询到结果</td>
+			</tr>
+		{{/if}}
+	</tbody>
+</table>
+{{#page}}
+</script>
+#end
 
 

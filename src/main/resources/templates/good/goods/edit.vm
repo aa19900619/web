@@ -1,0 +1,43 @@
+#detail({
+	"id":"form-supplier-edit",
+	"hiddens":[
+		{"name":"id","value":"$!obj.id"}
+	],
+	"rows":[
+		{"cols":[
+			{"colType":"label","length":"2","colRequired":true,"text":"供应商名称"},
+			{"colType":"text","length":"9","name":"name","value":"$!obj.name","placeholder":"请输入供应商名称"}
+		]},
+		
+		{"cols":[
+			{"colType":"label","length":"2","text":"联系人姓名"},
+			{"colType":"text","length":"9","name":"linkName","value":"$!obj.linkName","placeholder":"请输入联系人姓名"}
+		]},
+		
+		{"cols":[
+			{"colType":"label","length":"2","text":"联系人电话"},
+			{"colType":"text","length":"9","name":"linkTelephone","value":"$!obj.linkTelephone","placeholder":"请输入联系人电话"}
+		]},
+		
+		{"cols":[
+			{"colType":"label","length":"2","text":"联系人职务"},
+			{"colType":"text","length":"9","name":"linkPosition","value":"$!obj.linkPosition","placeholder":"请输入联系人职务"}
+		]},
+		
+		{"cols":[
+			{"colType":"label","length":"2","text":"供应商所在地"},
+			{"colType":"select","length":"3","name":"province","value":"$!obj.province","placeholder":"供应商所在地-省份","dataSource":$!provinces,"getValueMethod":"getId","getNameMethod":"getRegionName"},
+			{"colType":"select","length":"3","name":"city","value":"$!obj.city","placeholder":"供应商所在地-城市","dataSource":$!citys,"getValueMethod":"getId","getNameMethod":"getRegionName"},
+			{"colType":"select","length":"3","name":"area","value":"$!obj.area","placeholder":"供应商所在地-区域","dataSource":$!areas,"getValueMethod":"getId","getNameMethod":"getRegionName"}
+		]},
+		
+		{"cols":[
+			{"colType":"label","length":"2","text":"供应商详细地址"},
+			{"colType":"text","length":"9","name":"address","value":"$!obj.address","placeholder":"请输入供应商详细地址"}
+		]},
+		{"cols":[
+			{"colType":"label","length":"2","text":"备注"},
+			{"colType":"textarea","length":"9","name":"remark","value":"$!obj.remark","placeholder":"请输入备注"}
+		]}
+	]
+})
