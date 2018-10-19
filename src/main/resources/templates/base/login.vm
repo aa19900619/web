@@ -49,6 +49,19 @@
 
 <script>
 $(function(){
+	$("#username").keyup(function(e){
+		if( e.keyCode == 13 ){
+			$("#password").focus();
+		}
+	});
+	
+	$("#password").keyup(function(e){
+		if( e.keyCode == 13 ){
+			$("#validateCode").focus();
+		}
+	});
+	
+
 	$("#validateCode").keyup(function(e){
 		if( e.keyCode == 13 ){
 			login();
