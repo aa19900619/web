@@ -7,7 +7,7 @@
 	"query":[
 				{"type":"text","label":"商品名称","id":"name","name":"name","placeholder":"商品名称","style":"width:150px"},
 				{"type":"button","value":"查询","clickFun":"query()","iclass":"Hui-iconfont-search2"},
-				{"type":"button","value":"添加","clickFun":"add()","hasPermission":"goodsInfo:add","classes":"btn btn-primary size-M radius","iclass":"Hui-iconfont-add","style":"float:right;"}
+				{"type":"button","value":"添加商品","clickFun":"add()","hasPermission":"goodsInfo:add","classes":"btn btn-primary size-M radius","iclass":"Hui-iconfont-add","style":"float:right;"}
 	],
 	"colums":[
 		{"text":"序号","type":"text","key":"id"},

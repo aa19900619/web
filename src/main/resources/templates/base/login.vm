@@ -28,7 +28,7 @@
       		<div class="row cl">
         		<div class="formControls col-8 col-offset-3">
           			<input class="input-text size-L" type="text" id="validateCode" name="validateCode" placeholder="验证码" style="width:150px;">
-          			<img id="yzm" src="$!base/code/yzm">
+          			<img id="yzm" src="$!base/code/yzm" onclick="validate()">
           			<a id="kanbuq" href="javascript:void(0);" onclick="validate()">看不清，换一张</a> 
        			</div>
       		</div>
@@ -48,9 +48,18 @@
 #footer
 
 <script>
+$(function(){
+	$("#validateCode").keyup(function(e){
+		if( e.keyCode == 13 ){
+			login();
+		}
+	});
+});
+
 function validate(){
 	$("#yzm").attr("src","$!base/code/yzm?rand="+(new Date()).getTime());
 }
+
 
 function login(){
 	var username = $("#username").val();
