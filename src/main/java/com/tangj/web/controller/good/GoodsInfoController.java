@@ -40,12 +40,14 @@ public class GoodsInfoController extends BaseController{
 		return success(page);
 	}
 	
-	
 	//添加
 	@RequiresPermissions(values = "goodsInfo:add")
 	@RequestMapping(value = "add" , method = RequestMethod.GET)
 	public ModelAndView add(){
-		return new ModelAndView("templates/good/goods/edit");
+		ModelAndView view = new ModelAndView("templates/good/goods/edit");
+		initGoodsFL(view);
+		initGoodsGG(view);
+		return view;
 	}
 	@RequiresPermissions(values = "goodsInfo:add")
 	@ResponseBody
@@ -61,8 +63,13 @@ public class GoodsInfoController extends BaseController{
 	//修改
 	@RequiresPermissions(values = "goodsInfo:edit")
 	@RequestMapping(value = "edit" , method = RequestMethod.GET)
-	public ModelAndView edit(){
-		return new ModelAndView("templates/good/goods/edit");
+	public ModelAndView edit(Long id){
+		ModelAndView view = new ModelAndView("templates/good/goods/edit");
+		GoodsInfo obj = goodsService.getGoodsInfoBy(id);
+		view.addObject("obj", obj);
+		initGoodsFL(view);
+		initGoodsGG(view);
+		return view;
 	}
 	@RequiresPermissions(values = "goodsInfo:edit")
 	@ResponseBody
@@ -73,7 +80,5 @@ public class GoodsInfoController extends BaseController{
 		goodsService.update(obj);
 		return success("操作成功！");
 	}
-	
-	
 	
 }

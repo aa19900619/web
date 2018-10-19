@@ -1,5 +1,8 @@
 package com.tangj.web.service.sys;
 
+import java.util.List;
+
+import com.tangj.web.enums.DictionaryEnum;
 import com.tangj.web.pojo.sys.DictionaryInfo;
 import com.tangj.web.util.UIPage;
 import com.tangj.web.vo.sys.dictionary.QueryVO;
@@ -32,4 +35,10 @@ public interface IDictionaryService {
 	 */
 	public void update(DictionaryInfo obj);
 	
+	/**
+	 * 根据类型查找字典
+	 * @param enums
+	 * @return
+	 */
+	public List<DictionaryInfo> getDictionaryInfoByEnum(DictionaryEnum enums);
 }

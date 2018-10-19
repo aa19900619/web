@@ -1,43 +1,40 @@
 #detail({
-	"id":"form-supplier-edit",
+	"id":"form-goods-edit",
 	"hiddens":[
 		{"name":"id","value":"$!obj.id"}
 	],
 	"rows":[
 		{"cols":[
-			{"colType":"label","length":"2","colRequired":true,"text":"供应商名称"},
-			{"colType":"text","length":"9","name":"name","value":"$!obj.name","placeholder":"请输入供应商名称"}
-		]},
-		
-		{"cols":[
-			{"colType":"label","length":"2","text":"联系人姓名"},
-			{"colType":"text","length":"9","name":"linkName","value":"$!obj.linkName","placeholder":"请输入联系人姓名"}
-		]},
-		
-		{"cols":[
-			{"colType":"label","length":"2","text":"联系人电话"},
-			{"colType":"text","length":"9","name":"linkTelephone","value":"$!obj.linkTelephone","placeholder":"请输入联系人电话"}
-		]},
-		
-		{"cols":[
-			{"colType":"label","length":"2","text":"联系人职务"},
-			{"colType":"text","length":"9","name":"linkPosition","value":"$!obj.linkPosition","placeholder":"请输入联系人职务"}
-		]},
-		
-		{"cols":[
-			{"colType":"label","length":"2","text":"供应商所在地"},
-			{"colType":"select","length":"3","name":"province","value":"$!obj.province","placeholder":"供应商所在地-省份","dataSource":$!provinces,"getValueMethod":"getId","getNameMethod":"getRegionName"},
-			{"colType":"select","length":"3","name":"city","value":"$!obj.city","placeholder":"供应商所在地-城市","dataSource":$!citys,"getValueMethod":"getId","getNameMethod":"getRegionName"},
-			{"colType":"select","length":"3","name":"area","value":"$!obj.area","placeholder":"供应商所在地-区域","dataSource":$!areas,"getValueMethod":"getId","getNameMethod":"getRegionName"}
-		]},
-		
-		{"cols":[
-			{"colType":"label","length":"2","text":"供应商详细地址"},
-			{"colType":"text","length":"9","name":"address","value":"$!obj.address","placeholder":"请输入供应商详细地址"}
+			{"colType":"label","length":"2","colRequired":true,"text":"商品名称"},
+			{"colType":"text","length":"9","name":"goodsName","value":"$!obj.goodsName","placeholder":"请输入商品名称"}
 		]},
 		{"cols":[
-			{"colType":"label","length":"2","text":"备注"},
-			{"colType":"textarea","length":"9","name":"remark","value":"$!obj.remark","placeholder":"请输入备注"}
+			{"colType":"label","length":"2","colRequired":true,"text":"商品分类"},
+			{"colType":"select","length":"9","name":"goodsType","value":"$!obj.goodsType","placeholder":"请输入商品分类","dataSource":$!goodsFL,"getValueMethod":"getDicVal","getNameMethod":"getDicVal"}
+		]},
+		{"cols":[
+			{"colType":"label","length":"2","text":"商品类别"},
+			{"colType":"text","length":"9","name":"goodsCategory","value":"$!obj.goodsCategory","placeholder":"请输入商品类别"}
+		]},
+		{"cols":[
+			{"colType":"label","length":"2","colRequired":true,"text":"商品规格"},
+			{"colType":"select","length":"9","name":"goodsSpecifications","value":"$!obj.goodsSpecifications","placeholder":"请输入商品规格","dataSource":$!goodsGG,"getValueMethod":"getDicVal","getNameMethod":"getDicVal"}
+		]},
+		{"cols":[
+			{"colType":"label","length":"2","text":"商品规格信息"},
+			{"colType":"text","length":"9","name":"goodsSpecificationsDesc","value":"$!obj.goodsSpecificationsDesc","placeholder":"请输入商品规格信息"}
+		]},
+		{"cols":[
+			{"colType":"label","length":"2","text":"条形码"},
+			{"colType":"text","length":"9","name":"goodsBarCode","value":"$!obj.goodsBarCode","placeholder":"请输入条形码"}
+		]},
+		{"cols":[
+			{"colType":"label","length":"2","text":"产地"},
+			{"colType":"text","length":"9","name":"goodsPlaceOfOrigin","value":"$!obj.goodsPlaceOfOrigin","placeholder":"请输入产地"}
+		]},
+		{"cols":[
+			{"colType":"label","length":"2","colRequired":true,"text":"状态"},
+			{"colType":"select","length":"9","name":"goodsStatus","value":"$!obj.goodsStatus","placeholder":"请输入状态","options":[{"value":"0","text":"有效"},{"value":"1","text":"无效"}]}
 		]}
 	]
 })

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.tangj.web.dao.sys.IDictionaryDao;
+import com.tangj.web.enums.DictionaryEnum;
 import com.tangj.web.pojo.sys.DictionaryInfo;
 import com.tangj.web.service.sys.IDictionaryService;
 import com.tangj.web.util.UIPage;
@@ -37,6 +38,11 @@ public class DictionaryServiceImpl implements IDictionaryService{
 	@Override
 	public void update(DictionaryInfo obj) {
 		dictionaryDao.update(obj);
+	}
+
+	@Override
+	public List<DictionaryInfo> getDictionaryInfoByEnum(DictionaryEnum enums) {
+		return dictionaryDao.getDictionaryInfoByEnum(enums.toString());
 	}
 	
 }

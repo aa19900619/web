@@ -30,8 +30,8 @@ public class GoodsProvider {
 		sql.INTO_COLUMNS("goods_status").INTO_VALUES("#{goodsStatus}");
 		sql.INTO_COLUMNS("create_user_id").INTO_VALUES("#{createUserId}");
 		sql.INTO_COLUMNS("create_time").INTO_VALUES("#{createTime}");
-		sql.INTO_COLUMNS("").INTO_VALUES("#{updateUserId}");
-		sql.INTO_COLUMNS("").INTO_VALUES("#{updateTime}");
+		sql.INTO_COLUMNS("update_user_id").INTO_VALUES("#{updateUserId}");
+		sql.INTO_COLUMNS("update_time").INTO_VALUES("#{updateTime}");
 		
 		return sql.toString();
 	}

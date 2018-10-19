@@ -365,7 +365,7 @@ a:active{
 						#if( "$!obj.clickFun" != "" )
 							#set($clickFun = "$!obj.clickFun")	
 						#end
-						<button id="$!obj.id" name="$!obj.name" class="$!buttonClass" onclick="$clickFun"><i class="Hui-iconfont $!obj.iclass"></i>$!obj.value</button>
+						<button id="$!obj.id" name="$!obj.name" class="$!buttonClass" style="$!obj.style" onclick="$clickFun"><i class="Hui-iconfont $!obj.iclass"></i>$!obj.value</button>
 					#end
 				#end
 			#end

@@ -3,7 +3,6 @@ package com.tangj.web.controller.sys;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tangj.web.annotation.RequiresPermissions;
 import com.tangj.web.controller.base.BaseController;
 import com.tangj.web.pojo.sys.DictionaryInfo;
-import com.tangj.web.service.sys.IDictionaryService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.EnumsUtils;
 import com.tangj.web.util.KeyValue;
@@ -24,9 +22,6 @@ import com.tangj.web.vo.sys.dictionary.QueryVO;
 @RequestMapping(value = "dictionary")
 public class DictionaryController extends BaseController{
 
-	@Autowired
-	private IDictionaryService dictionaryService;
-	
 	@RequiresPermissions(values = "dictionary:all")
 	@RequestMapping(value = "" , method = RequestMethod.GET)
 	public ModelAndView index(){

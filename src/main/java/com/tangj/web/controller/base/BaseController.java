@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tangj.web.Exception.BaseException;
+import com.tangj.web.enums.DictionaryEnum;
 import com.tangj.web.pojo.base.BaseInfo;
+import com.tangj.web.pojo.sys.DictionaryInfo;
 import com.tangj.web.pojo.sys.RegionInfo;
 import com.tangj.web.pojo.sys.UserInfo;
+import com.tangj.web.service.sys.IDictionaryService;
 import com.tangj.web.service.sys.IRegionService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.SessionUtils;
@@ -22,6 +25,9 @@ public class BaseController {
 
 	@Autowired
 	protected IRegionService regionService;
+	
+	@Autowired
+	protected IDictionaryService dictionaryService;
 	
 	/**
 	 * 操作成功！
@@ -113,5 +119,23 @@ public class BaseController {
 		obj.setUpdateTime(new Date());
 	}
 	
+	
+	/**
+	 * 初始化商品分类字典
+	 * @param view
+	 */
+	protected void initGoodsFL(ModelAndView view){
+		List<DictionaryInfo> list = dictionaryService.getDictionaryInfoByEnum(DictionaryEnum.GOOD_FL);
+		view.addObject("goodsFL", list);
+	}
+	
+	/**
+	 * 初始化商品规格字典
+	 * @param view
+	 */
+	protected void initGoodsGG(ModelAndView view){
+		List<DictionaryInfo> list = dictionaryService.getDictionaryInfoByEnum(DictionaryEnum.GOOD_GG);
+		view.addObject("goodsGG", list);
+	}
 	
 }

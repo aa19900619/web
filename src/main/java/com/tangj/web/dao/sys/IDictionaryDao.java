@@ -25,4 +25,6 @@ public interface IDictionaryDao {
 	@InsertProvider(type = DictionaryProvider.class , method = "update")
 	public void update(DictionaryInfo info);
 	
+	@Select(value = "select * from " + TableConstanst.TB_DICTIONARY + " where dic_code = #{type}")
+	public List<DictionaryInfo> getDictionaryInfoByEnum(String type);
 }

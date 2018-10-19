@@ -7,7 +7,7 @@ package com.tangj.web.enums;
  */
 public enum DictionaryEnum {
 
-	GOOD_FL("商品分类"),GOOD_PP("商品品牌");
+	GOOD_FL("商品分类"),GOOD_GG("商品规格"),GOOD_PP("商品品牌");
 	
 	private String desc;
 	private DictionaryEnum(String desc){

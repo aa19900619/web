@@ -6,8 +6,8 @@
 	"url":"goodsInfo",
 	"query":[
 				{"type":"text","label":"商品名称","id":"name","name":"name","placeholder":"商品名称","style":"width:150px"},
-				{"type":"button","value":"查询","clickFun":"query()"},
-				{"type":"button","value":"添加","clickFun":"add()","hasPermission":"goodsInfo:add"}
+				{"type":"button","value":"查询","clickFun":"query()","iclass":"Hui-iconfont-search2"},
+				{"type":"button","value":"添加","clickFun":"add()","hasPermission":"goodsInfo:add","classes":"btn btn-primary size-M radius","iclass":"Hui-iconfont-add","style":"float:right;"}
 	],
 	"colums":[
 		{"text":"序号","type":"text","key":"id"},
@@ -22,3 +22,51 @@
 		{"text":"编辑","click":"edit(this)","property":[{"key":"id","value":"id"}]}
 	]
 })
+
+<script>
+function add(){
+	Jq.open({"url":"$!base/goodsInfo/add","title":"新增","height":"500px"},{},function(index){
+		
+		if( !parent.$("#form-goods-edit").valid() ){
+			return;
+		}
+		
+		Jq.MessageBox.confirm("您确定保存该商品信息吗？",function(){
+			toSaved("$!base/goodsInfo/add",parent.$("#form-goods-edit").serialize(),function(result){
+				if( result["code"] == 0 ){
+					Jq.closeLoading(index);
+					Jq.msg.success("操作成功");
+					page();
+				}else{
+					Jq.msg.error(result["msg"]);
+				}
+			});
+		});
+	});
+}
+
+function edit(obj){
+	var modify = $(obj);
+	var id = modify.attr("id");
+	Jq.open({"url":"$!base/goodsInfo/edit","title":"修改","height":"500px"},{"id":id},function(index){
+	
+		if( !parent.$("#form-goods-edit").valid() ){
+			return;
+		}
+	
+		Jq.MessageBox.confirm("您确定保存该商品信息吗？",function(){
+			toSaved("$!base/goodsInfo/edit",parent.$("#form-goods-edit").serialize(),function(result){
+				if( result["code"] == 0 ){
+					Jq.closeLoading(index);
+					Jq.msg.success("操作成功");
+					page();
+				}else{
+					Jq.msg.error(result["msg"]);
+				}
+			});
+		});
+	});
+}
+
+
+</script>

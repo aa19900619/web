@@ -13,9 +13,9 @@ public class DictionaryInfo {
 	public static final String ADD = "ADD";
 	public static final String MODIFY = "MODIFY";
 	
-	@NotNull(message = "ID不能为空" , profiles = {ADD})
-	@NotEmpty(message = "ID不能为空" , profiles = {ADD})
-	@Min(value = 1 , message = "ID传递错误" , profiles = {ADD})
+	@NotNull(message = "ID不能为空" , profiles = {MODIFY})
+	@NotEmpty(message = "ID不能为空" , profiles = {MODIFY})
+	@Min(value = 1 , message = "ID传递错误" , profiles = {MODIFY})
 	private Long id;
 	
 	@NotNull(message = "字典编码不能为空" , profiles = {ADD,MODIFY})
