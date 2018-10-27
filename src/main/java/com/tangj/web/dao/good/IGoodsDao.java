@@ -19,7 +19,7 @@ public interface IGoodsDao {
 	 * @param id
 	 * @return
 	 */
-	@Select(value = "select * from " + TableConstanst.TB_GOODS + " where id = #{id}")
+	@Select(value = "select * from " + TableConstanst.TB_PRODUCT + " where id = #{id}")
 	public GoodsInfo getGoodsInfoBy(Long id);
 	
 	/**
