@@ -1,4 +1,4 @@
-package com.tangj.web.dao.good;
+package com.tangj.web.dao.product;
 
 import java.util.List;
 import java.util.Map;

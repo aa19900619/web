@@ -1,4 +1,4 @@
-package com.tangj.web.controller.good;
+package com.tangj.web.controller.product;
 
 import java.util.HashMap;
 import java.util.Map;

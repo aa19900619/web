@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
-import com.tangj.web.dao.good.IGoodsDao;
+import com.tangj.web.dao.product.IGoodsDao;
 import com.tangj.web.pojo.good.GoodsInfo;
 import com.tangj.web.service.goods.IGoodsService;
 import com.tangj.web.util.UIPage;
