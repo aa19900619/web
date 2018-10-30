@@ -1,4 +1,4 @@
-package com.tangj.web.pojo.good;
+package com.tangj.web.pojo.product;
 
 import com.tangj.web.pojo.base.BaseInfo;
 import com.tangj.web.util.Constanst;
@@ -14,7 +14,7 @@ import net.sf.oval.constraint.NotNull;
  * @author jian.tang
  *
  */
-public class GoodsInfo extends BaseInfo{
+public class ProductInfo extends BaseInfo{
 
 	public static final String ADD = "ADD";
 	public static final String MODIFY = "MODIFY";

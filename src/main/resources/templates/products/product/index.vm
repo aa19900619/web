@@ -3,7 +3,7 @@
 	"nav":[
 			{"title":"商品管理"},{"title":"商品管理"}
 	],
-	"url":"goodsInfo",
+	"url":"productInfo",
 	"query":[
 				{"type":"text","label":"商品名称","id":"name","name":"name","placeholder":"商品名称","style":"width:150px"},
 				{"type":"button","value":"查询","clickFun":"query()","iclass":"Hui-iconfont-search2"},
@@ -25,14 +25,14 @@
 
 <script>
 function add(){
-	Jq.open({"url":"$!base/goodsInfo/add","title":"新增","height":"500px"},{},function(index){
+	Jq.open({"url":"$!base/productInfo/add","title":"新增","height":"500px"},{},function(index){
 		
-		if( !parent.$("#form-goods-edit").valid() ){
+		if( !parent.$("#form-product-edit").valid() ){
 			return;
 		}
 		
 		Jq.MessageBox.confirm("您确定保存该商品信息吗？",function(){
-			toSaved("$!base/goodsInfo/add",parent.$("#form-goods-edit").serialize(),function(result){
+			toSaved("$!base/productInfo/add",parent.$("#form-product-edit").serialize(),function(result){
 				if( result["code"] == 0 ){
 					Jq.closeLoading(index);
 					Jq.msg.success("操作成功");
@@ -48,14 +48,14 @@ function add(){
 function edit(obj){
 	var modify = $(obj);
 	var id = modify.attr("id");
-	Jq.open({"url":"$!base/goodsInfo/edit","title":"修改","height":"500px"},{"id":id},function(index){
+	Jq.open({"url":"$!base/productInfo/edit","title":"修改","height":"500px"},{"id":id},function(index){
 	
-		if( !parent.$("#form-goods-edit").valid() ){
+		if( !parent.$("#form-product-edit").valid() ){
 			return;
 		}
 	
 		Jq.MessageBox.confirm("您确定保存该商品信息吗？",function(){
-			toSaved("$!base/goodsInfo/edit",parent.$("#form-goods-edit").serialize(),function(result){
+			toSaved("$!base/productInfo/edit",parent.$("#form-product-edit").serialize(),function(result){
 				if( result["code"] == 0 ){
 					Jq.closeLoading(index);
 					Jq.msg.success("操作成功");

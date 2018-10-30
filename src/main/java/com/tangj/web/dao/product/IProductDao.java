@@ -9,10 +9,10 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
 
-import com.tangj.web.pojo.good.GoodsInfo;
+import com.tangj.web.pojo.product.ProductInfo;
 import com.tangj.web.util.TableConstanst;
 
-public interface IGoodsDao {
+public interface IProductDao {
 
 	/**
 	 * 根据ID查询商品信息
@@ -20,29 +20,29 @@ public interface IGoodsDao {
 	 * @return
 	 */
 	@Select(value = "select * from " + TableConstanst.TB_PRODUCT + " where id = #{id}")
-	public GoodsInfo getGoodsInfoBy(Long id);
+	public ProductInfo getProductInfoBy(Long id);
 	
 	/**
 	 * 条件查询商品信息
 	 * @param name
 	 * @return
 	 */
-	@SelectProvider(type = GoodsProvider.class , method = "getList")
-	public List<GoodsInfo> getList(Map<String,Object> param);
+	@SelectProvider(type = ProductProvider.class , method = "getList")
+	public List<ProductInfo> getList(Map<String,Object> param);
 	
 	/**
 	 * 添加
 	 * @param obj
 	 */
-	@InsertProvider(type = GoodsProvider.class , method = "add")
+	@InsertProvider(type = ProductProvider.class , method = "add")
 	@Options(useGeneratedKeys = true , keyProperty = "id" , keyColumn = "id")
-	public void add(GoodsInfo obj);
+	public void add(ProductInfo obj);
 	
 	/**
 	 * 修改
 	 * @param obj
 	 */
-	@UpdateProvider(type = GoodsProvider.class , method = "update")
-	public void update(GoodsInfo obj);
+	@UpdateProvider(type = ProductProvider.class , method = "update")
+	public void update(ProductInfo obj);
 	
 }

@@ -1,5 +1,5 @@
 #detail({
-	"id":"form-goods-edit",
+	"id":"form-product-edit",
 	"hiddens":[
 		{"name":"id","value":"$!obj.id"}
 	],

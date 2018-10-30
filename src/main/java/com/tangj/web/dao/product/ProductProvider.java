@@ -4,7 +4,7 @@ import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 import com.tangj.web.util.TableConstanst;
 
-public class GoodsProvider {
+public class ProductProvider {
 
 	public String getList(Map<String,Object> param){
 		SQL sql = new SQL();
