@@ -12,23 +12,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tangj.web.annotation.RequiresPermissions;
 import com.tangj.web.controller.base.BaseController;
-import com.tangj.web.pojo.good.GoodsInfo;
-import com.tangj.web.service.goods.IGoodsService;
+import com.tangj.web.pojo.product.ProductInfo;
+import com.tangj.web.service.product.IProductService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.UIPage;
 import com.tangj.web.vo.good.goodsInfo.QueryVO;
 
 @Controller
-@RequestMapping(value = "goodsInfo")
-public class GoodsInfoController extends BaseController{
+@RequestMapping(value = "productInfo")
+public class ProductInfoController extends BaseController{
 
 	@Autowired
-	private IGoodsService goodsService;
+	private IProductService productService;
 	
 	@RequiresPermissions(values = "goodsInfo:index")
 	@RequestMapping(value = "" , method = RequestMethod.GET)
 	public ModelAndView index(){
-		return new ModelAndView("templates/good/goods/index");
+		return new ModelAndView("templates/products/product/index");
 	}
 	@RequiresPermissions(values = "goodsInfo:index")
 	@ResponseBody
@@ -36,7 +36,7 @@ public class GoodsInfoController extends BaseController{
 	public ApiCommonResultVo index(QueryVO vo){
 		Map<String,Object> param = new HashMap<>();
 		param.put("name", vo.getName());
-		UIPage page = goodsService.page(param, vo.getPageNum(), vo.getPageSize());
+		UIPage page = productService.page(param, vo.getPageNum(), vo.getPageSize());
 		return success(page);
 	}
 	
@@ -44,7 +44,7 @@ public class GoodsInfoController extends BaseController{
 	@RequiresPermissions(values = "goodsInfo:add")
 	@RequestMapping(value = "add" , method = RequestMethod.GET)
 	public ModelAndView add(){
-		ModelAndView view = new ModelAndView("templates/good/goods/edit");
+		ModelAndView view = new ModelAndView("templates/products/product/edit");
 		initGoodsFL(view);
 		initGoodsGG(view);
 		return view;
@@ -52,10 +52,10 @@ public class GoodsInfoController extends BaseController{
 	@RequiresPermissions(values = "goodsInfo:add")
 	@ResponseBody
 	@RequestMapping(value = "add" , method = RequestMethod.POST)
-	public ApiCommonResultVo add(GoodsInfo obj){
-		super.validator(obj, GoodsInfo.ADD);
+	public ApiCommonResultVo add(ProductInfo obj){
+		super.validator(obj, ProductInfo.ADD);
 		initInfo(obj);
-		goodsService.add(obj);
+		productService.add(obj);
 		return success("操作成功！");
 	}
 	
@@ -64,8 +64,8 @@ public class GoodsInfoController extends BaseController{
 	@RequiresPermissions(values = "goodsInfo:edit")
 	@RequestMapping(value = "edit" , method = RequestMethod.GET)
 	public ModelAndView edit(Long id){
-		ModelAndView view = new ModelAndView("templates/good/goods/edit");
-		GoodsInfo obj = goodsService.getGoodsInfoBy(id);
+		ModelAndView view = new ModelAndView("templates/products/product/edit");
+		ProductInfo obj = productService.getProductInfoBy(id);
 		view.addObject("obj", obj);
 		initGoodsFL(view);
 		initGoodsGG(view);
@@ -74,10 +74,10 @@ public class GoodsInfoController extends BaseController{
 	@RequiresPermissions(values = "goodsInfo:edit")
 	@ResponseBody
 	@RequestMapping(value = "edit" , method = RequestMethod.POST)
-	public ApiCommonResultVo edit(GoodsInfo obj){
-		super.validator(obj, GoodsInfo.MODIFY);
+	public ApiCommonResultVo edit(ProductInfo obj){
+		super.validator(obj, ProductInfo.MODIFY);
 		initInfo(obj);
-		goodsService.update(obj);
+		productService.update(obj);
 		return success("操作成功！");
 	}
 	

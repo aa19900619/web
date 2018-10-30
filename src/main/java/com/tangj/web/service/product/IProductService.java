@@ -1,18 +1,18 @@
-package com.tangj.web.service.goods;
+package com.tangj.web.service.product;
 
 import java.util.Map;
 
-import com.tangj.web.pojo.good.GoodsInfo;
+import com.tangj.web.pojo.product.ProductInfo;
 import com.tangj.web.util.UIPage;
 
-public interface IGoodsService {
+public interface IProductService {
 
 	/**
 	 * 根据ID查询商品信息
 	 * @param id
 	 * @return
 	 */
-	public GoodsInfo getGoodsInfoBy(Long id);
+	public ProductInfo getProductInfoBy(Long id);
 	
 	/**
 	 * 分页查询商品信息
@@ -27,12 +27,12 @@ public interface IGoodsService {
 	 * 新增商品信息
 	 * @param obj
 	 */
-	public void add(GoodsInfo obj);
+	public void add(ProductInfo obj);
 	
 	/**
 	 * 修改商品信息
 	 * @param obj
 	 */
-	public void update(GoodsInfo obj);
+	public void update(ProductInfo obj);
 	
 }
