@@ -12,10 +12,6 @@ public class BaseInfo {
 
 	private Date updateTime;
 
-	private Long deleteUserId;
-
-	private Date deleteTime;
-
 	public Long getCreateUserId() {
 		return createUserId;
 	}
@@ -46,22 +42,6 @@ public class BaseInfo {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
-	}
-
-	public Long getDeleteUserId() {
-		return deleteUserId;
-	}
-
-	public void setDeleteUserId(Long deleteUserId) {
-		this.deleteUserId = deleteUserId;
-	}
-
-	public Date getDeleteTime() {
-		return deleteTime;
-	}
-
-	public void setDeleteTime(Date deleteTime) {
-		this.deleteTime = deleteTime;
 	}
 
 }
