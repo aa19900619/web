@@ -1,0 +1,75 @@
+#queryDetail({
+	"showHeader":"true",
+	"nav":[
+			{"title":"收货管理"},{"title":"收货管理"}
+	],
+	"url":"goodsInfo",
+	"query":[
+				{"type":"text","label":"商品名称","id":"productName","productName":"productName","placeholder":"商品名称","style":"width:150px"},
+				{"type":"text","label":"收货数量","id":"counts","name":"counts","placeholder":"收货数量","style":"width:150px"},
+				{"type":"date","label":"时间","id":"createDate","name":"createDate","placeholder":"收货时间","style":"width:150px"},,
+				收货人：{"type":"selected","label":"下拉框","id":"type","name":"type","placeholder":"下拉选择","style":"width:150px","options":[{"value":"下拉值1","text":"下拉显示值1"},{"value":"下拉值2","text":"下拉显示值2"}]},,
+				{"type":"button","value":"查询","clickFun":"query()","iclass":"Hui-iconfont-search2"},
+				{"type":"button","value":"新增收货","clickFun":"add()","hasPermission":"goodsInfo:add","classes":"btn btn-primary size-M radius","iclass":"Hui-iconfont-add","style":"float:right;"}
+	],
+	"colums":[
+		{"text":"序号","type":"text","key":"id"},
+		{"text":"商品名称","type":"text","key":"productName"},
+		{"text":"商品分类","type":"text","key":"productType"},
+		{"text":"商品规格","type":"text","key":"goodsCategory"},
+		{"text":"收货数量（件）","type":"text","key":"goodsSpecifications"},
+		{"text":"收货数量（个）","type":"text","key":"goodsBarCode"},
+		{"text":"运费","type":"text","key":"goodsPlaceOfOrigin"}
+	],
+	"operations":[
+		{"text":"编辑","click":"edit(this)","property":[{"key":"id","value":"id"}]}
+	]
+})
+
+<script>
+function add(){
+	Jq.open({"url":"$!base/goodsInfo/add","title":"新增","height":"500px"},{},function(index){
+		
+		if( !parent.$("#form-goods-edit").valid() ){
+			return;
+		}
+		
+		Jq.MessageBox.confirm("您确定保存该收货信息吗？",function(){
+			toSaved("$!base/goodsInfo/add",parent.$("#form-goods-edit").serialize(),function(result){
+				if( result["code"] == 0 ){
+					Jq.closeLoading(index);
+					Jq.msg.success("操作成功");
+					page();
+				}else{
+					Jq.msg.error(result["msg"]);
+				}
+			});
+		});
+	});
+}
+
+function edit(obj){
+	var modify = $(obj);
+	var id = modify.attr("id");
+	Jq.open({"url":"$!base/goodsInfo/edit","title":"修改","height":"500px"},{"id":id},function(index){
+	
+		if( !parent.$("#form-goods-edit").valid() ){
+			return;
+		}
+	
+		Jq.MessageBox.confirm("您确定保存该收货信息吗？",function(){
+			toSaved("$!base/goodsInfo/edit",parent.$("#form-goods-edit").serialize(),function(result){
+				if( result["code"] == 0 ){
+					Jq.closeLoading(index);
+					Jq.msg.success("操作成功");
+					page();
+				}else{
+					Jq.msg.error(result["msg"]);
+				}
+			});
+		});
+	});
+}
+
+
+</script>

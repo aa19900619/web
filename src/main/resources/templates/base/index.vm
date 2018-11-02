@@ -48,6 +48,14 @@
 			</dd>
 		</dl>
 		
+		<dl id="menu-article">
+			<dt><i class="Hui-iconfont">&#xe616;</i>收货管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a _href="$!base/goodsInfo" data-title="收货管理" href="javascript:void(0)">收货管理</a></li>
+				</ul>
+			</dd>
+		</dl>
 	</div>
 </aside>
 	

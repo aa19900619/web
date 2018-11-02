@@ -27,7 +27,7 @@
       		
       		<div class="row cl">
         		<div class="formControls col-8 col-offset-3">
-          			<input class="input-text size-L" type="text" id="validateCode" name="validateCode" placeholder="验证码" style="width:150px;">
+          			<input class="input-text size-L" type="text" id="validateCode" value="aaa" name="validateCode" placeholder="验证码" style="width:150px;">
           			<img id="yzm" src="$!base/code/yzm" onclick="validate()">
           			<a id="kanbuq" href="javascript:void(0);" onclick="validate()">看不清，换一张</a> 
        			</div>
