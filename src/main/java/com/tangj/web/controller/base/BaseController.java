@@ -2,7 +2,9 @@ package com.tangj.web.controller.base;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,6 +17,7 @@ import com.tangj.web.pojo.sys.RegionInfo;
 import com.tangj.web.pojo.sys.UserInfo;
 import com.tangj.web.service.sys.IDictionaryService;
 import com.tangj.web.service.sys.IRegionService;
+import com.tangj.web.service.sys.IUserService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.SessionUtils;
 
@@ -28,6 +31,9 @@ public class BaseController {
 	
 	@Autowired
 	protected IDictionaryService dictionaryService;
+	
+	@Autowired
+	protected IUserService iUserService;
 	
 	/**
 	 * 操作成功！
@@ -138,4 +144,11 @@ public class BaseController {
 		view.addObject("goodsGG", list);
 	}
 	
+	/**初始化操作人列表
+	 * @param param
+	 */
+	public void initUsers(ModelAndView view){
+		Map<String, Object> param = new HashMap<>();
+		iUserService.queryUsers(param);
+	}
 }

@@ -1,5 +1,8 @@
 package com.tangj.web.service.sys.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,11 @@ public class UserServiceImpl implements IUserService{
 	
 	public UserInfo login(String username, String password) {
 		return userDao.login(username, password);
+	}
+
+	@Override
+	public List<UserInfo> queryUsers(Map<String, Object> param) {
+		return userDao.queryUsers(param);
 	}
 
 }
