@@ -45,4 +45,6 @@ public interface IProductDao {
 	@UpdateProvider(type = ProductProvider.class , method = "update")
 	public void update(ProductInfo obj);
 	
+	@Select(value = "select goods_name from " + TableConstanst.TB_PRODUCT + " where goods_name like concat('%',#{name},'%') limit 5")
+	public List<String> getProductName(String name);
 }

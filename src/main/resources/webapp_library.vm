@@ -23,6 +23,7 @@
 <link href="$!base/static/css/laypage.css" rel="stylesheet" type="text/css" />
 <link href="$!base/static/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css">
 <link href="$!base/static/lib/icheck/icheck.css" rel="stylesheet" type="text/css" />
+<link href="$!base/static/lib/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="$!base/static/lib/jquery/1.9.1/jquery.min.js"></script> 
 <!--[if IE 6]>
 	<script type="text/javascript" src="$!base/static/plus/DD_belatedPNG_0.0.8a-min.js" ></script>
@@ -85,6 +86,7 @@ a:active{
 <script type="text/javascript" src="$!base/static/plus/KeyValue.js"></script> 
 <script type="text/javascript" src="$!base/static/upload/ajaxfileupload.js"></script>
 <script type="text/javascript" src="$!base/static/upload/uploadHelper.js"></script> 
+<script type="text/javascript" src="$!base/static/lib/jquery-ui/jquery-ui.min.js"></script> 
 #end
 
 #macro(nav $nav)
@@ -494,4 +496,20 @@ function reloadData(){
 </script>
 #end
 
+#macro(autocomplete $id $type)
+<script>
+$(function(){
+    $( "#$!id" ).autocomplete({
+		source: function( request, response ) {
+			toAjax("$!base/autocomplete",{"type":0,"name":request.term},function(result){
+				response( 
+        			result.data
+        		);
+			});
+      	}
+    });
+});
+</script>
+
+#end
 

@@ -22,6 +22,7 @@
 		{"text":"编辑","click":"edit(this)","property":[{"key":"id","value":"id"}]}
 	]
 })
+#autocomplete("name" "1")
 
 <script>
 function add(){
