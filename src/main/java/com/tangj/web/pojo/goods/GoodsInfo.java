@@ -10,6 +10,7 @@ import net.sf.oval.constraint.NotNull;
 
 /**
  * 收货info
+ * 
  * @author sisimiemie
  *
  */
@@ -38,6 +39,11 @@ public class GoodsInfo extends BaseInfo {
 	private BigDecimal goodsFreight;
 	private Integer goodsStatus;
 	private Long remitId;
+	private String productName;
+	private Long goodsSpecifications;
+	private String goodsSpecificationsDesc;
+	private String dicVal;
+	private String userName;
 
 	public Long getId() {
 		return id;
@@ -109,6 +115,46 @@ public class GoodsInfo extends BaseInfo {
 
 	public void setRemitId(Long remitId) {
 		this.remitId = remitId;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public Long getGoodsSpecifications() {
+		return goodsSpecifications;
+	}
+
+	public void setGoodsSpecifications(Long goodsSpecifications) {
+		this.goodsSpecifications = goodsSpecifications;
+	}
+
+	public String getGoodsSpecificationsDesc() {
+		return goodsSpecificationsDesc;
+	}
+
+	public void setGoodsSpecificationsDesc(String goodsSpecificationsDesc) {
+		this.goodsSpecificationsDesc = goodsSpecificationsDesc;
+	}
+
+	public String getDicVal() {
+		return dicVal;
+	}
+
+	public void setDicVal(String dicVal) {
+		this.dicVal = dicVal;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

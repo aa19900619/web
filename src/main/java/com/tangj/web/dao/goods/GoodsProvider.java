@@ -8,11 +8,37 @@ public class GoodsProvider {
 
 	public String getList(Map<String,Object> param){
 		SQL sql = new SQL();
-		sql.SELECT("*");
-		sql.FROM(TableConstanst.TB_GOODS);
+		sql.SELECT("a.*");
+		sql.SELECT(" b.goods_name as productName ");
+		sql.SELECT(" b.goods_specifications as goodsSpecifications ");
+		sql.SELECT(" b.goods_specifications_desc as goodsSpecificationsDesc ");
+		sql.SELECT(" c.dic_val as dicVal ");
+		sql.SELECT(" d.user_name as userName ");
+		sql.FROM(TableConstanst.TB_GOODS + " a ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_PRODUCT + " b on a.product_id = b.id ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_DICTIONARY  + " c on b.goods_type = c.id ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_USER + " d d.id=a.create_id ");
 		if( param.get("name") != null && !"".equals(param.get("name"))){
-			sql.WHERE("goods_name like  concat('%',#{name},'%')");
+			sql.WHERE("b.goods_name like  concat('%',#{name},'%') or b.goods_name_initial like concat('%',#{name},'%')");
 		}
+		if( param.get("goodsCounts") != null && !"".equals(param.get("goodsCounts"))){
+			sql.WHERE("a.goods_counts >= #{goodsCounts} and a.goods_counts < #{goodsCounts} + 1");
+		}
+		if( param.get("createId") != null && !"".equals(param.get("createId"))){
+			sql.WHERE("a.create_id = #{createId}");
+		}
+		if( param.get("createDateE") != null && !"".equals(param.get("createDateEx"))){
+			if( param.get("createDateS") != null && !"".equals(param.get("createDate"))){
+				sql.WHERE("a.create_date >= #{createDateE} and a.create_date >= #{createDateE}");
+			} else {
+				sql.WHERE("a.create_date >= #{createDateES} and a.create_date <= #{createDateE}");
+			}
+		} else{
+			if( param.get("createDateS") != null && !"".equals(param.get("createDate"))){
+				sql.WHERE("a.create_date >= #{createDateS} and a.create_date < #{createDateSE}");
+			}
+		}
+		sql.ORDER_BY(" a.create_date desc ");
 		return sql.toString();
 	}
 	

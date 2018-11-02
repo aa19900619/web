@@ -39,9 +39,9 @@ public class LoginController extends BaseController{
 		super.validator(vo);
 		
 		HttpSession session = ApplicationContextHolder.getRequest().getSession();
-		if( !vo.getCode().toUpperCase().equals(session.getAttribute("code")) ){
-			throw new BaseException("验证码输入错误");
-		}
+		//if( !vo.getCode().toUpperCase().equals(session.getAttribute("code")) ){
+		//	throw new BaseException("验证码输入错误");
+		//}
 		
 		UserInfo user = userService.login(vo.getUsername(), MD5Utils.MD5(vo.getPassword()));
 		if( user == null ){
