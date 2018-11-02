@@ -4,13 +4,13 @@
 
 <div class="page-container">
 	<div class="cl mt-20">
-		##<h3>字典配置</h3><br>
-		字典类型：
-		<select class="select select-box" size="1" id="code" style="width:200px">
+		类型：
+		<input type="text" class="input-text" id="code" name="code" placeholder="类型" style="width:200px"/>
+		状态：
+		<select class="select select-box" size="1" id="status" style="width:200px">
 			<option value="">全部</option>
-			#foreach( $!item in $!type)
-				<option value="$!item.key">$!item.value</option>
-			#end
+			<option value="0">有效</option>
+			<option value="1">无效</option>
 		</select>
 		<button onclick="query()" class="btn btn-success radius"><i class="Hui-iconfont Hui-iconfont-search2"></i>查询</button>
 		&nbsp;<button type="button" onclick="addData()" class="btn btn-primary size-M radius" style="float:right;"><i class="Hui-iconfont Hui-iconfont-add"></i>新增字典</button>
@@ -32,6 +32,7 @@ $(function(){
 
 function query(){
 	param["code"] = $("#code").val();
+	param["status"] = $("#status").val();
 	page(1);
 }
 

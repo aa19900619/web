@@ -1,5 +1,6 @@
 package com.tangj.web.pojo.sys;
 
+import com.tangj.web.pojo.base.BaseInfo;
 import com.tangj.web.util.Constanst;
 
 import net.sf.oval.constraint.MaxLength;
@@ -8,7 +9,7 @@ import net.sf.oval.constraint.Min;
 import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.constraint.NotNull;
 
-public class DictionaryInfo {
+public class DictionaryInfo extends BaseInfo{
 
 	public static final String ADD = "ADD";
 	public static final String MODIFY = "MODIFY";
@@ -33,6 +34,11 @@ public class DictionaryInfo {
 	@MemberOf(value = { Constanst.STATUS_YX_STRING , Constanst.STATUS_WX_STRING } , message = "状态值错误" , profiles = {ADD , MODIFY})
 	private int status;
 
+	@NotNull(message = "上级数据不能为空" , profiles = {ADD,MODIFY})
+	@NotEmpty(message = "上级数据不能为空" , profiles = {ADD,MODIFY})
+	@Min(value = 0 , message = "上级数据错误" , profiles = {ADD,MODIFY})
+	private Long typeNum;
+	
 	public Long getId() {
 		return id;
 	}
