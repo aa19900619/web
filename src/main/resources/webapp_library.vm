@@ -338,7 +338,7 @@ a:active{
 								#set($datasuurcevalue = "")
 								#set($datasuurcevalue = $!opt.getClass().getMethod("$!obj.getValueMethod", null).invoke($!opt, null))
 								<option value="$!datasuurcevalue" #if("$!obj.value" == "$!datasuurcevalue") selected #end>
-            						$!opt.getClass().getMethod("$!_col.getNameMethod", null).invoke($!opt, null)
+            						$!opt.getClass().getMethod("$!obj.getNameMethod", null).invoke($!opt, null)
             					</option>
 							#end
 						#end

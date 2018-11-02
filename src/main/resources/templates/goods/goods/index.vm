@@ -9,7 +9,7 @@
 				{"type":"text","label":"收货数量","id":"counts","name":"counts","placeholder":"收货数量","style":"width:150px"},
 				{"type":"date","label":"时间","id":"startDate","name":"startDate","placeholder":"收货时间","style":"width:150px"},
 				{"type":"date","label":"至","id":"endDate","name":"endDate","placeholder":"收货时间","style":"width:150px"},
-				收货人：{"type":"selected","label":"下拉框","id":"createId","name":"createId","placeholder":"下拉选择","style":"width:150px","options":[{"value":"下拉值1","text":"下拉显示值1"},{"value":"下拉值2","text":"下拉显示值2"}]},
+				{"type":"selected","label":"收货人","id":"createId","name":"createId","placeholder":"收货人","style":"width:150px","dataSource":$!usersInfo,"getValueMethod":"getId","getNameMethod":"getUserName"},
 				{"type":"button","value":"查询","clickFun":"query()","iclass":"Hui-iconfont-search2"},
 				{"type":"button","value":"新增收货","clickFun":"add()","hasPermission":"goodsInfo:add","classes":"btn btn-primary size-M radius","iclass":"Hui-iconfont-add","style":"float:right;"}
 	],
