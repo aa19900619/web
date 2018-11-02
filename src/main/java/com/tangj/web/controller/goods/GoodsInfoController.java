@@ -29,6 +29,7 @@ public class GoodsInfoController extends BaseController{
 	@RequestMapping(value = "" , method = RequestMethod.GET)
 	public ModelAndView index(){
 		ModelAndView view = new ModelAndView("templates/goods/goods/index");
+		initUsers(view);
 		return view;
 	}
 	@RequiresPermissions(values = "goodsInfo:index")

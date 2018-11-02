@@ -149,6 +149,6 @@ public class BaseController {
 	 */
 	public void initUsers(ModelAndView view){
 		Map<String, Object> param = new HashMap<>();
-		iUserService.queryUsers(param);
+		view.addObject("usersInfo", iUserService.queryUsers(param));
 	}
 }

@@ -16,6 +16,8 @@ public class QueryVO extends BaseQueryVO{
 	
 	private Date endDate;
 	
+	private Long createId;
+	
 	public String getName() {
 		return name;
 	}
@@ -49,5 +51,14 @@ public class QueryVO extends BaseQueryVO{
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+
+	public Long getCreateId() {
+		return createId;
+	}
+
+	public void setCreateId(Long createId) {
+		this.createId = createId;
+	}
+	
 	
 }
