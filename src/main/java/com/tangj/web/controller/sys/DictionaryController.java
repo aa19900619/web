@@ -1,7 +1,6 @@
 package com.tangj.web.controller.sys;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +25,6 @@ public class DictionaryController extends BaseController{
 	@RequestMapping(value = "" , method = RequestMethod.GET)
 	public ModelAndView index(){
 		ModelAndView view = new ModelAndView("templates/sys/dictionary/index");
-		List<KeyValue> item = EnumsUtils.getDictionaryEnum();
-		view.addObject("type", item);
 		return view;
 	}
 	
@@ -37,14 +34,6 @@ public class DictionaryController extends BaseController{
 	@RequestMapping(value = "" , method = RequestMethod.POST)
 	public ApiCommonResultVo index(QueryVO vo){
 		UIPage page = dictionaryService.page(vo);
-		
-		List<DictionaryInfo> list = page.getList().stream().map(obj -> {
-			DictionaryInfo data = (DictionaryInfo) obj;
-			data.setDicCode(EnumsUtils.getDictionaryEnumDesc(data.getDicCode()));
-			return data;
-		}).collect(Collectors.toList());
-		page.setList(list);
-		
 		return success(page); 
 	}
 	
@@ -65,6 +54,7 @@ public class DictionaryController extends BaseController{
 	public ApiCommonResultVo add(DictionaryInfo info){
 		//数据验证
 		super.validator(info, DictionaryInfo.ADD);
+		initInfo(info);
 		dictionaryService.add(info);
 		return success("操作成功！");
 	}
@@ -88,6 +78,7 @@ public class DictionaryController extends BaseController{
 	public ApiCommonResultVo edit(DictionaryInfo info){
 		//数据验证
 		super.validator(info, DictionaryInfo.MODIFY);
+		initInfo(info);
 		dictionaryService.update(info);
 		return success("操作成功！");
 	}

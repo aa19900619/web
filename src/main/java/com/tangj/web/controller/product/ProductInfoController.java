@@ -25,12 +25,12 @@ public class ProductInfoController extends BaseController{
 	@Autowired
 	private IProductService productService;
 	
-	@RequiresPermissions(values = "goodsInfo:index")
+	@RequiresPermissions(values = "productInfo:index")
 	@RequestMapping(value = "" , method = RequestMethod.GET)
 	public ModelAndView index(){
 		return new ModelAndView("templates/products/product/index");
 	}
-	@RequiresPermissions(values = "goodsInfo:index")
+	@RequiresPermissions(values = "productInfo:index")
 	@ResponseBody
 	@RequestMapping(value = "" , method = RequestMethod.POST)
 	public ApiCommonResultVo index(QueryVO vo){
@@ -41,7 +41,7 @@ public class ProductInfoController extends BaseController{
 	}
 	
 	//添加
-	@RequiresPermissions(values = "goodsInfo:add")
+	@RequiresPermissions(values = "productInfo:add")
 	@RequestMapping(value = "add" , method = RequestMethod.GET)
 	public ModelAndView add(){
 		ModelAndView view = new ModelAndView("templates/products/product/edit");
@@ -49,7 +49,7 @@ public class ProductInfoController extends BaseController{
 		initGoodsGG(view);
 		return view;
 	}
-	@RequiresPermissions(values = "goodsInfo:add")
+	@RequiresPermissions(values = "productInfo:add")
 	@ResponseBody
 	@RequestMapping(value = "add" , method = RequestMethod.POST)
 	public ApiCommonResultVo add(ProductInfo obj){
@@ -61,7 +61,7 @@ public class ProductInfoController extends BaseController{
 	
 	
 	//修改
-	@RequiresPermissions(values = "goodsInfo:edit")
+	@RequiresPermissions(values = "productInfo:edit")
 	@RequestMapping(value = "edit" , method = RequestMethod.GET)
 	public ModelAndView edit(Long id){
 		ModelAndView view = new ModelAndView("templates/products/product/edit");
@@ -71,7 +71,7 @@ public class ProductInfoController extends BaseController{
 		initGoodsGG(view);
 		return view;
 	}
-	@RequiresPermissions(values = "goodsInfo:edit")
+	@RequiresPermissions(values = "productInfo:edit")
 	@ResponseBody
 	@RequestMapping(value = "edit" , method = RequestMethod.POST)
 	public ApiCommonResultVo edit(ProductInfo obj){

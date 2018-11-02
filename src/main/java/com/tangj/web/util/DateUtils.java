@@ -1,4 +1,4 @@
-package com.tangj.web.util;
+﻿package com.tangj.web.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

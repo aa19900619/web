@@ -1,6 +1,8 @@
 package com.tangj.web.service.sys.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,10 @@ public class DictionaryServiceImpl implements IDictionaryService{
 	
 	public UIPage page(QueryVO vo) {
 		PageHelper.startPage(vo.getPageNum(), vo.getPageSize());
-		List<DictionaryInfo> list = dictionaryDao.getList(vo.getCode());
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("code", vo.getCode());
+		param.put("status", vo.getStatus());
+		List<DictionaryInfo> list = dictionaryDao.getList(param);
 		return new UIPage(list);
 	}
 
