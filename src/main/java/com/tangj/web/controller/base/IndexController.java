@@ -1,8 +1,10 @@
 package com.tangj.web.controller.base;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tangj.web.pojo.sys.RegionInfo;
+import com.tangj.web.service.product.IProductService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.SessionUtils;
 
@@ -34,5 +37,22 @@ public class IndexController extends BaseController{
 		List<RegionInfo> list = parentId == null ? Arrays.asList() : regionService.getChildRegion(parentId);
 		return success(list);
 	}
+	
+	@Autowired
+	private IProductService productService; 
+	
+	@ResponseBody
+	@RequestMapping(value = "autocomplete")
+	public ApiCommonResultVo getProductName(int type,String name){
+		List<String> result = new ArrayList<>();
+		//商品名称
+		if( type == 0 ){
+			result = productService.getProductName(name);
+		}
+		return success(result);
+	}
+	
+	
+	
 	
 }

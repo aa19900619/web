@@ -1,5 +1,6 @@
 package com.tangj.web.service.product;
 
+import java.util.List;
 import java.util.Map;
 
 import com.tangj.web.pojo.product.ProductInfo;
@@ -34,5 +35,12 @@ public interface IProductService {
 	 * @param obj
 	 */
 	public void update(ProductInfo obj);
+	
+	/**
+	 * 查询商品名称
+	 * @param val
+	 * @return
+	 */
+	public List<String> getProductName(String val);
 	
 }

@@ -40,4 +40,9 @@ public class ProductInfoServiceImpl implements IProductService{
 		productDao.update(obj);
 	}
 
+	@Override
+	public List<String> getProductName(String val) {
+		return productDao.getProductName(val);
+	}
+
 }
