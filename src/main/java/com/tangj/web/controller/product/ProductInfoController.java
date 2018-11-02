@@ -16,7 +16,7 @@ import com.tangj.web.pojo.product.ProductInfo;
 import com.tangj.web.service.product.IProductService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.UIPage;
-import com.tangj.web.vo.good.goodsInfo.QueryVO;
+import com.tangj.web.vo.products.product.QueryVO;
 
 @Controller
 @RequestMapping(value = "productInfo")

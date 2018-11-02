@@ -15,6 +15,7 @@ import com.tangj.web.controller.base.BaseController;
 import com.tangj.web.pojo.goods.GoodsInfo;
 import com.tangj.web.service.goods.IGoodsService;
 import com.tangj.web.util.ApiCommonResultVo;
+import com.tangj.web.util.DateUtils;
 import com.tangj.web.util.UIPage;
 import com.tangj.web.vo.good.goodsInfo.QueryVO;
 
@@ -35,6 +36,9 @@ public class GoodsInfoController extends BaseController{
 	public ApiCommonResultVo index(QueryVO vo){
 		Map<String,Object> param = new HashMap<>();
 		param.put("name", vo.getName());
+		param.put("goodsCounts", vo.getCounts());
+		param.put("startDate", DateUtils.getFirstDate(vo.getStartDate()));
+		param.put("endDate", DateUtils.getLastDate(vo.getEndDate()));
 		UIPage page = goodsService.page(param, vo.getPageNum(), vo.getPageSize());
 		return success(page);
 	}

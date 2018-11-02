@@ -17,7 +17,7 @@ public class GoodsProvider {
 		sql.FROM(TableConstanst.TB_GOODS + " a ");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_PRODUCT + " b on a.product_id = b.id ");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_DICTIONARY  + " c on b.goods_type = c.id ");
-		sql.LEFT_OUTER_JOIN(TableConstanst.TB_USER + " d d.id=a.create_id ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_USER + " d on d.id=a.create_id ");
 		if( param.get("name") != null && !"".equals(param.get("name"))){
 			sql.WHERE("b.goods_name like  concat('%',#{name},'%') or b.goods_name_initial like concat('%',#{name},'%')");
 		}
@@ -27,7 +27,16 @@ public class GoodsProvider {
 		if( param.get("createId") != null && !"".equals(param.get("createId"))){
 			sql.WHERE("a.create_id = #{createId}");
 		}
-		if( param.get("createDateE") != null && !"".equals(param.get("createDateEx"))){
+		
+		if( param.get("startDate") != null ){
+			sql.WHERE("a.create_date > #{startDate}");
+		}
+		if( param.get("endDate") != null ){
+			sql.WHERE("a.create_date <= #{endDate}");
+		}
+		
+		
+		/*if( param.get("createDateE") != null && !"".equals(param.get("createDateEx"))){
 			if( param.get("createDateS") != null && !"".equals(param.get("createDate"))){
 				sql.WHERE("a.create_date >= #{createDateE} and a.create_date >= #{createDateE}");
 			} else {
@@ -37,7 +46,10 @@ public class GoodsProvider {
 			if( param.get("createDateS") != null && !"".equals(param.get("createDate"))){
 				sql.WHERE("a.create_date >= #{createDateS} and a.create_date < #{createDateSE}");
 			}
-		}
+		}*/
+		
+		
+		
 		sql.ORDER_BY(" a.create_date desc ");
 		return sql.toString();
 	}

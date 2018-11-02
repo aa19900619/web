@@ -1,6 +1,5 @@
 ﻿package com.tangj.web.util;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,6 +11,9 @@ public class DateUtils {
 	 * @return
 	 */
 	public static Date getFirstDate(Date date){
+		if( date == null ){
+			return null;
+		}
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -26,6 +28,9 @@ public class DateUtils {
 	 * @return
 	 */
 	public static Date getLastDate(Date date){
+		if( date == null ){
+			return null;
+		}
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.set(Calendar.HOUR_OF_DAY, 23);
