@@ -44,6 +44,7 @@ public class GoodsInfo extends BaseInfo {
 	private String goodsSpecificationsDesc;
 	private String dicVal;
 	private String userName;
+	private String goodsCategory;
 
 	public Long getId() {
 		return id;
@@ -156,5 +157,14 @@ public class GoodsInfo extends BaseInfo {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
+	public String getGoodsCategory() {
+		return goodsCategory;
+	}
+
+	public void setGoodsCategory(String goodsCategory) {
+		this.goodsCategory = goodsCategory;
+	}
+	
 
 }

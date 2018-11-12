@@ -12,6 +12,7 @@ public class GoodsProvider {
 		sql.SELECT(" b.goods_name as productName ");
 		sql.SELECT(" b.goods_specifications as goodsSpecifications ");
 		sql.SELECT(" b.goods_specifications_desc as goodsSpecificationsDesc ");
+		sql.SELECT(" b.goods_category as goodsCategory ");
 		sql.SELECT(" c.dic_val as dicVal ");
 		sql.SELECT(" d.user_name as userName ");
 		sql.FROM(TableConstanst.TB_GOODS + " a ");
@@ -53,6 +54,26 @@ public class GoodsProvider {
 		sql.ORDER_BY(" a.create_date desc ");
 		return sql.toString();
 	}
+	
+	
+	
+	public String getGoodsInfoById(Long id){
+		SQL sql = new SQL();
+		sql.SELECT("a.*");
+		sql.SELECT(" b.goods_name as productName ");
+		sql.SELECT(" b.goods_specifications as goodsSpecifications ");
+		sql.SELECT(" b.goods_specifications_desc as goodsSpecificationsDesc ");
+		sql.SELECT(" b.goods_category as goodsCategory ");
+		sql.SELECT(" c.dic_val as dicVal ");
+		sql.SELECT(" d.user_name as userName ");
+		sql.FROM(TableConstanst.TB_GOODS + " a ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_PRODUCT + " b on a.product_id = b.id ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_DICTIONARY  + " c on b.goods_type = c.id ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_USER + " d on d.id=a.create_id ");
+		sql.WHERE("a.id=" + id);
+		return sql.toString();
+	}
+	
 	
 	public String add(){
 		SQL sql = new SQL();

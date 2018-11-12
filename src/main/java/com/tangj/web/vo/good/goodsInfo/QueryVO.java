@@ -18,6 +18,8 @@ public class QueryVO extends BaseQueryVO{
 	
 	private Long createId;
 	
+	private Long goodsId;
+	
 	public String getName() {
 		return name;
 	}
@@ -58,6 +60,14 @@ public class QueryVO extends BaseQueryVO{
 
 	public void setCreateId(Long createId) {
 		this.createId = createId;
+	}
+
+	public Long getGoodsId() {
+		return goodsId;
+	}
+
+	public void setGoodsId(Long goodsId) {
+		this.goodsId = goodsId;
 	}
 	
 	

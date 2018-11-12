@@ -5,11 +5,9 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
 import com.tangj.web.pojo.goods.GoodsInfo;
-import com.tangj.web.util.TableConstanst;
 
 public interface IGoodsDao {
 
@@ -19,7 +17,7 @@ public interface IGoodsDao {
 	 * @param id
 	 * @return
 	 */
-	@Select(value = "select * from " + TableConstanst.TB_GOODS + " where id = #{id}")
+	@SelectProvider(type = GoodsProvider.class, method = "getGoodsInfoById")
 	public GoodsInfo getGoodsInfoBy(Long id);
 
 	/**
