@@ -521,7 +521,7 @@ function reloadData(){
 $(function(){
     $( "#$!id" ).autocomplete({
 		source: function( request, response ) {
-			toAjax("$!base/autocomplete",{"type":0,"name":request.term},function(result){
+			toAjax("$!base/autocomplete",{"type":$type,"name":request.term},function(result){
 				response( 
         			result.data
         		);
