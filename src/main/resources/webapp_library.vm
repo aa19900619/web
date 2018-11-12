@@ -442,15 +442,35 @@ function reloadData(){
 							#set($cls = "$!obj.cls")
 						#end
 						<td class="$!cls">
-							#if( "$!obj.type" == "date" )
-								{{obj.$!obj.key | dateFormat : '$!obj.col_type'}}
-							#elseif( "$!obj.type" == "number" )	
-								{{obj.$!obj.key | numberFormat : $!obj.col_type}}
-							#else
-								#if( "$!obj.property" != "" )
-									{{$!{obj.property}[obj.$!obj.key]}}
+							#if( "$!obj.colType" == "" || "$!obj.colType" == "singleton" )
+								#if( "$!obj.type" == "date" )
+									{{obj.$!obj.key | dateFormat : '$!obj.col_type'}}
+								#elseif( "$!obj.type" == "number" )	
+									{{obj.$!obj.key | numberFormat : $!obj.col_type}}
+								#elseif( "$!obj.type" == "custom" )
+										$!obj.key
 								#else
-									{{obj.$!obj.key}}
+									#if( "$!obj.property" != "" )
+										{{$!{obj.property}[obj.$!obj.key]}}
+									#else
+										{{obj.$!obj.key}}
+									#end
+								#end
+							#elseif( "$!obj.colType" == "multistation" )
+								#foreach( $!cur_col in $!obj.keys )
+									#if( "$!cur_col.type" == "date" )
+										{{obj.$!cur_col.key | dateFormat : '$!cur_col.col_type'}}
+									#elseif( "$!cur_col.type" == "number" )	
+										{{obj.$!cur_col.key | numberFormat : $!cur_col.col_type}}
+									#elseif( "$!cur_col.type" == "custom" )
+										$!cur_col.key
+									#else
+										#if( "$!cur_col.property" != "" )
+											{{$!{cur_col.property}[obj.$!cur_col.key]}}
+										#else
+											{{obj.$!cur_col.key}}
+										#end
+									#end
 								#end
 							#end
 						</td>
