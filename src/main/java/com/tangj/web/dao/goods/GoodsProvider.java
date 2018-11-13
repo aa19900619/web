@@ -9,6 +9,7 @@ public class GoodsProvider {
 	public String getList(Map<String,Object> param){
 		SQL sql = new SQL();
 		sql.SELECT("a.*");
+		sql.SELECT(" a.goods_num/b.goods_specifications as goodsCounts ");
 		sql.SELECT(" b.goods_name as productName ");
 		sql.SELECT(" b.goods_specifications as goodsSpecifications ");
 		sql.SELECT(" b.goods_specifications_desc as goodsSpecificationsDesc ");
@@ -35,22 +36,6 @@ public class GoodsProvider {
 		if( param.get("endDate") != null ){
 			sql.WHERE("a.create_date <= #{endDate}");
 		}
-		
-		
-		/*if( param.get("createDateE") != null && !"".equals(param.get("createDateEx"))){
-			if( param.get("createDateS") != null && !"".equals(param.get("createDate"))){
-				sql.WHERE("a.create_date >= #{createDateE} and a.create_date >= #{createDateE}");
-			} else {
-				sql.WHERE("a.create_date >= #{createDateES} and a.create_date <= #{createDateE}");
-			}
-		} else{
-			if( param.get("createDateS") != null && !"".equals(param.get("createDate"))){
-				sql.WHERE("a.create_date >= #{createDateS} and a.create_date < #{createDateSE}");
-			}
-		}*/
-		
-		
-		
 		sql.ORDER_BY(" a.create_date desc ");
 		return sql.toString();
 	}
@@ -60,6 +45,7 @@ public class GoodsProvider {
 	public String getGoodsInfoById(Long id){
 		SQL sql = new SQL();
 		sql.SELECT("a.*");
+		sql.SELECT(" a.goods_num/b.goods_specifications as goodsCounts ");
 		sql.SELECT(" b.goods_name as productName ");
 		sql.SELECT(" b.goods_specifications as goodsSpecifications ");
 		sql.SELECT(" b.goods_specifications_desc as goodsSpecificationsDesc ");
@@ -100,14 +86,11 @@ public class GoodsProvider {
 	
 	public String update(){
 		SQL sql = new SQL();
-		sql.UPDATE(TableConstanst.TB_PRODUCT);
-		sql.SET("goods_counts = #{goodsCounts}");
+		sql.UPDATE(TableConstanst.TB_GOODS);
 		sql.SET("goods_num = #{goodsNum}");
 		sql.SET("goods_buy_price = #{goodsBuyPrice}");
 		sql.SET("goods_selling_price = #{goodsSellingPrice}");
 		sql.SET("goods_freight = #{goodsFreight}");
-		sql.SET("goods_status = #{goodsStatus}");
-		sql.SET("goods_place_of_origin = #{goodsPlaceOfOrigin}");
 		sql.SET("goods_status = #{goodsStatus}");
 		sql.SET("remit_id = #{remitId}");
 		sql.SET("create_id = #{createUserId}");

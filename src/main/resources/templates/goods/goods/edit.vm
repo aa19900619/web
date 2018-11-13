@@ -6,35 +6,60 @@
 	"rows":[
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"商品名称"},
-			{"colType":"text","length":"9","name":"productName","value":"$!obj.goodsName","placeholder":"请输入商品名称"}
+			{"colType":"text","length":"9","name":"productName","value":"$!obj.productName","readonly":"true"}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"商品分类"},
-			{"colType":"select","length":"9","name":"goodsType","value":"$!obj.dicVal","placeholder":"请输入商品分类","dataSource":$!goodsFL,"getValueMethod":"getDicVal","getNameMethod":"getDicVal"}
-		]},
-		{"cols":[
-			{"colType":"label","length":"2","text":"商品类别"},
-			{"colType":"text","length":"9","name":"goodsCategory","value":"$!obj.goodsCategory","placeholder":"请输入商品类别"}
+			{"colType":"text","length":"9","name":"dicVal","value":"$!obj.dicVal","readonly":"true"}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"商品规格"},
-			{"colType":"select","length":"9","name":"goodsSpecifications","value":"$!obj.goodsSpecifications","placeholder":"请输入商品规格","dataSource":$!goodsGG,"getValueMethod":"getDicVal","getNameMethod":"getDicVal"}
+			{"colType":"text","length":"9","name":"goodsSpecificationsmsg","value":"$!obj.goodsSpecifications$!obj.goodsCategory","readonly":"true"}
 		]},
 		{"cols":[
-			{"colType":"label","length":"2","text":"商品规格信息"},
-			{"colType":"text","length":"9","name":"goodsSpecificationsDesc","value":"$!obj.goodsSpecificationsDesc","placeholder":"请输入商品规格信息"}
+			{"colType":"label","length":"2","text":"收货数量"},
+			{"colType":"text","length":"9","name":"dicVal","value":"$!obj.goodsCounts","readonly":"true"},
+			{"colType":"text","length":"3","name":"goodsCounts","value":"$!obj.goodsCounts","placeholder":"请输入收货数量"},
+			{"colType":"text","length":"0","name":"","value":"箱","readonly":"true"},
+			{"colType":"text","length":"3","name":"goodsNum","value":"$!obj.goodsNum"},
+			{"colType":"text","length":"0","name":"","value":"$!obj.goodsCategory","readonly":"true"}
 		]},
 		{"cols":[
-			{"colType":"label","length":"2","text":"条形码"},
-			{"colType":"text","length":"9","name":"goodsBarCode","value":"$!obj.goodsBarCode","placeholder":"请输入条形码"}
+			{"colType":"label","length":"2","text":"运费"},
+			{"colType":"text","length":"9","name":"goodsFreight","value":"$!obj.goodsFreight","placeholder":"请输入运费"}
 		]},
 		{"cols":[
-			{"colType":"label","length":"2","text":"产地"},
-			{"colType":"text","length":"9","name":"goodsPlaceOfOrigin","value":"$!obj.goodsPlaceOfOrigin","placeholder":"请输入产地"}
+			{"colType":"label","length":"2","text":"进货价"},
+			{"colType":"text","length":"9","name":"goodsBuyPrice","value":"$!obj.goodsBuyPrice","placeholder":"请输入进货价"}
+		]},
+		{"cols":[
+			{"colType":"label","length":"2","text":"出货价"},
+			{"colType":"text","length":"9","name":"goodsSellingPrice","value":"$!obj.goodsSellingPrice","placeholder":"请输入出货价"}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"状态"},
-			{"colType":"select","length":"9","name":"goodsStatus","value":"$!obj.goodsStatus","placeholder":"请输入状态","options":[{"value":"0","text":"有效"},{"value":"1","text":"无效"}]}
+			{"colType":"select","length":"9","name":"goodsStatus","value":"$!obj.goodsStatus","placeholder":"请输入状态","options":[{"value":"1","text":"有效"},{"value":"0","text":"无效"}]}
 		]}
 	]
 })
+<input type='hidden' id='goodsSpecifications' value='$!obj.goodsSpecifications'>
+<script>
+$(function(){
+	$("#goodsCounts").keyup(function(){
+		var val = $(this).val();
+		var sp = $("#goodsSpecifications").val();
+		$("#goodsNum").val(val*sp);
+	});
+	$("#goodsCounts").focus(function(){
+		$("#goodsCounts").select();
+	});
+	$("#goodsNum").keyup(function(){
+		var val = $(this).val();
+		var sp = $("#goodsSpecifications").val();
+		$("#goodsCounts").val(val/sp);
+	});
+	$("#goodsNum").focus(function(){
+		$("#goodsNum").select();
+	});
+})
+</script>

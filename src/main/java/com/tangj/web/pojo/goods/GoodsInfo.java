@@ -32,7 +32,10 @@ public class GoodsInfo extends BaseInfo {
 	@NotEmpty(message = "收货数量不能为空", profiles = { MODIFY })
 	@Min(value = 1, message = "收货数量格式错误", profiles = { MODIFY })
 	private BigDecimal goodsCounts;
-
+	
+	@NotNull(message = "收货数量不能为空", profiles = { MODIFY })
+	@NotEmpty(message = "收货数量不能为空", profiles = { MODIFY })
+	@Min(value = 1, message = "收货数量格式错误", profiles = { MODIFY })
 	private BigDecimal goodsNum;
 	private BigDecimal goodsBuyPrice;
 	private BigDecimal goodsSellingPrice;
