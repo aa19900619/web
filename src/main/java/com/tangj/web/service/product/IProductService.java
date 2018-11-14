@@ -50,4 +50,11 @@ public interface IProductService {
 	 */
 	public List<ProductInfo> getProductList(String val);
 	
+	/**
+	 * 查询
+	 * @param name
+	 * @return
+	 */
+	public List<ProductInfo> getProductInfoBy(String name);
+	
 }

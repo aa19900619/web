@@ -50,4 +50,7 @@ public interface IProductDao {
 	
 	@Select(value = "select * from " + TableConstanst.TB_PRODUCT + " where goods_name like concat('%',#{name},'%')  or goods_name_initial like concat('%',#{name},'%') limit 5")
 	public List<ProductInfo> getProductList(String val);
+	
+	@Select(value = "select * from " + TableConstanst.TB_PRODUCT + " where goods_name like concat('%',#{name},'%')  or goods_name_initial like concat('%',#{name},'%') limit 5")
+	public List<ProductInfo> getProductInfoByName(String name);
 }
