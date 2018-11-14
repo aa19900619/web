@@ -15,6 +15,7 @@ import com.tangj.web.pojo.sys.RegionInfo;
 import com.tangj.web.service.product.IProductService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.SessionUtils;
+import com.tangj.web.vo.base.AutoCompleteVO;
 
 @Controller
 public class IndexController extends BaseController{
@@ -44,10 +45,10 @@ public class IndexController extends BaseController{
 	@ResponseBody
 	@RequestMapping(value = "autocomplete")
 	public ApiCommonResultVo getProductName(int type,String name){
-		List<String> result = new ArrayList<>();
+		List<AutoCompleteVO> result = new ArrayList<>();
 		//商品名称
 		if( type == 0 ){
-			result = productService.getProductName(name);
+			result = forAutoComplete(productService.getProductName(name));
 		}
 		return success(result);
 	}
