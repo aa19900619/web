@@ -53,9 +53,9 @@ public class IndexController extends BaseController{
 			result = forAutoComplete(productService.getProductName(name));
 		}else if( type == 1 ){
 			List<ProductInfo> list = productService.getProductInfoBy(name);
-			result.addAll(list.stream().map(obj -> {
+			result = list.stream().map(obj -> {
 				return new AutoCompleteVO(obj.getGoodsName(),obj);
-			}).collect(Collectors.toList()));
+			}).collect(Collectors.toList());
 		}
 		return success(result);
 	}
