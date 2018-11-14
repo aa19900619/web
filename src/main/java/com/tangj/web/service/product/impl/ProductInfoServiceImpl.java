@@ -45,4 +45,9 @@ public class ProductInfoServiceImpl implements IProductService{
 		return productDao.getProductName(val);
 	}
 
+	@Override
+	public List<ProductInfo> getProductInfoBy(String name) {
+		return productDao.getProductInfoBy(name);
+	}
+
 }

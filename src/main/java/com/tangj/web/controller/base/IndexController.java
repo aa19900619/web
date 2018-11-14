@@ -3,6 +3,7 @@ package com.tangj.web.controller.base;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tangj.web.pojo.product.ProductInfo;
 import com.tangj.web.pojo.sys.RegionInfo;
 import com.tangj.web.service.product.IProductService;
 import com.tangj.web.util.ApiCommonResultVo;
@@ -49,6 +51,11 @@ public class IndexController extends BaseController{
 		//商品名称
 		if( type == 0 ){
 			result = forAutoComplete(productService.getProductName(name));
+		}else if( type == 1 ){
+			List<ProductInfo> list = productService.getProductInfoBy(name);
+			result.addAll(list.stream().map(obj -> {
+				return new AutoCompleteVO(obj.getGoodsName(),obj);
+			}).collect(Collectors.toList()));
 		}
 		return success(result);
 	}
