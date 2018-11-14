@@ -1,5 +1,5 @@
 #detail({
-	"id":"form-product-edit",
+	"id":"form-goods-edit",
 	"hiddens":[
 		{"name":"id","value":"$!obj.id"}
 	],
@@ -50,16 +50,56 @@ $(function(){
 		var sp = $("#goodsSpecifications").val();
 		$("#goodsNum").val(val*sp);
 	});
-	$("#goodsCounts").focus(function(){
-		$("#goodsCounts").select();
-	});
+	
 	$("#goodsNum").keyup(function(){
 		var val = $(this).val();
 		var sp = $("#goodsSpecifications").val();
 		$("#goodsCounts").val(val/sp);
 	});
+	$("#goodsCounts").focus(function(){
+		$("#goodsCounts").select();
+	});
 	$("#goodsNum").focus(function(){
 		$("#goodsNum").select();
+	});
+	$("#goodsFreight").focus(function(){
+		$("#goodsFreight").select();
+	});
+	$("#goodsBuyPrice").focus(function(){
+		$("#goodsBuyPrice").select();
+	});
+	$("#goodsSellingPrice").focus(function(){
+		$("#goodsSellingPrice").select();
+	});
+	
+	$("#form-goods-edit").validate({
+		rules:{
+			"goodsCounts":{
+				maxlength:10,
+				required:true,
+				number: true
+			},
+			"goodsNum":{
+				maxlength:10,
+				required:true,
+				digits: true
+			},
+			"goodsFreight":{
+				maxlength:10,
+				required:true,
+				number: true
+			},
+			"goodsBuyPrice":{
+				maxlength:10,
+				required:true,
+				number: true
+			},
+			"goodsSellingPrice":{
+				maxlength:10,
+				required:true,
+				number: true
+			}
+		}
 	});
 })
 </script>

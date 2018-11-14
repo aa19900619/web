@@ -5,7 +5,7 @@
 	],
 	"url":"goodsInfo",
 	"query":[
-				{"type":"text","label":"商品名称","id":"productName","productName":"productName","placeholder":"商品名称","style":"width:150px"},
+				{"type":"text","label":"商品名称","id":"name","name":"name","placeholder":"商品名称","style":"width:150px"},
 				{"type":"text","label":"收货数量","id":"counts","name":"counts","placeholder":"收货数量","style":"width:150px"},
 				{"type":"date","label":"时间","id":"startDate","name":"startDate","placeholder":"收货时间","style":"width:150px"},
 				{"type":"date","label":"至","id":"endDate","name":"endDate","placeholder":"收货时间","style":"width:150px"},
@@ -27,8 +27,13 @@
 		{"text":"汇款","click":"edit(this)","property":[{"key":"remitid","value":"remitId"}]}
 	]
 })
-
+#autocomplete("name" "0")
 <script>
+$(function(){
+	$("#name").focus(function(){
+		$("#name").select();
+	});
+})
 function add(){
 	Jq.open({"url":"$!base/goodsInfo/add","title":"新增","height":"500px"},{},function(index){
 		

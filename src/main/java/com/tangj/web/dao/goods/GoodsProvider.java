@@ -21,7 +21,7 @@ public class GoodsProvider {
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_DICTIONARY  + " c on b.goods_type = c.id ");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_USER + " d on d.id=a.create_id ");
 		if( param.get("name") != null && !"".equals(param.get("name"))){
-			sql.WHERE("b.goods_name like  concat('%',#{name},'%') or b.goods_name_initial like concat('%',#{name},'%')");
+			sql.WHERE("b.goods_name = #{name}");
 		}
 		if( param.get("goodsCounts") != null && !"".equals(param.get("goodsCounts"))){
 			sql.WHERE("a.goods_counts >= #{goodsCounts} and a.goods_counts < #{goodsCounts} + 1");
@@ -77,8 +77,6 @@ public class GoodsProvider {
 		sql.INTO_COLUMNS("create_date").INTO_VALUES("#{createTime}");
 		sql.INTO_COLUMNS("update_id").INTO_VALUES("#{updateUserId}");
 		sql.INTO_COLUMNS("update_date").INTO_VALUES("#{updateTime}");
-		sql.INTO_COLUMNS("delete_id").INTO_VALUES("#{deleteUserId}");
-		sql.INTO_COLUMNS("delete_date").INTO_VALUES("#{deleteTime}");
 		
 		return sql.toString();
 	}
@@ -97,8 +95,6 @@ public class GoodsProvider {
 		sql.SET("create_date = #{createTime}");
 		sql.SET("update_id = #{updateUserId}");
 		sql.SET("update_date = #{updateTime}");
-		sql.SET("delete_id = #{deleteUserId}");
-		sql.SET("delete_date = #{deleteTime}");
 		sql.WHERE("id = #{id}");
 		return sql.toString();
 	}

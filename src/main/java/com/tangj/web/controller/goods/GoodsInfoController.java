@@ -38,6 +38,7 @@ public class GoodsInfoController extends BaseController{
 	public ApiCommonResultVo index(QueryVO vo){
 		Map<String,Object> param = new HashMap<>();
 		param.put("name", vo.getName());
+		param.put("createId", vo.getCreateId());
 		param.put("goodsCounts", vo.getCounts());
 		param.put("startDate", DateUtils.getFirstDate(vo.getStartDate()));
 		param.put("endDate", DateUtils.getLastDate(vo.getEndDate()));
@@ -49,7 +50,7 @@ public class GoodsInfoController extends BaseController{
 	@RequiresPermissions(values = "goodsInfo:add")
 	@RequestMapping(value = "add" , method = RequestMethod.GET)
 	public ModelAndView add(){
-		ModelAndView view = new ModelAndView("templates/goods/goods/edit");
+		ModelAndView view = new ModelAndView("templates/goods/goods/add");
 		initGoodsFL(view);
 		initGoodsGG(view);
 		return view;

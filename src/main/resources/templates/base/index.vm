@@ -53,6 +53,7 @@
 			<dd>
 				<ul>
 					<li><a _href="$!base/goodsInfo" data-title="收货管理" href="javascript:void(0)">收货管理</a></li>
+					<li><a _href="$!base/addGoodsInfo" data-title="收货管理" href="javascript:void(0)">新增收货</a></li>
 				</ul>
 			</dd>
 		</dl>

@@ -22,23 +22,31 @@ public class GoodsInfo extends BaseInfo {
 	@NotEmpty(message = "ID不能为空", profiles = { MODIFY })
 	@Min(value = 1, message = "ID格式错误", profiles = { MODIFY })
 	private Long id;
-
-	@NotNull(message = "产品ID不能为空", profiles = { MODIFY })
-	@NotEmpty(message = "产品ID不能为空", profiles = { MODIFY })
-	@Min(value = 1, message = "ID格式错误", profiles = { MODIFY })
 	private Long productId;
 
-	@NotNull(message = "收货数量不能为空", profiles = { MODIFY })
-	@NotEmpty(message = "收货数量不能为空", profiles = { MODIFY })
-	@Min(value = 1, message = "收货数量格式错误", profiles = { MODIFY })
+	@NotNull(message = "收货数量不能为空", profiles = { MODIFY, ADD })
+	@NotEmpty(message = "收货数量不能为空", profiles = { MODIFY, ADD })
+	@Min(value = 1, message = "收货数量格式错误", profiles = { MODIFY, ADD })
 	private BigDecimal goodsCounts;
-	
-	@NotNull(message = "收货数量不能为空", profiles = { MODIFY })
-	@NotEmpty(message = "收货数量不能为空", profiles = { MODIFY })
-	@Min(value = 1, message = "收货数量格式错误", profiles = { MODIFY })
+
+	@NotNull(message = "收货数量不能为空", profiles = { MODIFY, ADD })
+	@NotEmpty(message = "收货数量不能为空", profiles = { MODIFY, ADD })
+	@Min(value = 1, message = "收货数量格式错误", profiles = { MODIFY, ADD })
 	private BigDecimal goodsNum;
+
+	@NotNull(message = "进货价不能为空", profiles = { MODIFY, ADD })
+	@NotEmpty(message = "进货价不能为空", profiles = { MODIFY, ADD })
+	@Min(value = 1, message = "进货价格式错误", profiles = { MODIFY, ADD })
 	private BigDecimal goodsBuyPrice;
+
+	@NotNull(message = "出货价不能为空", profiles = { MODIFY, ADD })
+	@NotEmpty(message = "出货价不能为空", profiles = { MODIFY, ADD })
+	@Min(value = 1, message = "出货价格式错误", profiles = { MODIFY, ADD })
 	private BigDecimal goodsSellingPrice;
+
+	@NotNull(message = "运费不能为空", profiles = { MODIFY, ADD })
+	@NotEmpty(message = "运费不能为空", profiles = { MODIFY, ADD })
+	@Min(value = 1, message = "运费格式错误", profiles = { MODIFY, ADD })
 	private BigDecimal goodsFreight;
 	private Integer goodsStatus;
 	private Long remitId;
@@ -168,6 +176,5 @@ public class GoodsInfo extends BaseInfo {
 	public void setGoodsCategory(String goodsCategory) {
 		this.goodsCategory = goodsCategory;
 	}
-	
 
 }

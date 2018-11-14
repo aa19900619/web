@@ -11,7 +11,7 @@ public class ProductProvider {
 		sql.SELECT("*");
 		sql.FROM(TableConstanst.TB_PRODUCT);
 		if( param.get("name") != null && !"".equals(param.get("name"))){
-			sql.WHERE("goods_name like  concat('%',#{name},'%')");
+			sql.WHERE("goods_name like  concat('%',#{name},'%') or goods_name_initial like concat('%',#{name},'%')");
 		}
 		return sql.toString();
 	}
