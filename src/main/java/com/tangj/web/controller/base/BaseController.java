@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +21,7 @@ import com.tangj.web.service.sys.IRegionService;
 import com.tangj.web.service.sys.IUserService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.SessionUtils;
+import com.tangj.web.vo.base.AutoCompleteVO;
 
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
@@ -151,4 +153,11 @@ public class BaseController {
 		Map<String, Object> param = new HashMap<>();
 		view.addObject("usersInfo", iUserService.queryUsers(param));
 	}
+	
+	public List<AutoCompleteVO> forAutoComplete(List<String> list){
+		return list.stream().map(obj -> {
+			return new AutoCompleteVO(obj, obj);
+		}).collect(Collectors.toList());
+	}
+	
 }
