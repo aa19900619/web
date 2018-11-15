@@ -49,6 +49,7 @@ public class GoodsInfo extends BaseInfo {
 	@Min(value = 1, message = "运费格式错误", profiles = { MODIFY, ADD })
 	private BigDecimal goodsFreight;
 	private Integer goodsStatus;
+	private Long suppliersId;
 	private Long remitId;
 	private String productName;
 	private Long goodsSpecifications;
@@ -119,6 +120,14 @@ public class GoodsInfo extends BaseInfo {
 
 	public void setGoodsStatus(Integer goodsStatus) {
 		this.goodsStatus = goodsStatus;
+	}
+
+	public Long getSuppliersId() {
+		return suppliersId;
+	}
+
+	public void setSuppliersId(Long suppliersId) {
+		this.suppliersId = suppliersId;
 	}
 
 	public Long getRemitId() {
