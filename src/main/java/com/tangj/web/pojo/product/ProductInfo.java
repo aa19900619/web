@@ -1,5 +1,7 @@
 package com.tangj.web.pojo.product;
 
+import java.math.BigDecimal;
+
 import com.tangj.web.pojo.base.BaseInfo;
 import com.tangj.web.util.Constanst;
 
@@ -55,8 +57,28 @@ public class ProductInfo extends BaseInfo{
 	@NotEmpty(message = "状态不能为空" , profiles = {ADD,MODIFY})
 	@MemberOf(value = { Constanst.STATUS_YX_STRING,Constanst.STATUS_WX_STRING } , message = "状态类型错误" , profiles = {ADD,MODIFY})
 	private String goodsStatus;
+	private Long productCounts;
+	private BigDecimal productDisCounts;
 	
+	@NotNull(message = "进货价不能为空", profiles = { MODIFY, ADD })
+	@NotEmpty(message = "进货价不能为空", profiles = { MODIFY, ADD })
+	@Min(value = 1, message = "进货价格式错误", profiles = { MODIFY, ADD })
+	private BigDecimal productBuyPrice;
 	
+	@NotNull(message = "出货价不能为空", profiles = { MODIFY, ADD })
+	@NotEmpty(message = "出货价不能为空", profiles = { MODIFY, ADD })
+	@Min(value = 1, message = "出货价格式错误", profiles = { MODIFY, ADD })
+	private BigDecimal productSellingPrice;
+	
+	@NotNull(message = "零售价不能为空", profiles = { MODIFY, ADD })
+	@NotEmpty(message = "零售价不能为空", profiles = { MODIFY, ADD })
+	@Min(value = 1, message = "零售价格式错误", profiles = { MODIFY, ADD })
+	private BigDecimal productRetailPrice;
+	
+	@NotNull(message = "运费不能为空", profiles = { MODIFY, ADD })
+	@NotEmpty(message = "运费不能为空", profiles = { MODIFY, ADD })
+	@Min(value = 1, message = "运费格式错误", profiles = { MODIFY, ADD })
+	private BigDecimal productFreight;
 
 	public Long getId() {
 		return id;
@@ -129,5 +151,55 @@ public class ProductInfo extends BaseInfo{
 	public void setGoodsStatus(String goodsStatus) {
 		this.goodsStatus = goodsStatus;
 	}
+
+	public Long getProductCounts() {
+		return productCounts;
+	}
+
+	public void setProductCounts(Long productCounts) {
+		this.productCounts = productCounts;
+	}
+
+	public BigDecimal getProductDisCounts() {
+		return productDisCounts;
+	}
+
+	public void setProductDisCounts(BigDecimal productDisCounts) {
+		this.productDisCounts = productDisCounts;
+	}
+
+	public BigDecimal getProductBuyPrice() {
+		return productBuyPrice;
+	}
+
+	public void setProductBuyPrice(BigDecimal productBuyPrice) {
+		this.productBuyPrice = productBuyPrice;
+	}
+
+	public BigDecimal getProductSellingPrice() {
+		return productSellingPrice;
+	}
+
+	public void setProductSellingPrice(BigDecimal productSellingPrice) {
+		this.productSellingPrice = productSellingPrice;
+	}
+
+	public BigDecimal getProductRetailPrice() {
+		return productRetailPrice;
+	}
+
+	public void setProductRetailPrice(BigDecimal productRetailPrice) {
+		this.productRetailPrice = productRetailPrice;
+	}
+
+	public BigDecimal getProductFreight() {
+		return productFreight;
+	}
+
+	public void setProductFreight(BigDecimal productFreight) {
+		this.productFreight = productFreight;
+	}
+	
+	
 
 }
