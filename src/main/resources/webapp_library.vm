@@ -516,7 +516,7 @@ function reloadData(){
 </script>
 #end
 
-#macro(autocomplete $id $type $selectFun)
+#macro(autocomplete $id $type $selectFun $closeFun)
 <script>
 $(function(){
     $( "#$!id" ).autocomplete({
@@ -531,6 +531,11 @@ $(function(){
       		#if( "$!selectFun" != "" )
       		$!{selectFun}(ui["item"])
       		#end
+      	},
+      	close:function(event,ui){
+      		#if( "$!closeFun" != "" )
+          	$!{closeFun}()
+          	#end
       	}
     });
 });
