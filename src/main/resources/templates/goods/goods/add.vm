@@ -1,15 +1,18 @@
 #header
 
 
-商品名称：<input type="text" id="name" name="name" style="width:150px" class="input-text" onfocus="$(this).val('')" />
 
+<link href="$!base/static/css/button-style.css" rel="stylesheet" type="text/css" />
 
 <div class="page-container">
+
 <div class="cl mt-20">
+商品名称：<input type="text" id="name" name="name" style="width:150px" class="input-text" />
+<br>
+<br>
 <table id="table1" class="table table-border table-bordered table-hover table-bg table-sort">
 	<thead>
 		<tr class="text-c">
-			<th><input type="checkbox">全选</th>
 			<th width="">商品名称</th>
 			<th width="">规格</th>
 			<th width="">收货数量</th>
@@ -26,55 +29,23 @@
 </div>
 </div>
 <div align="center">
-<input type="button" value="   添  加" onclick="addNew();"> 
-<input type="button" value="   删   除" onclick=""> 
+<input type="button" class="button button-primary button-rounded button-small" value=" 提   交" onclick="sbmit()"> 
+<input type="button" class="button button-primary button-rounded button-small" value=" 删   除" onclick="delRow(this,-1)"> 
 </div>
 #footer
-#autocomplete("name" "1" "selectTest")
+#autocomplete("name" "1" "selectPro" "closeAjaxDo")
+
 
 <script>
-	function delt(obj) {
-		var modify = $(obj);
-		var id = modify.attr("id");
-		Jq.open({
-			"url" : "$!base/productInfo/edit",
-			"title" : "修改",
-			"height" : "500px"
-		}, {
-			"id" : id
-		}, function(index) {
-
-			if (!parent.$("#form-product-edit").valid()) {
-				return;
-			}
-
-			Jq.MessageBox.confirm("您确定保存该收货信息吗？", function() {
-				toSaved("$!base/productInfo/edit", parent.$(
-						"#form-product-edit").serialize(), function(result) {
-					if (result["code"] == 0) {
-						Jq.closeLoading(index);
-						Jq.msg.success("操作成功");
-						page();
-					} else {
-						Jq.msg.error(result["msg"]);
-					}
-				});
-			});
-		});
-	}
-	
-	
-	
 	var row_name = 0;
 	var row_count = 0; 
-	function selectTest(data) {
+	function selectPro(data) {
 		//console.log(data);	
 		//data.data.goodsName;
 		var obj = data.data;
 		var table1 = $('#table1'); 
 		var firstTr = table1.find('tbody>tr:first'); 
-		var row = $("<tr id=tr" + row_name + "></tr>"); 
-		var td1 = $("<td>"+row_count+"</td>"); 
+		var row = $("<tr id=tr" + row_name + "></tr>");
 		var td2 = $("<td id=td" + row_name + ">"+"</td>"); 
 		var td3 = $("<td id=td" + row_name + ">"+"</td>"); 
 		var td4 = $("<td id=td" + row_name + ">"+"</td>"); 
@@ -82,22 +53,21 @@
 		var td6 = $("<td id=td" + row_name + ">"+"</td>"); 
 		var td7 = $("<td id=td" + row_name + ">"+"</td>"); 
 		var td8 = $("<td id=td" + row_name + ">"+"</td>"); 
-		td1.append("<input type='checkbox' name='count' value='New'>"); 
-		td2.append("<label> "+ obj.goodsName + " </label>") ;
-		td3.append("<label> "+ obj.goodsSpecifications + obj.goodsCategory+" </label>") ;
-		td4.append("<button type='button' onclick='changeCounts(1,"+ obj.goodsSpecifications +row_name+",'-1')'>&nbsp;-&nbsp;</button>");
-		td4.append("<input style='width:75px' class='input-text'  type='text' name='goodsCounts' value=0>");
-		td4.append("<button type='button' onclick='changeCounts(1,"+ obj.goodsSpecifications +row_name+",1)'>&nbsp;+&nbsp;</button>");
+		td2.append("<label> "+ obj.goodsName + " </label>");
+		td2.append("<input type='hidden' id='productId' name='productId' value='"+ obj.id + "' >");
+		td3.append("<label> "+ obj.goodsSpecifications + obj.goodsCategory+" </label>");
+		td4.append("<button type='button' onclick='changeCounts(1,"+ obj.goodsSpecifications+ "," +row_name+",-1)' class='button button-box button-tiny'><i class='fa fa-plus'>-</i></button>");
+		td4.append("<input style='width:100px' onfocus='$(this).select()' onkeyup='changeKeyUp(this,"+ obj.goodsSpecifications+ "," +row_name+",1)'  class='input-text'  type='text' name='goodsCounts' value=0>");
+		td4.append("<button type='button' onclick='changeCounts(1,"+ obj.goodsSpecifications+ "," +row_name+",1)' class='button button-box button-tiny'><i class='fa fa-plus'>+</i></button>");
 		td4.append("<center>箱</center>");
-		td4.append("<button type='button' onclick='changeCounts(2,"+ obj.goodsSpecifications +row_name+",-1)'>&nbsp;-&nbsp; </button>");
-		td4.append("<input style='width:75px' class='input-text' size=1 type='text' name='goodsNum' value=0>") ;
-		td4.append("<button type='button' onclick='changeCounts(2,"+ obj.goodsSpecifications +row_name+",1)'>&nbsp;+&nbsp;</button>");
+		td4.append("<button type='button' onclick='changeCounts(2,"+ obj.goodsSpecifications+ "," +row_name+",-1)' class='button button-box button-tiny'><i class='fa fa-plus'>-</i></button>");
+		td4.append("<input style='width:100px' onfocus='$(this).select()' onkeyup='changeKeyUp(this,"+ obj.goodsSpecifications+ "," +row_name+",-1)' class='input-text' size=1 type='text' name='goodsNum' value=0>") ;
+		td4.append("<button type='button' onclick='changeCounts(2,"+ obj.goodsSpecifications + "," +row_name+",1)' class='button button-box button-tiny'><i class='fa fa-plus'>+</i></button>");
 		td4.append("<center>瓶</center>");
 		td5.append("<input  style='width:100px' class='input-text' type='text' name='goodsBuyPrice'  value="+ obj.productBuyPrice+">") ;
 		td6.append("<input style='width:100px' class='input-text' type='text' name='goodsSellingPrice' value="+ obj.productSellingPrice+">") ;
 		td7.append("<input style='width:100px' class='input-text' type='text' name='goodsFreight' value="+ obj.productFreight+">") ;
 		td8.append("<a onclick='delRow(this,1)'>删除</a>") ;
-		row.append(td1); 
 		row.append(td2); 
 		row.append(td3); 
 		row.append(td4); 
@@ -109,6 +79,12 @@
 		row_count++;
 		row_name++;
 		//alert("#name").val();
+	}
+	
+	function closeAjaxDo() {
+		$("#name").val("");
+		$("#name").select();
+		$("#name").focus();
 	}
 
 	function delRow(obj,types) 
@@ -140,26 +116,23 @@
 	
 	function changeCounts(t1,gs,nums,types) {
 		var name = "";
-		alert(tyeps);
-		//gs= Number(gs);
-		var obj1 = $("#tr" + nums).find("td:eq(3)").find("input[name='goodsCounts']");
-		var obj2 = $("#tr" + nums).find("td:eq(3)").find("input[name='goodsNum']");
+		gs= Number(gs);
+		var obj1 = $("#tr" + nums).find("td:eq(2)").find("input[name='goodsCounts']");
+		var obj2 = $("#tr" + nums).find("td:eq(2)").find("input[name='goodsNum']");
 		if(t1== 1) {
 			name = "goodsCounts";
 			addAndSub(name,nums,types);
-			//obj2.val(gs * Number(obj1.val()));
+			obj2.val(Number(obj1.val()) * gs);
 			
 		}else{
 			name = "goodsNum";
 			addAndSub(name,nums,types);
-			//obj1.val(gs * Number(obj2.val()));
+			obj1.val(Number(obj2.val()) / gs);
 		}
-		
 	}
 	
 	function addAndSub(name,nums,types) {
-		alert(name+nums+types);
-		var obj = $("#tr" + nums).find("td:eq(3)").find("input[name="+ name +"]");
+		var obj = $("#tr" + nums).find("td:eq(2)").find("input[name="+ name +"]");
 		if(types == 1) {
 			obj.val(Number(obj.val()) + 1);
 		}else {
@@ -172,4 +145,36 @@
 		}
 	}
 	
+	function changeKeyUp(obj,gs,nums,types) {
+		gs = Number(gs);
+		var name = "";
+		if(types == 1) {
+			name = "goodsNum";
+			var inp = $("#tr" + nums).find("td:eq(2)").find("input[name="+ name +"]")
+			inp.val(Number($(obj).val()) * gs);
+		} else {
+			name = "goodsCounts";
+			var inp = $("#tr" + nums).find("td:eq(2)").find("input[name="+ name +"]")
+			inp.val(Number($(obj).val()) / gs);
+		}
+	}
+	
+	
+	function sbmit() {
+		var len = $("#productId").length;
+		var gdata = [];
+		if(len == 0) {
+			alert("请录入收货信息！");
+		} else {
+			$.each($("#productId"),function(i,item){
+				gdata[$(i).attr('productId')] = $(item).val();
+				gdata[$(i).attr('goodsNum')] = $("#goodsNum")[i].val();
+				gdata[$(i).attr('goodsBuyPrice')] = $("#goodsBuyPrice")[i].val();
+				gdata[$(i).attr('goodsSellingPrice')] = $("#goodsSellingPrice")[i].val();
+				gdata[$(i).attr('goodsFreight')] = $("#goodsFreight")[i].val();
+			});
+			console.log(gdata);
+		}
+		
+	}
 	</script>
