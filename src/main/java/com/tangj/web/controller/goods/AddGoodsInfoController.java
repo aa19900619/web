@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tangj.web.annotation.RequiresPermissions;
 import com.tangj.web.controller.base.BaseController;
 import com.tangj.web.pojo.goods.GoodsInfo;
@@ -46,17 +47,17 @@ public class AddGoodsInfoController extends BaseController{
 	@RequestMapping(value = "add" , method = RequestMethod.GET)
 	public ModelAndView add(){
 		ModelAndView view = new ModelAndView("templates/goods/goods/add");
-		initGoodsFL(view);
-		initGoodsGG(view);
+		//initGoodsFL(view);
+		//initGoodsGG(view);
 		return view;
 	}
 	@RequiresPermissions(values = "goodsInfo:add")
 	@ResponseBody
 	@RequestMapping(value = "add" , method = RequestMethod.POST)
-	public ApiCommonResultVo add(GoodsInfo obj){
-		super.validator(obj, GoodsInfo.ADD);
-		initInfo(obj);
-		goodsService.add(obj);
+	public ApiCommonResultVo add(JSONObject jsonObj){
+		//super.validator(obj, GoodsInfo.ADD);
+		//goodsService.add(obj);
+		System.out.println(jsonObj);
 		return success("操作成功！");
 	}
 	

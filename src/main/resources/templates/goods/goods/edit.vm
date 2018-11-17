@@ -99,6 +99,33 @@ $(function(){
 				required:true,
 				number: true
 			}
+		},
+		message: {
+			"goodsCounts":{
+				maxlength:"收货数量不能超过十位数！",
+				required:"请输入收货数量！",
+				number: "请输出有效的数字！"
+			},
+			"goodsNum":{
+				maxlength:"收货数量不能超过十位数！",
+				required:"请输入收货数量！",
+				digits: "请输入有效的数字"
+			},
+			"goodsFreight":{
+				maxlength:"运费不能超过十位数！",
+				required:"运费不能为空！",
+				number: "运费不能超过十位数！"
+			},
+			"goodsBuyPrice":{
+				maxlength:"进货价不能超过十位数！",
+				required:"进货价不能为空！",
+				number: "请输出有效的数字！"
+			},
+			"goodsSellingPrice":{
+				maxlength:"出货价不能超过十位数！",
+				required:"出货价不能为空！",
+				number: "请输出有效的数字！"
+			}
 		}
 	});
 })

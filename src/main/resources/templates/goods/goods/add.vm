@@ -3,35 +3,37 @@
 
 
 <link href="$!base/static/css/button-style.css" rel="stylesheet" type="text/css" />
-
+<form method="post" class="form form-horizontal" id="frm" name="frm">
 <div class="page-container">
 
 <div class="cl mt-20">
 商品名称：<input type="text" id="name" name="name" style="width:150px" class="input-text" />
 <br>
 <br>
-<table id="table1" class="table table-border table-bordered table-hover table-bg table-sort">
-	<thead>
-		<tr class="text-c">
-			<th width="">商品名称</th>
-			<th width="">规格</th>
-			<th width="">收货数量</th>
-			<th width="">进货价</th>
-			<th width="">出货价</th>
-			<th width="">运费</th>
-			<th width="90px">操作</th>
-		</tr>
-	</thead>
-	<tbody id="gitbody">
-	</tbody>
-</table>
 
-</div>
-</div>
-<div align="center">
-<input type="button" class="button button-primary button-rounded button-small" value=" 提   交" onclick="sbmit()"> 
-<input type="button" class="button button-primary button-rounded button-small" value=" 删   除" onclick="delRow(this,-1)"> 
-</div>
+	<table id="table1" class="table table-border table-bordered table-hover table-bg table-sort">
+		<thead>
+			<tr class="text-c">
+				<th width="">商品名称</th>
+				<th width="">规格</th>
+				<th width="">收货数量</th>
+				<th width="">进货价</th>
+				<th width="">出货价</th>
+				<th width="">运费</th>
+				<th width="90px">操作</th>
+			</tr>
+		</thead>
+		<tbody id="gitbody">
+			</tbody>
+		</table>
+		
+		</div>
+		</div>
+		<div align="center">
+		<input type="button" id="btnSend" name="btnSend" class="button button-primary button-rounded button-small" value=" 提   交"> 
+		<input type="button" class="button button-primary button-rounded button-small" value=" 删   除" onclick="delRow(this,-1)"> 
+		</div>
+</form>
 #footer
 #autocomplete("name" "1" "selectPro" "closeAjaxDo")
 
@@ -64,9 +66,9 @@
 		td4.append("<input style='width:100px' onfocus='$(this).select()' onkeyup='changeKeyUp(this,"+ obj.goodsSpecifications+ "," +row_name+",-1)' class='input-text' size=1 type='text' id='goodsNum' name='goodsNum' value=0>") ;
 		td4.append("<button type='button' onclick='changeCounts(2,"+ obj.goodsSpecifications + "," +row_name+",1)' class='button button-box button-tiny'><i class='fa fa-plus'>+</i></button>");
 		td4.append("<center>瓶</center>");
-		td5.append("<input  style='width:100px' class='input-text' type='text' id='goodsBuyPrice' name='goodsBuyPrice'  value="+ obj.productBuyPrice+">") ;
-		td6.append("<input style='width:100px' class='input-text' type='text' id='goodsSellingPrice' name='goodsSellingPrice' value="+ obj.productSellingPrice+">") ;
-		td7.append("<input style='width:100px' class='input-text' type='text' id='goodsFreight' name='goodsFreight' value="+ obj.productFreight+">") ;
+		td5.append("<input  style='width:100px' class='input-text' type='text' id='goodsBuyPrice' name='goodsBuyPrice'  value="+ obj.productBuyPrice+" onkeyup='isNum(this)'>") ;
+		td6.append("<input style='width:100px' class='input-text' type='text' id='goodsSellingPrice' name='goodsSellingPrice' value="+ obj.productSellingPrice+" onkeyup='isNum(this)'>") ;
+		td7.append("<input style='width:100px' class='input-text' type='text' id='goodsFreight' name='goodsFreight' value="+ obj.productFreight+" onkeyup='isNum(this)'>") ;
 		td8.append("<a onclick='delRow(this,1)'>删除</a>") ;
 		row.append(td2); 
 		row.append(td3); 
@@ -133,20 +135,29 @@
 	
 	function addAndSub(name,nums,types) {
 		var obj = $("#tr" + nums).find("td:eq(2)").find("input[name="+ name +"]");
+		var val = Number(obj.val());
+		$(obj).val($(obj).val().replace(/[^\d.-]/g, '').replace(/(^\s*)|(\s*$)/g,''));
+		//if(val == 0) {
+		//	$($("#tr" + nums).find("td:eq(2)").find("button").index(0)).attr("disabled",false);
+		//} else {
+		//	$($("#tr" + nums).find("td:eq(2)").find("button").index(0)).removeAttr("disabled"); 
+		//}
+		val = ~~val;
 		if(types == 1) {
-			obj.val(Number(obj.val()) + 1);
+			obj.val(val + 1);
 		}else {
-			var counts = obj.val();
+			var counts = val;
 			if(counts <= 0) {
 				obj.val(0)
 			} else {
-				obj.val(Number(obj.val()) - 1);
+				obj.val(val - 1);
 			}
 		}
 	}
 	
 	function changeKeyUp(obj,gs,nums,types) {
 		gs = Number(gs);
+		$(obj).val($(obj).val().replace(/[^\d.-]/g, '').replace(/(^\s*)|(\s*$)/g,''));
 		var name = "";
 		if(types == 1) {
 			name = "goodsNum";
@@ -159,27 +170,66 @@
 		}
 	}
 	
-	
-	function sbmit() {
+	$("#btnSend").click(function() {
 		var len = $("input:hidden[name=productId]");
 		var  gdata = "[";
 		if(len.length == 0) {
 			alert("请录入收货信息！");
-		} else {
-			$.each(len,function(i,item){
-				 if(i > 0){
-					 gdata += ","
-				 }
-					 gdata +="{productId:\""+$(item).val()+"\",";
-					 gdata += "goodsNum:\""+$($("input:text[name=goodsNum]")[i]).val()+"\",";
-					 gdata += "goodsBuyPrice:\""+$($("input:text[name=goodsBuyPrice]")[i]).val()+"\",";
-					 gdata += "goodsSellingPrice:\""+$($("input:text[name=goodsSellingPrice]")[i]).val()+"\",";
-					 gdata += "goodsFreight:\""+$($("input:text[name=goodsFreight]")[i]).val()+"\"";
-					 gdata +="}";
-			});
-			gdata += "]";
-			console.log(gdata);
+			return;
 		}
+	
+		$.each(len,function(i,item){
+			 if(i > 0){
+				 gdata += ","
+			 }
+				 gdata +="{productId:\""+$(item).val()+"\",";
+				 gdata += "goodsNum:\""+$($("input:text[name=goodsNum]")[i]).val()+"\",";
+				 gdata += "goodsBuyPrice:\""+$($("input:text[name=goodsBuyPrice]")[i]).val()+"\",";
+				 gdata += "goodsSellingPrice:\""+$($("input:text[name=goodsSellingPrice]")[i]).val()+"\",";
+				 gdata += "goodsFreight:\""+$($("input:text[name=goodsFreight]")[i]).val()+"\"";
+				 gdata +="}";
+		});
+		gdata += "]";
+		console.log(gdata);
 		
+		$("#request-process-patent").html("正在提交数据，请勿关闭当前窗口...");
+		    $.ajax({
+		        type: "POST",
+		        //url: "url":"/goodsInfo/add",
+		        contentType: "application/json; charset=utf-8",
+		        data: JSON.stringify(gdata),
+		        dataType: "json",
+		        success: function (message) {
+		            if (message > 0) {
+		                alert("请求已提交！我们会尽快与您取得联系");
+		            }
+		        },
+		        error: function (message) {
+		            $("#request-process-patent").html("提交数据失败！");
+		        }
+		    });
+		
+	});
+
+	
+	function isNum(obj) {
+		var val =$(obj).val().trim();
+		if(isNaN(val)) {
+			val = val.replace(/[^\d.-]/g, '');
+			val = val.replace(/(^\s*)|(\s*$)/g,'');
+			$(obj).val(val);
+			$(obj).focus();
+			return;
+		}
+		$(obj).val(val);
+		return "";
 	}
+	
+	$(function(){
+		var len = $("input:hidden[name=productId]");
+		$.each(len,function(i,item){
+			
+		});
+		
+	});
 	</script>
