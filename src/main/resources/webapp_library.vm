@@ -491,7 +491,7 @@ function reloadData(){
 										#if($jud == true)
 											#set($jud = "")
 										#end
-										#set($jud = $!jud + "(" )
+										#set($jud = $!jud + " (" )
 										#foreach( $!jud2 in $jud1)
 											#set($jud = $jud + " obj.$!{jud2.key} == $!{jud2.value} &&")
 										#end
