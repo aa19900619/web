@@ -484,17 +484,53 @@ function reloadData(){
 								#set($bool = $!shiro.hasPermission("$!operation.hasPermission"))
 							#end
 							#if( $bool )
-								<a href="javascript:void(0)" onclick="$!operation.click"
-									#if( "$!operation.property" != "" )
-										#foreach( $!pro in $!operation.property )
-											#if( "$!pro.custom" == "true" )
-												$!pro.key="$!pro.value"
-											#else
-												$!pro.key="{{obj.$!pro.value}}"
+								#if( "$!operation.judgement" != "" )
+									#set($jud = true)
+									
+									#foreach( $!jud1 in $!operation.judgement )
+										#if($jud == true)
+											#set($jud = "")
+										#end
+										#set($jud = $!jud + "(" )
+										#foreach( $!jud2 in $jud1)
+											#set($jud = $jud + " obj.$!{jud2.key} == $!{jud2.value} &&")
+										#end
+										#set($l = $!jud.length() - 2)
+										#set($jud = $!jud.substring(0,$l))
+										#set($jud = $jud + ") ||")
+									#end
+									#if("$jud" != "true")
+										#set($l = $!jud.length() - 2)
+										#set($jud = $!jud.substring(0,$l))
+									#end									
+
+									{{if $jud }}
+										<a href="javascript:void(0)" onclick="$!operation.click"
+											#if( "$!operation.property" != "" )
+												#foreach( $!pro in $!operation.property )
+													#if( "$!pro.custom" == "true" )
+														$!pro.key="$!pro.value"
+													#else
+														$!pro.key="{{obj.$!pro.value}}"
+													#end
+												#end
+											#end
+										>$!operation.text</a>
+									{{/if}}
+								#else
+									<a href="javascript:void(0)" onclick="$!operation.click"
+										#if( "$!operation.property" != "" )
+											#foreach( $!pro in $!operation.property )
+												#if( "$!pro.custom" == "true" )
+													$!pro.key="$!pro.value"
+												#else
+													$!pro.key="{{obj.$!pro.value}}"
+												#end
 											#end
 										#end
-									#end
-								>$!operation.text</a>
+									>$!operation.text</a>
+								#end
+
 							#end
 						#end
 						</td>
