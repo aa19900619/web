@@ -1,10 +1,15 @@
 ﻿package com.tangj.web.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils {
 
+	public static String format(Date date , String format){
+		return (new SimpleDateFormat(format)).format(date);
+	}
+	
 	/**
 	 * 获取日期最开始秒
 	 * @param date

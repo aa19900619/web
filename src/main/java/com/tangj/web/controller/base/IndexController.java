@@ -60,7 +60,4 @@ public class IndexController extends BaseController{
 		return success(result);
 	}
 	
-	
-	
-	
 }
