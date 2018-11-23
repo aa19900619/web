@@ -13,7 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tangj.web.annotation.RequiresPermissions;
 import com.tangj.web.controller.base.BaseController;
 import com.tangj.web.pojo.goods.GoodsInfo;
+import com.tangj.web.pojo.remit.RemitInfo;
 import com.tangj.web.service.goods.IGoodsService;
+import com.tangj.web.service.remit.IRemitService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.DateUtils;
 import com.tangj.web.util.UIPage;
@@ -24,6 +26,9 @@ import com.tangj.web.vo.good.goodsInfo.QueryVO;
 public class GoodsInfoController extends BaseController{
 	@Autowired
 	private IGoodsService goodsService;
+	
+	@Autowired
+	private IRemitService remitService;
 	
 	@RequiresPermissions(values = "goodsInfo:index")
 	@RequestMapping(value = "" , method = RequestMethod.GET)
@@ -67,23 +72,53 @@ public class GoodsInfoController extends BaseController{
 	
 	
 	//修改
-	@RequiresPermissions(values = "goodsInfo:edit")
-	@RequestMapping(value = "edit" , method = RequestMethod.GET)
-	public ModelAndView edit(Long id){
-		ModelAndView view = new ModelAndView("templates/goods/goods/edit");
-		GoodsInfo obj = goodsService.getGoodsInfoBy(id);
-		view.addObject("obj", obj);
-		initGoodsFL(view);
-		initGoodsGG(view);
-		return view;
-	}
-	@RequiresPermissions(values = "goodsInfo:edit")
-	@ResponseBody
-	@RequestMapping(value = "edit" , method = RequestMethod.POST)
-	public ApiCommonResultVo edit(GoodsInfo obj){
-		super.validator(obj, GoodsInfo.MODIFY);
-		initInfo(obj);
-		goodsService.update(obj);
-		return success("操作成功！");
-	}
+		@RequiresPermissions(values = "goodsInfo:edit")
+		@RequestMapping(value = "edit" , method = RequestMethod.GET)
+		public ModelAndView edit(Long id){
+			ModelAndView view = new ModelAndView("templates/goods/goods/edit");
+			GoodsInfo obj = goodsService.getGoodsInfoBy(id);
+			view.addObject("obj", obj);
+			initGoodsFL(view);
+			initGoodsGG(view);
+			return view;
+		}
+		@RequiresPermissions(values = "goodsInfo:edit")
+		@ResponseBody
+		@RequestMapping(value = "edit" , method = RequestMethod.POST)
+		public ApiCommonResultVo edit(GoodsInfo obj){
+			super.validator(obj, GoodsInfo.MODIFY);
+			initInfo(obj);
+			goodsService.update(obj);
+			return success("操作成功！");
+		}
+		
+		
+		
+		//修改状态
+				@RequiresPermissions(values = "goodsInfo:ediremit")
+				@RequestMapping(value = "ediremit" , method = RequestMethod.GET)
+				public ModelAndView ediremit(Long id,Long stype){
+					ModelAndView view = new ModelAndView("templates/goods/goods/goods_remit");
+					GoodsInfo obj = goodsService.getGoodsInfoBy(id);
+					if(stype == 2) {//物流对数
+						obj.setGoodsStatus(2);
+					} else if(stype == 3) {//供应商对数
+						obj.setGoodsStatus(4);
+					} else if(stype == 5) {//查看
+						obj.setGoodsStatus(5);
+					}
+					view.addObject("obj", obj);
+					return view;
+				}
+				@RequiresPermissions(values = "goodsInfo:ediremit")
+				@ResponseBody
+				@RequestMapping(value = "ediremit" , method = RequestMethod.POST)
+				public ApiCommonResultVo ediremit(GoodsInfo obj){
+					initInfo(obj);
+
+					System.out.println(obj.getRemitMoney()+ ":汇款金额发斯蒂芬斯蒂芬斯蒂芬水电费士大夫士大夫士大夫数对 ");
+					RemitInfo rInfo = new RemitInfo();
+					//remitService.updateRemit(obj);
+					return success("操作成功！");
+				}
 }

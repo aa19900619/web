@@ -20,9 +20,9 @@
 			{"colType":"label","length":"2","text":"收货数量"},
 			{"colType":"text","length":"9","name":"dicVal","value":"$!obj.goodsCounts","readonly":"true"},
 			{"colType":"text","length":"3","name":"goodsCounts","value":"$!obj.goodsCounts","placeholder":"请输入收货数量"},
-			{"colType":"text","length":"0","name":"","value":"箱","readonly":"true"},
+			{"colType":"text","length":"0","name":"","value":"$!obj.goodsCategory","readonly":"true"},
 			{"colType":"text","length":"3","name":"goodsNum","value":"$!obj.goodsNum"},
-			{"colType":"text","length":"0","name":"","value":"$!obj.goodsCategory","readonly":"true"}
+			{"colType":"text","length":"0","name":"","value":"$!obj.goodsCategorys","readonly":"true"}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","text":"运费"},
@@ -38,7 +38,7 @@
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"状态"},
-			{"colType":"select","length":"9","name":"goodsStatus","value":"$!obj.goodsStatus","placeholder":"请输入状态","options":[{"value":"1","text":"有效"},{"value":"0","text":"无效"}]}
+			{"colType":"select","length":"9","name":"goodsStatus","value":"$!obj.goodsStatus","placeholder":"请输入状态","options":[{"value":"0","text":"新增"},{"value":"1","text":"物流对数"},{"value":"2","text":"物流结款"},{"value":"3","text":"供应商对数"},{"value":"4","text":"供应商结款"}],"readonly":"true"}
 		]}
 	]
 })

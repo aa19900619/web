@@ -29,7 +29,7 @@
 		
 		</div>
 		</div>
-		<div align="center">
+		<div align="center" id="div_btn" hidden="hidden">
 		<input type="button" id="btnSend" name="btnSend" class="button button-primary button-rounded button-small" value=" 提   交"> 
 		<input type="button" class="button button-primary button-rounded button-small" value=" 删   除" onclick="delRow(this,-1)"> 
 		</div>
@@ -87,6 +87,7 @@
 		$("#name").val("");
 		$("#name").select();
 		$("#name").focus();
+		$("#div_btn").show();
 	}
 
 	function delRow(obj,types) 
@@ -94,13 +95,18 @@
 		if(types == 1) {
 			if(confirm("是否删除该条收货？")) {
 				$(obj).parent().parent().remove(); 
+				if($("#gitbody").find("tr").size() == 0 ){
+					$("#div_btn").hide();
+				}
 			}
+			
 		} else {
 			if(row_count > 0) {
 				if(confirm("是否删除全部收货信息？")) {
 					$("#gitbody").find("tr").remove();
 					row_count = 0;
 					row_name = 0;
+					$("#div_btn").hide();
 				}
 			}
 		}
@@ -171,43 +177,25 @@
 	}
 	
 	$("#btnSend").click(function() {
-		var len = $("input:hidden[name=productId]");
-		var  gdata = "[";
-		if(len.length == 0) {
+		if($("#gitbody").find("input[name='productId']").size() == 0) {
 			alert("请录入收货信息！");
 			return;
 		}
-	
-		$.each(len,function(i,item){
-			 if(i > 0){
-				 gdata += ","
-			 }
-				 gdata +="{productId:\""+$(item).val()+"\",";
-				 gdata += "goodsNum:\""+$($("input:text[name=goodsNum]")[i]).val()+"\",";
-				 gdata += "goodsBuyPrice:\""+$($("input:text[name=goodsBuyPrice]")[i]).val()+"\",";
-				 gdata += "goodsSellingPrice:\""+$($("input:text[name=goodsSellingPrice]")[i]).val()+"\",";
-				 gdata += "goodsFreight:\""+$($("input:text[name=goodsFreight]")[i]).val()+"\"";
-				 gdata +="}";
+		var gdata = new Array();
+		$("#gitbody").find("tr").each(function() {
+			var obj = {};
+			var info = $(this);
+			obj["productId"] = info.find("input[name='productId']").val();
+			obj["goodsNum"] = info.find("input[name='goodsNum']").val();
+			obj["goodsBuyPrice"] = info.find("input[name='goodsBuyPrice']").val();
+			obj["goodsSellingPrice"] = info.find("input[name='goodsSellingPrice']").val();
+			obj["goodsFreight"] = info.find("input[name='goodsFreight']").val();
+			gdata.push(obj);
 		});
-		gdata += "]";
 		console.log(gdata);
-		
-		$("#request-process-patent").html("正在提交数据，请勿关闭当前窗口...");
-		    $.ajax({
-		        type: "POST",
-		        //url: "url":"/goodsInfo/add",
-		        contentType: "application/json; charset=utf-8",
-		        data: JSON.stringify(gdata),
-		        dataType: "json",
-		        success: function (message) {
-		            if (message > 0) {
-		                alert("请求已提交！我们会尽快与您取得联系");
-		            }
-		        },
-		        error: function (message) {
-		            $("#request-process-patent").html("提交数据失败！");
-		        }
-		    });
+		toJson("$!base/addGoodsInfo/addList",gdata,function(result) {
+			window.location.reload()
+		});
 		
 	});
 

@@ -1,16 +1,17 @@
 package com.tangj.web.controller.goods;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.tangj.web.annotation.RequiresPermissions;
 import com.tangj.web.controller.base.BaseController;
 import com.tangj.web.pojo.goods.GoodsInfo;
@@ -25,14 +26,14 @@ public class AddGoodsInfoController extends BaseController{
 	@Autowired
 	private IGoodsService goodsService;
 	
-	@RequiresPermissions(values = "goodsInfo:add")
+	@RequiresPermissions(values = "addGoodsInfo:add")
 	@RequestMapping(value = "" , method = RequestMethod.GET)
 	public ModelAndView index(){
 		ModelAndView view = new ModelAndView("templates/goods/goods/add");
 		//initUsers(view);
 		return view;
 	}
-	@RequiresPermissions(values = "goodsInfo:add")
+	@RequiresPermissions(values = "addGoodsInfo:add")
 	@ResponseBody
 	@RequestMapping(value = "" , method = RequestMethod.POST)
 	public ApiCommonResultVo index(QueryVO vo){
@@ -42,42 +43,25 @@ public class AddGoodsInfoController extends BaseController{
 		return success(page);
 	}
 	
+	
 	//添加
-	@RequiresPermissions(values = "goodsInfo:add")
-	@RequestMapping(value = "add" , method = RequestMethod.GET)
-	public ModelAndView add(){
-		ModelAndView view = new ModelAndView("templates/goods/goods/add");
-		//initGoodsFL(view);
-		//initGoodsGG(view);
-		return view;
-	}
-	@RequiresPermissions(values = "goodsInfo:add")
-	@ResponseBody
-	@RequestMapping(value = "add" , method = RequestMethod.POST)
-	public ApiCommonResultVo add(JSONObject jsonObj){
-		//super.validator(obj, GoodsInfo.ADD);
-		//goodsService.add(obj);
-		System.out.println(jsonObj);
-		return success("操作成功！");
-	}
+			@RequiresPermissions(values = "addGoodsInfo:addList")
+			@RequestMapping(value = "addList" , method = RequestMethod.GET)
+			public ModelAndView addList(){
+				ModelAndView view = new ModelAndView("templates/goods/goods/add");
+				return view;
+			}
+			@RequiresPermissions(values = "addGoodsInfo:addList")
+			@ResponseBody
+			@RequestMapping(value = "addList" , method = RequestMethod.POST)
+			public ApiCommonResultVo addList(@RequestBody  List<GoodsInfo> lst){
+				for (GoodsInfo obj : lst) {
+					super.validator(obj, GoodsInfo.ADD);
+					initInfo(obj);
+					obj.setGoodsStatus(0);/*新增状态*/
+				}
+				goodsService.addList(lst);
+				return success("操作成功！");
+			}
 	
-	
-	//修改
-	@RequiresPermissions(values = "goodsInfo:edit")
-	@RequestMapping(value = "edit" , method = RequestMethod.GET)
-	public ModelAndView edit(Long id){
-		ModelAndView view = new ModelAndView("templates/goods/goods/edit");
-		GoodsInfo obj = goodsService.getGoodsInfoBy(id);
-		view.addObject("obj", obj);
-		initGoodsFL(view);
-		initGoodsGG(view);
-		return view;
-	}
-	@RequiresPermissions(values = "goodsInfo:edit")
-	@ResponseBody
-	@RequestMapping(value = "edit" , method = RequestMethod.POST)
-	public ApiCommonResultVo edit(GoodsInfo obj){
-		
-		return success("操作成功！");
-	}
 }

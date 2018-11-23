@@ -40,4 +40,20 @@ public class GoodsServiceImpl implements IGoodsService {
 		goodsDao.update(obj);
 	}
 
+	@Override
+	public void addList(List<GoodsInfo> lst) {
+		for (GoodsInfo obj : lst) {
+			goodsDao.add(obj);
+		}
+	}
+
+	@Override
+	public List<GoodsInfo> getGoodsInfoList(Map<String, Object> param) {
+		return goodsDao.getList(param);
+	}
+
+	@Override
+	public void updateRemit(Map<String,Object> param) {
+		goodsDao.updateRemit(param);
+	}
 }

@@ -10,21 +10,48 @@
 				{"type":"date","label":"时间","id":"startDate","name":"startDate","placeholder":"收货时间","style":"width:150px"},
 				{"type":"date","label":"至","id":"endDate","name":"endDate","placeholder":"收货时间","style":"width:150px"},
 				{"type":"selected","label":"收货人","id":"createId","name":"createId","placeholder":"收货人","style":"width:150px","dataSource":$!usersInfo,"getValueMethod":"getId","getNameMethod":"getUserName"},
-				{"type":"button","value":"查询","clickFun":"query()","iclass":"Hui-iconfont-search2"},
-				{"type":"button","value":"新增收货","clickFun":"add()","hasPermission":"goodsInfo:add","classes":"btn btn-primary size-M radius","iclass":"Hui-iconfont-add","style":"float:right;"}
+				{"type":"button","value":"查询","clickFun":"query()","iclass":"Hui-iconfont-search2"}
 	],
 	"colums":[
 		{"text":"序号","type":"text","key":"id"},
 		{"text":"商品名称","type":"text","key":"productName"},
 		{"text":"商品分类","type":"text","key":"dicVal"},
-		{"text":"商品规格","colType":"multistation","keys":[{"type":"text","key":"goodsSpecifications"},{"type":"text","key":"goodsCategory"},{"type":"custom","key":"/ 箱"}]},
-		{"text":"收货数量","colType":"multistation","keys":[{"type":"text","key":"goodsCounts"},{"type":"custom","key":"/ 箱"}]},
-		{"text":"收货数量","colType":"multistation","keys":[{"type":"text","key":"goodsNum"},{"type":"text","key":"goodsCategory"}]},
+		{"text":"商品规格","colType":"multistation","keys":[{"type":"text","key":"goodsSpecifications"},{"type":"text","key":"goodsCategorys"},{"type":"custom","key":"/"},{"type":"text","key":"goodsCategory"}]},
+		{"text":"收货数量","colType":"multistation","keys":[{"type":"text","key":"goodsCounts"},{"type":"custom","key":"/"},{"type":"text","key":"goodsCategory"}]},
+		{"text":"收货数量","colType":"multistation","keys":[{"type":"text","key":"goodsNum"},{"type":"text","key":"goodsCategorys"}]},
 		{"text":"运费","colType":"multistation","keys":[{"type":"text","key":"goodsFreight"},{"type":"custom","key":"/ 元"}]}
 	],
 	"operations":[
-		{"text":"编辑","click":"edit(this)","property":[{"key":"id","value":"id"}]},
-		{"text":"汇款","click":"edit(this)","property":[{"key":"remitid","value":"remitId"}]}
+		{"text":"编辑","click":"edit(this,1)","property":[{"key":"id","value":"id"}],
+			"judgement":[
+			[{"key":"goodsStatus","value":"0"}],
+			[{"key":"goodsStatus","value":"1"}],
+			[{"key":"goodsStatus","value":"3"}]
+			]
+		},
+		{"text":"物流","click":"edit(this,2)","property":[{"key":"id","value":"id"}],
+			"judgement":[
+			[{"key":"goodsStatus","value":"0"}],
+			[{"key":"goodsStatus","value":"1"}]
+			]
+		},
+		{"text":"供应商","click":"edit(this,3)","property":[{"key":"id","value":"id"}],
+			"judgement":[
+			[{"key":"goodsStatus","value":"1"}],
+			[{"key":"goodsStatus","value":"3"}]
+			]
+		},
+		{"text":"查看","click":"edit(this,4)","property":[{"key":"id","value":"id"}],
+			"judgement":[
+			[{"key":"goodsStatus","value":"2"}],
+			[{"key":"goodsStatus","value":"4"}]
+			]
+		},
+		{"text":"删除","click":"edit(this,5)","property":[{"key":"id","value":"id"}],
+			"judgement":[
+			[{"key":"goodsStatus","value":"0"}]
+			]
+		}
 	]
 })
 #autocomplete("name" "0")
@@ -55,27 +82,73 @@ function add(){
 	});
 }
 
-function edit(obj){
+function edit(obj,sty){
 	var modify = $(obj);
 	var id = modify.attr("id");
-	Jq.open({"url":"$!base/goodsInfo/edit","title":"修改","height":"500px"},{"id":id},function(index){
-	
-		if( !parent.$("#form-goods-edit").valid() ){
-			return;
-		}
-	
-		Jq.MessageBox.confirm("您确定保存该收货信息吗？",function(){
-			toSaved("$!base/goodsInfo/edit",parent.$("#form-goods-edit").serialize(),function(result){
-				if( result["code"] == 0 ){
-					Jq.closeLoading(index);
-					Jq.msg.success("操作成功");
-					page();
-				}else{
-					Jq.msg.error(result["msg"]);
-				}
+	<!--修改-->
+	if(sty == 1) {
+		Jq.open({"url":"$!base/goodsInfo/edit","title":"修改","height":"500px"},{"id":id},function(index){
+			
+			if( !parent.$("#form-goods-edit").valid() ){
+				return;
+			}
+		
+			Jq.MessageBox.confirm("您确定保存该收货信息吗？",function(){
+				toSaved("$!base/goodsInfo/edit",parent.$("#form-goods-edit").serialize(),function(result){
+					if( result["code"] == 0 ){
+						Jq.closeLoading(index);
+						Jq.msg.success("操作成功");
+						page();
+					}else{
+						Jq.msg.error(result["msg"]);
+					}
+				});
 			});
 		});
-	});
+	} else if(sty == 2) {<!--物流-->
+		Jq.open({"url":"$!base/goodsInfo/ediremit","title":"物流对数","height":"500px"},{"id":id,"stype":2},function(index){
+		
+			if( !parent.$("#form-goods-ediremit").valid() ){
+				return;
+			}
+	
+			Jq.MessageBox.confirm("您确定保存该物流对数信息吗？",function(){
+				toSaved("$!base/goodsInfo/ediremit",parent.$("#form-goods-ediremit").serialize(),function(result){
+					if( result["code"] == 0 ){
+						Jq.closeLoading(index);
+						Jq.msg.success("操作成功");
+						page();
+					}else{
+						Jq.msg.error(result["msg"]);
+					}
+				});
+			});
+		});
+	} else if(sty == 3) {<!--供应商-->
+		Jq.open({"url":"$!base/goodsInfo/ediremit","title":"供应商对数","height":"500px"},{"id":id,"stype":3},function(index){
+			if( !parent.$("#form-goods-ediremit").valid() ){
+				return;
+			}
+			Jq.MessageBox.confirm("您确定保存该供应商对数信息吗？",function(){
+				toSaved("$!base/goodsInfo/ediremit",parent.$("#form-goods-ediremit").serialize(),function(result){
+					if( result["code"] == 0 ){
+						Jq.closeLoading(index);
+						Jq.msg.success("操作成功");
+						page();
+					}else{
+						Jq.msg.error(result["msg"]);
+					}
+				});
+			});
+		});
+	} else if(sty == 4){<!--查看-->
+		Jq.open({"url":"$!base/goodsInfo/ediremit","title":"查看明细","height":"500px"},{"id":id,"stype":5},function(index){
+		});
+	} else {<!--删除-->
+		
+	}
+	
+	
 }
 
 

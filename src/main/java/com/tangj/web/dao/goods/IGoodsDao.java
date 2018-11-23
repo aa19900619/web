@@ -45,5 +45,13 @@ public interface IGoodsDao {
 	 */
 	@UpdateProvider(type = GoodsProvider.class, method = "update")
 	public void update(GoodsInfo obj);
+	
+	/**
+	 * 修改汇款id
+	 * 
+	 * @param param
+	 */
+	@UpdateProvider(type = GoodsProvider.class, method = "updateRemit")
+	public void updateRemit(Map<String, Object> param);
 
 }
