@@ -29,4 +29,6 @@ public class TableConstanst {
 	//借货表
 	public static final String TB_BORROW_GOODS = "tb_borrow_goods";
 	
+	//上传文件表
+	public static final String TB_UPLOAD_FILE = "tb_upload_file";
 }

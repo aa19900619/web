@@ -146,9 +146,9 @@ a:active{
 						#elseif( "$_col.colType" == "date" )
 							<div class="formControls col-xs-$!col_length col-sm-$!col_length">
 								#if( "$!_col.readonly" == "true" )
-									$date.format($!_col.value,$!_col.dateformat)
+									$!_col.value
 								#else
-									<input type="text" class="input-text Wdate" value="$!date.formate($!_col.value,'$!_col.formate')" placeholder="$!_col.placeholder" id="$!_col.name" name="$!_col.name" onfocus="WdatePicker()">
+									<input type="text" class="input-text Wdate" value="$!_col.value" placeholder="$!_col.placeholder" id="$!_col.name" name="$!_col.name" onfocus="WdatePicker()">
 								#end
 							</div>	
 						#elseif( "$!_col.colType" == "select" )	

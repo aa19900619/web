@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tangj.web.Exception.BaseException;
@@ -36,6 +37,9 @@ public class BaseController {
 	
 	@Autowired
 	protected IUserService iUserService;
+	
+	@Value("${file.root}")
+	protected String rootpath;
 	
 	/**
 	 * 操作成功！
@@ -120,13 +124,17 @@ public class BaseController {
 	
 	
 	protected void initInfo(BaseInfo obj){
-		UserInfo user = SessionUtils.getSessionUser();
+		UserInfo user = this.getUserInfo();
 		obj.setCreateUserId(user.getId());
 		obj.setCreateTime(new Date());
 		obj.setUpdateUserId(user.getId());
 		obj.setUpdateTime(new Date());
 	}
 	
+	
+	protected UserInfo getUserInfo(){
+		return SessionUtils.getSessionUser();
+	}
 	
 	/**
 	 * 初始化商品分类字典

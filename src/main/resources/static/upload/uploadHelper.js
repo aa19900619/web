@@ -32,8 +32,12 @@ function upload(id,fn,accept,type){
         businessType:type,
         success: function(data, status){
         	Jq.closeLoading(index);
-        	data["buttonId"] = id;
-        	fn(data);
+        	//data["buttonId"] = id;
+        	if( data.code == 0 ){
+        		fn(data["data"]);
+        	}else{
+        		Jq.MessageBox.error("上传失败，失败原因：" + data["msg"]);
+        	}
         },
         error: function(data, status, e){
         	Jq.closeLoading(index);
