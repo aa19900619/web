@@ -46,7 +46,7 @@
 	]
 })
 <div id="div_frmbtn" style="text-align:center;"><input type="button" id="frmbtn" name="frmbtn" class="button button-primary button-rounded button-small" value="汇款" /></div>
-<div id="div_frmbtnre" style="text-align:center;DISPLAY: none;"><center><input type="button" id="frmbtnre" name="frmbtn" class="button button-primary button-rounded button-small" value="取消" /></div>
+<div id="div_frmbtnre" style="text-align:center;DISPLAY: none;"><input type="button" id="frmbtnre" name="frmbtn" class="button button-primary button-rounded button-small" value="取消" /></div>
 <script>
 $(function(){
 	var div_ = $("div[id='div_rows']");
