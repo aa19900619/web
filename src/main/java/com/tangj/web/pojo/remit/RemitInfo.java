@@ -39,6 +39,7 @@ public class RemitInfo extends BaseInfo{
 	private BigDecimal goodsCounts;
 	private Long goodsNum;
 	private Long goodsId;
+	private Integer goodsStatus;
 
 	public Long getId() {
 		return id;
@@ -110,5 +111,13 @@ public class RemitInfo extends BaseInfo{
 
 	public void setGoodsId(Long goodsId) {
 		this.goodsId = goodsId;
+	}
+
+	public Integer getGoodsStatus() {
+		return goodsStatus;
+	}
+
+	public void setGoodsStatus(Integer goodsStatus) {
+		this.goodsStatus = goodsStatus;
 	}
 }

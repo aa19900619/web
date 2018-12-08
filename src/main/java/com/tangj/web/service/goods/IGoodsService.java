@@ -59,5 +59,11 @@ public interface IGoodsService {
 	 * @param param
 	 */
 	public void updateRemit(Map<String,Object> param);
+	
+	/**
+	 * 修改收货信息，增加商品库存
+	 * @param obj
+	 */
+	public void updateGoodsProductInfo(GoodsInfo obj);
 
 }

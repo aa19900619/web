@@ -19,6 +19,7 @@ import com.tangj.web.pojo.sys.RegionInfo;
 import com.tangj.web.pojo.sys.UserInfo;
 import com.tangj.web.service.sys.IDictionaryService;
 import com.tangj.web.service.sys.IRegionService;
+import com.tangj.web.service.sys.ISupplierService;
 import com.tangj.web.service.sys.IUserService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.SessionUtils;
@@ -37,6 +38,9 @@ public class BaseController {
 	
 	@Autowired
 	protected IUserService iUserService;
+	
+	@Autowired
+	protected ISupplierService iSupplierService;
 	
 	@Value("${file.root}")
 	protected String rootpath;
@@ -168,4 +172,18 @@ public class BaseController {
 		}).collect(Collectors.toList());
 	}
 	
+	/**
+	 * 
+	 * @param view
+	 */
+	public void initSupplies(ModelAndView view, String typs) {
+		Map<String, Object> param = new HashMap<>();
+		if(typs != null || "本地供应商".equals(typs)) {
+			/*查询本地供应商 设置查询条件湖南株洲醴陵*/
+			param.put("province", "430000");
+			param.put("city", "430200");
+			param.put("area", "430281");
+		}
+		view.addObject("supList", iSupplierService.getSupList(param));
+	}
 }

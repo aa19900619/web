@@ -1,6 +1,7 @@
 package com.tangj.web.service.sys.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,11 @@ public class SupplierServiceImpl implements ISupplierService{
 	@Override
 	public void update(SupplierInfo obj) {
 		supplierDao.update(obj);
+	}
+
+	@Override
+	public List<SupplierInfo> getSupList(Map<String, Object> param) {
+		return supplierDao.getSupList(param);
 	}
 
 }

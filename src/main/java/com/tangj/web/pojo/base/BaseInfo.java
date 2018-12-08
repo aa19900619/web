@@ -5,10 +5,14 @@ import java.util.Date;
 public class BaseInfo {
 
 	private Long createUserId;
+	
+	private String userName;
 
 	private Date createTime;
 
 	private Long updateUserId;
+	
+	private String upUserName;
 
 	private Date updateTime;
 
@@ -18,6 +22,14 @@ public class BaseInfo {
 
 	public void setCreateUserId(Long createUserId) {
 		this.createUserId = createUserId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public Date getCreateTime() {
@@ -36,6 +48,14 @@ public class BaseInfo {
 		this.updateUserId = updateUserId;
 	}
 
+	public String getUpUserName() {
+		return upUserName;
+	}
+
+	public void setUpUserName(String upUserName) {
+		this.upUserName = upUserName;
+	}
+
 	public Date getUpdateTime() {
 		return updateTime;
 	}
@@ -43,5 +63,4 @@ public class BaseInfo {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-
 }

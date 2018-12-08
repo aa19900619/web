@@ -1,6 +1,7 @@
 package com.tangj.web.dao.supplier;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Options;
@@ -26,5 +27,9 @@ public interface ISupplierDao {
 	
 	@UpdateProvider(type = SupplierProvider.class , method = "update")
 	public void update(SupplierInfo obj);
+	
+	
+	@SelectProvider(type = SupplierProvider.class , method = "getSupList")
+	public List<SupplierInfo> getSupList(Map<String, Object> param);
 	
 }
