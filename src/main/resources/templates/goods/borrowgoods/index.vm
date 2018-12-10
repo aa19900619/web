@@ -3,26 +3,44 @@
 	"nav":[
 			{"title":"商品管理"},{"title":"商品管理"}
 	],
-	"url":"productInfo",
+	"url":"borrowGoodsInfo",
 	"query":[
 				{"type":"text","label":"商品名称","id":"name","name":"name","placeholder":"商品名称","style":"width:150px"},
 				{"type":"button","value":"查询","clickFun":"query()","iclass":"Hui-iconfont-search2"},
 				{"type":"button","value":"添加商品","clickFun":"add()","hasPermission":"goodsInfo:add","classes":"btn btn-primary size-M radius","iclass":"Hui-iconfont-add","style":"float:right;"}
 	],
 	"colums":[
-		{"text":"序号","type":"text","key":"id"},
-		{"text":"商品名称","type":"text","key":"goodsName"},
-		{"text":"商品分类","type":"text","key":"goodsType"},
-		{"text":"商品类别","type":"text","key":"goodsCategory"},
-		{"text":"商品规格","type":"text","key":"goodsSpecifications"},
-		{"text":"条形码","type":"text","key":"goodsBarCode"},
-		{"text":"产地","type":"text","key":"goodsPlaceOfOrigin"}
+		{"text":"商品名称","type":"text","key":"productName"},
+		{"text":"供应商名字","type":"text","key":"supName"},
+		{"text":"商品规格","colType":"multistation","keys":[{"type":"text","key":"goodsSpecifications"},{"type":"text","key":"goodsCategorys"},{"type":"custom","key":"/"},{"type":"text","key":"goodsCategory"}]},
+		{"text":"数量","colType":"multistation","keys":[{"type":"text","key":"counts"},{"type":"text","key":"goodsCategory"},{"type":"custom","key":"/"},{"type":"text","key":"nums"}, {"type":"text","key":"goodsCategorys"}]},
+		{"text":"方式","type":"text","key":"type"}
 	],
 	"operations":[
-		{"text":"编辑","click":"edit(this)","property":[{"key":"id","value":"id"}]}
+		{"text":"编辑","click":"edit(this,1)","property":[{"key":"id","value":"id"}],
+			"judgement":[
+			[{"key":"status","value":"0"}]
+			]
+		},
+		{"text":"归还","click":"edit(this,1)","property":[{"key":"id","value":"id"}],
+			"judgement":[
+			[{"key":"status","value":"0"}]
+			]
+		},
+		{"text":"删除","click":"edit(this,1)","property":[{"key":"id","value":"id"}],
+			"judgement":[
+			[{"key":"status","value":"0"}]
+			]
+		},
+		{"text":"查看","click":"edit(this,1)","property":[{"key":"id","value":"id"}],
+			"judgement":[
+			[{"key":"status","value":"1"}],
+			[{"key":"status","value":"-1"}]
+			]
+		}
 	]
 })
-
+#autocomplete("name" "0")
 <script>
 function add(){
 	Jq.open({"url":"$!base/productInfo/add","title":"新增","height":"500px"},{},function(index){

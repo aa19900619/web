@@ -54,5 +54,13 @@ public class ProductProvider {
 		return sql.toString();
 	}
 	
-	
+	public String updateProduct(Map<String,Object> param) {
+		SQL sql = new SQL();
+		sql.UPDATE(TableConstanst.TB_PRODUCT);
+		if( param.get("pCounts") != null && !"".equals(param.get("pCounts"))){
+			sql.SET("product_counts = product_counts + #{pCounts}");
+		}
+		sql.WHERE("id = #{id}");
+		return sql.toString();
+	}
 }

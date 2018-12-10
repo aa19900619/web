@@ -1,7 +1,9 @@
 #detail({
 	"id":"form-goods-edit",
 	"hiddens":[
-		{"name":"id","value":"$!obj.id"}
+		{"name":"id","value":"$!obj.id"},
+		{"name":"goodsNumed","value":"$!obj.goodsNum"},
+		{"name":"productId","value":"$!obj.productId"}
 	],
 	"rows":[
 		{"cols":[
@@ -10,11 +12,9 @@
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"商品分类"},
-			{"colType":"text","length":"9","name":"dicVal","value":"$!obj.dicVal","readonly":"true"}
-		]},
-		{"cols":[
+			{"colType":"text","length":"2","name":"dicVal","value":"$!obj.dicVal","readonly":"true"},
 			{"colType":"label","length":"2","colRequired":true,"text":"商品规格"},
-			{"colType":"text","length":"9","name":"goodsSpecificationsmsg","value":"$!obj.goodsSpecifications$!obj.goodsCategory","readonly":"true"}
+			{"colType":"text","length":"2","name":"goodsSpecificationsmsg","value":"$!obj.goodsSpecifications$!obj.goodsCategory","readonly":"true"}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","text":"收货数量"},
@@ -30,11 +30,9 @@
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","text":"进货价"},
-			{"colType":"text","length":"9","name":"goodsBuyPrice","value":"$!obj.goodsBuyPrice","placeholder":"请输入进货价"}
-		]},
-		{"cols":[
+			{"colType":"text","length":"3","name":"goodsBuyPrice","value":"$!obj.goodsBuyPrice","placeholder":"请输入进货价"},
 			{"colType":"label","length":"2","text":"出货价"},
-			{"colType":"text","length":"9","name":"goodsSellingPrice","value":"$!obj.goodsSellingPrice","placeholder":"请输入出货价"}
+			{"colType":"text","length":"3","name":"goodsSellingPrice","value":"$!obj.goodsSellingPrice","placeholder":"请输入出货价"}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"状态"},

@@ -1,5 +1,6 @@
 package com.tangj.web.controller.goods;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -88,7 +89,6 @@ public class GoodsInfoController extends BaseController{
 		public ApiCommonResultVo edit(GoodsInfo obj){
 			super.validator(obj, GoodsInfo.MODIFY);
 			initInfo(obj);
-			goodsService.update(obj);
 			return success("操作成功！");
 		}
 		
@@ -100,12 +100,12 @@ public class GoodsInfoController extends BaseController{
 				public ModelAndView ediremit(Long id,Long stype){
 					ModelAndView view = new ModelAndView("templates/goods/goods/goods_remit");
 					GoodsInfo obj = goodsService.getGoodsInfoBy(id);
-					if(stype == 2) {//物流对数
-						obj.setGoodsStatus(2);
-					} else if(stype == 3) {//供应商对数
+					if(stype == 1) {//物流对数
+						obj.setGoodsStatus(1);
+					} else if(stype == 2) {//供应商对数
+						obj.setGoodsStatus(3);
+					} else if(stype == 3) {//查看
 						obj.setGoodsStatus(4);
-					} else if(stype == 5) {//查看
-						obj.setGoodsStatus(5);
 					}
 					view.addObject("obj", obj);
 					return view;
@@ -114,10 +114,34 @@ public class GoodsInfoController extends BaseController{
 				@ResponseBody
 				@RequestMapping(value = "ediremit" , method = RequestMethod.POST)
 				public ApiCommonResultVo ediremit(GoodsInfo obj){
-					initInfo(obj);
-
-					System.out.println(obj.getRemitMoney()+ ":汇款金额发斯蒂芬斯蒂芬斯蒂芬水电费士大夫士大夫士大夫数对 ");
 					RemitInfo rInfo = new RemitInfo();
+					Map<String,Object> param = new HashMap<>();
+					initInfo(rInfo);
+					if(obj.getGoodsStatus() == 2) {/**物流对数改状态**/
+						if(obj.getRemitMoney() == null || "".equals(obj.getRemitMoney())) {
+							param.put("id", obj.getId());
+							param.put("goodsStatus", "1");
+							//goodsService.updateRemit(param);
+						} else {/**物流结款 新增汇款信息，修改收货表汇款id**/
+							rInfo.setGoodsId(obj.getId());
+							rInfo.setRemitType(obj.getRemitType());
+							rInfo.setRemitMoney(obj.getRemitMoney());
+							rInfo.setGoodsStatus(2);
+							remitService.update(rInfo);
+						}
+							
+					} else if(obj.getGoodsStatus() == 3) {/**供应商对数，默认已结款**/
+						rInfo.setGoodsId(obj.getId());
+						rInfo.setRemitType(obj.getRemitType());
+						rInfo.setGoodsStatus(3);
+						if(obj.getRemitMoney() == null || "".equals(obj.getRemitMoney())) {
+							Long remitMoney = obj.getGoodsNum() / obj.getGoodsSpecifications() * obj.getGoodsBuyPrice().longValue();
+							rInfo.setRemitMoney(new BigDecimal(remitMoney));
+							remitService.update(rInfo);
+						}
+						
+					}
+					
 					//remitService.updateRemit(obj);
 					return success("操作成功！");
 				}

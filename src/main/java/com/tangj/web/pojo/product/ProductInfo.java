@@ -1,8 +1,10 @@
 package com.tangj.web.pojo.product;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.tangj.web.pojo.base.BaseInfo;
+import com.tangj.web.pojo.supplier.SupplierInfo;
 import com.tangj.web.util.Constanst;
 
 import net.sf.oval.constraint.MaxLength;
@@ -82,6 +84,8 @@ public class ProductInfo extends BaseInfo{
 	@NotEmpty(message = "运费不能为空", profiles = { MODIFY, ADD })
 	@Min(value = 1, message = "运费格式错误", profiles = { MODIFY, ADD })
 	private BigDecimal productFreight;
+	
+	private List<SupplierInfo> slist;
 
 	public Long getId() {
 		return id;
@@ -209,6 +213,14 @@ public class ProductInfo extends BaseInfo{
 
 	public void setProductFreight(BigDecimal productFreight) {
 		this.productFreight = productFreight;
+	}
+
+	public List<SupplierInfo> getSlist() {
+		return slist;
+	}
+
+	public void setSlist(List<SupplierInfo> slist) {
+		this.slist = slist;
 	}
 	
 	

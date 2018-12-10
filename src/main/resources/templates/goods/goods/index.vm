@@ -37,19 +37,19 @@
 		},
 		{"text":"供应商","click":"edit(this,3)","property":[{"key":"id","value":"id"}],
 			"judgement":[
-			[{"key":"goodsStatus","value":"1"}],
-			[{"key":"goodsStatus","value":"3"}]
+			[{"key":"goodsStatus","value":"1"}]
 			]
 		},
 		{"text":"查看","click":"edit(this,4)","property":[{"key":"id","value":"id"}],
 			"judgement":[
 			[{"key":"goodsStatus","value":"2"}],
-			[{"key":"goodsStatus","value":"4"}]
+			[{"key":"goodsStatus","value":"3"}]
 			]
 		},
 		{"text":"删除","click":"edit(this,5)","property":[{"key":"id","value":"id"}],
 			"judgement":[
-			[{"key":"goodsStatus","value":"0"}]
+			[{"key":"goodsStatus","value":"0"}],
+			[{"key":"goodsStatus","value":"1"}]
 			]
 		}
 	]
@@ -106,7 +106,7 @@ function edit(obj,sty){
 			});
 		});
 	} else if(sty == 2) {<!--物流-->
-		Jq.open({"url":"$!base/goodsInfo/ediremit","title":"物流对数","height":"500px"},{"id":id,"stype":2},function(index){
+		Jq.open({"url":"$!base/goodsInfo/ediremit","title":"物流对数","height":"500px"},{"id":id,"stype":1},function(index){
 		
 			if( !parent.$("#form-goods-ediremit").valid() ){
 				return;
@@ -125,7 +125,7 @@ function edit(obj,sty){
 			});
 		});
 	} else if(sty == 3) {<!--供应商-->
-		Jq.open({"url":"$!base/goodsInfo/ediremit","title":"供应商对数","height":"500px"},{"id":id,"stype":3},function(index){
+		Jq.open({"url":"$!base/goodsInfo/ediremit","title":"供应商对数","height":"500px"},{"id":id,"stype":2},function(index){
 			if( !parent.$("#form-goods-ediremit").valid() ){
 				return;
 			}
@@ -142,7 +142,7 @@ function edit(obj,sty){
 			});
 		});
 	} else if(sty == 4){<!--查看-->
-		Jq.open({"url":"$!base/goodsInfo/ediremit","title":"查看明细","height":"500px"},{"id":id,"stype":5},function(index){
+		Jq.open({"url":"$!base/goodsInfo/ediremit","title":"查看明细","height":"500px"},{"id":id,"stype":3},function(index){
 		});
 	} else {<!--删除-->
 		

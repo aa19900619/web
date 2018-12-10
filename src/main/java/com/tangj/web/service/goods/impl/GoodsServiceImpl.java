@@ -1,5 +1,6 @@
 package com.tangj.web.service.goods.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.tangj.web.dao.goods.IGoodsDao;
+import com.tangj.web.dao.product.IProductDao;
 import com.tangj.web.pojo.goods.GoodsInfo;
 import com.tangj.web.service.goods.IGoodsService;
 import com.tangj.web.util.UIPage;
@@ -17,6 +19,9 @@ public class GoodsServiceImpl implements IGoodsService {
 
 	@Autowired
 	private IGoodsDao goodsDao;
+	
+	@Autowired
+	private IProductDao productDao;
 
 	@Override
 	public GoodsInfo getGoodsInfoBy(Long id) {
@@ -42,8 +47,14 @@ public class GoodsServiceImpl implements IGoodsService {
 
 	@Override
 	public void addList(List<GoodsInfo> lst) {
+		Map<String,Object> param = new HashMap<>();
 		for (GoodsInfo obj : lst) {
 			goodsDao.add(obj);
+			/**新增收货信息，增加商品库存**/
+			param.put("pCounts", obj.getGoodsNum());
+			param.put("id", obj.getProductId());
+			productDao.updateProduct(param);
+			param.clear();
 		}
 	}
 
@@ -56,4 +67,17 @@ public class GoodsServiceImpl implements IGoodsService {
 	public void updateRemit(Map<String,Object> param) {
 		goodsDao.updateRemit(param);
 	}
+
+	@Override
+	public void updateGoodsProductInfo(GoodsInfo obj) {
+		Long gnum = obj.getGoodsNum() - obj.getGoodsNumed();
+		Map<String,Object> param = new HashMap<>();
+		if(gnum != 0 ) {
+			param.put("pCounts", gnum);
+			param.put("id", obj.getProductId());
+			productDao.updateProduct(param);
+			param.clear();
+		}
+	}
+
 }

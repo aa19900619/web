@@ -10,21 +10,31 @@
 商品名称：<input type="text" id="name" name="name" style="width:150px" class="input-text" />
 <br>
 <br>
-
+	<table class="table table-border table-bordered table-hover table-bg table-sort" id="talbe_sup">
+		<tr>
+			<td onclick="changedir()" background="../images/borrow.png">$!hnpfb</td>
+			<td align="right">
+				<select id='suppliersId' name='suppliersId'>
+					#foreach($item in $!supList)
+						<option value="$!item.id">$!item.name</option>
+					#end
+				</select>
+				<input id="hnpfb" type="hidden" value="$!hnpfb">	
+			</td>
+		</tr>
+	</table>
 	<table id="table1" class="table table-border table-bordered table-hover table-bg table-sort">
 		<thead>
 			<tr class="text-c">
-				<th width="">商品名称</th>
-				<th width="">规格</th>
-				<th width="">收货数量</th>
-				<th width="">进货价</th>
-				<th width="">出货价</th>
-				<th width="">运费</th>
-				<th width="90px">操作</th>
+				<th width="300px">商品名称</th>
+				<th width="100px">规格</th>
+				<th width="">数量</th>
+				<th width="50px">操作</th>
 			</tr>
+			
 		</thead>
 		<tbody id="gitbody">
-			</tbody>
+		</tbody>
 		</table>
 		
 		</div>
@@ -51,31 +61,22 @@
 		var td2 = $("<td id=td" + row_name + ">"+"</td>"); 
 		var td3 = $("<td id=td" + row_name + ">"+"</td>"); 
 		var td4 = $("<td id=td" + row_name + ">"+"</td>"); 
-		var td5 = $("<td id=td" + row_name + ">"+"</td>"); 
-		var td6 = $("<td id=td" + row_name + ">"+"</td>"); 
-		var td7 = $("<td id=td" + row_name + ">"+"</td>"); 
 		var td8 = $("<td id=td" + row_name + ">"+"</td>"); 
 		td2.append("<label> "+ obj.goodsName + " </label>");
 		td2.append("<input type='hidden' id='productId' name='productId' value='"+ obj.id + "' >");
-		td3.append("<label> "+ obj.goodsSpecifications + obj.goodsCategory+" </label>");
+		td3.append("<label> " + obj.goodsSpecifications + " " + obj.goodsCategorys + " \\ " + obj.goodsCategory + " </label>");
 		td4.append("<button type='button' onclick='changeCounts(1,"+ obj.goodsSpecifications+ "," +row_name+",-1)' class='button button-box button-tiny'><i class='fa fa-plus'>-</i></button>");
 		td4.append("<input style='width:100px' onfocus='$(this).select()' onkeyup='changeKeyUp(this,"+ obj.goodsSpecifications+ "," +row_name+",1)'  class='input-text'  type='text' id='goodsCounts' name='goodsCounts' value=0>");
-		td4.append("<button type='button' onclick='changeCounts(1,"+ obj.goodsSpecifications+ "," +row_name+",1)' class='button button-box button-tiny'><i class='fa fa-plus'>+</i></button>");
-		td4.append("<center>" + obj.goodsCategory + "</center>");
-		td4.append("<button type='button' onclick='changeCounts(2,"+ obj.goodsSpecifications+ "," +row_name+",-1)' class='button button-box button-tiny'><i class='fa fa-plus'>-</i></button>");
+		td4.append("<button type='button' onclick='changeCounts(1,"+ obj.goodsSpecifications+ "," +row_name+",1)' class='button button-box button-tiny'><i class='fa fa-plus'>+</i></button>&nbsp;&nbsp;");
+		td4.append(obj.goodsCategory);
+		td4.append("&nbsp;&nbsp;<button type='button' onclick='changeCounts(2,"+ obj.goodsSpecifications+ "," +row_name+",-1)' class='button button-box button-tiny'><i class='fa fa-plus'>-</i></button>");
 		td4.append("<input style='width:100px' onfocus='$(this).select()' onkeyup='changeKeyUp(this,"+ obj.goodsSpecifications+ "," +row_name+",-1)' class='input-text' size=1 type='text' id='goodsNum' name='goodsNum' value=0>") ;
-		td4.append("<button type='button' onclick='changeCounts(2,"+ obj.goodsSpecifications + "," +row_name+",1)' class='button button-box button-tiny'><i class='fa fa-plus'>+</i></button>");
-		td4.append("<center>" + obj.goodsCategorys + "</center>");
-		td5.append("<input  style='width:100px' class='input-text' type='text' id='goodsBuyPrice' name='goodsBuyPrice'  value="+ obj.productBuyPrice+" onkeyup='isNum(this)'>") ;
-		td6.append("<input style='width:100px' class='input-text' type='text' id='goodsSellingPrice' name='goodsSellingPrice' value="+ obj.productSellingPrice+" onkeyup='isNum(this)'>") ;
-		td7.append("<input style='width:100px' class='input-text' type='text' id='goodsFreight' name='goodsFreight' value="+ obj.productFreight+" onkeyup='isNum(this)'>") ;
+		td4.append("<button type='button' onclick='changeCounts(2,"+ obj.goodsSpecifications + "," +row_name+",1)' class='button button-box button-tiny'><i class='fa fa-plus'>+</i></button>&nbsp;&nbsp;");
+		td4.append(obj.goodsCategorys);
 		td8.append("<a onclick='delRow(this,1)'>删除</a>") ;
 		row.append(td2); 
 		row.append(td3); 
 		row.append(td4); 
-		row.append(td5); 
-		row.append(td6); 
-		row.append(td7); 
 		row.append(td8); 
 		table1.append(row);
 		row_count++;
@@ -93,7 +94,7 @@
 	function delRow(obj,types) 
 	{ 
 		if(types == 1) {
-			if(confirm("是否删除该条收货？")) {
+			if(confirm("是否删除该条借货？")) {
 				$(obj).parent().parent().remove(); 
 				if($("#gitbody").find("tr").size() == 0 ){
 					$("#div_btn").hide();
@@ -102,7 +103,7 @@
 			
 		} else {
 			if(row_count > 0) {
-				if(confirm("是否删除全部收货信息？")) {
+				if(confirm("是否删除全部借货信息？")) {
 					$("#gitbody").find("tr").remove();
 					row_count = 0;
 					row_name = 0;
@@ -182,18 +183,19 @@
 			return;
 		}
 		var gdata = new Array();
+		var supId = $("#suppliersId").val();
 		$("#gitbody").find("tr").each(function() {
 			var obj = {};
 			var info = $(this);
+			obj["suppliersId"] = supId;
 			obj["productId"] = info.find("input[name='productId']").val();
-			obj["goodsNum"] = info.find("input[name='goodsNum']").val();
-			obj["goodsBuyPrice"] = info.find("input[name='goodsBuyPrice']").val();
-			obj["goodsSellingPrice"] = info.find("input[name='goodsSellingPrice']").val();
-			obj["goodsFreight"] = info.find("input[name='goodsFreight']").val();
+			obj["nums"] = info.find("input[name='goodsNum']").val();
+			obj["type"] = cdtyps;
+			obj["status"] = 0;
 			gdata.push(obj);
 		});
 		console.log(gdata);
-		toJson("$!base/addGoodsInfo/addList",gdata,function(result) {
+		toJson("$!base/addBorrowGoodsInfo/addList",gdata,function(result) {
 			window.location.reload()
 		});
 		
@@ -213,11 +215,21 @@
 		return "";
 	}
 	
-	$(function(){
-		var len = $("input:hidden[name=productId]");
-		$.each(len,function(i,item){
-			
-		});
-		
-	});
+	var cdtyps = 0;
+	function changedir() {
+		if(cdtyps == 1) {
+			alert("其他商行借货");
+			$("#talbe_sup tr:eq(-1) td:eq(-1)").after("<td onclick='changedir(1)'>" + $("#hnpfb").val() + "</td>")
+			$("#talbe_sup tr:eq(-1) td:eq(-2)").attr("background", "../images/borrow.png");
+			$("#talbe_sup tr:eq(-1) td:eq(-3)").remove();
+			cdtyps = 1;
+		} else {
+			alert("借进商品");
+			$("#talbe_sup tr:eq(-1) td:eq(-2)").before("<td onclick='changedir(1)' background='../images/borrow.png'>" + $("#hnpfb").val() + "</td>")
+			$("#talbe_sup tr:eq(-1) td:eq(-2)").attr("background", "");
+			$("#talbe_sup tr:eq(-1) td:eq(-1)").remove();
+			cdtyps = 0;
+		}
+	}
+	
 	</script>

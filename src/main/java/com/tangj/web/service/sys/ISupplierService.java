@@ -1,5 +1,8 @@
 package com.tangj.web.service.sys;
 
+import java.util.List;
+import java.util.Map;
+
 import com.tangj.web.pojo.supplier.SupplierInfo;
 import com.tangj.web.util.UIPage;
 import com.tangj.web.vo.sys.supplier.QueryVO;
@@ -32,5 +35,12 @@ public interface ISupplierService {
 	 * @param obj
 	 */
 	public void update(SupplierInfo obj);
+	
+	/**
+	 * 查询供应商列表
+	 * @param param
+	 * @return
+	 */
+	public List<SupplierInfo> getSupList(Map<String,Object> param);
 	
 }

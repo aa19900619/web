@@ -1,5 +1,7 @@
 package com.tangj.web.dao.supplier;
 
+import java.util.Map;
+
 import org.apache.ibatis.jdbc.SQL;
 
 import com.tangj.web.util.TableConstanst;
@@ -62,6 +64,28 @@ public class SupplierProvider {
 		sql.SET("update_time = #{updateTime}");
 		
 		sql.WHERE("id = #{id}");
+		return sql.toString();
+	}
+	
+	public String getSupList(Map<String, Object> param) {
+		SQL sql = new SQL();
+		sql.SELECT("a.*");
+		sql.SELECT(" b.region_name as provinceName ");
+		sql.SELECT(" c.region_name as cityName ");
+		sql.SELECT(" d.region_name as areaName ");
+		sql.FROM(TableConstanst.TB_SUPPLIERS + " a ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_REGION + " b on a.province = b.id ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_REGION + " c on a.city = c.id ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_REGION + " d on a.area = d.id ");
+		if( param.get("province") != null && !"".equals(param.get("province"))){
+			sql.WHERE("a.province=#{province}");
+		}
+		if( param.get("city") != null && !"".equals(param.get("city"))){
+			sql.WHERE("a.city=#{city}");
+		}
+		if( param.get("area") != null && !"".equals(param.get("area"))){
+			sql.WHERE("a.area=#{area}");
+		}
 		return sql.toString();
 	}
 	

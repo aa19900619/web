@@ -66,6 +66,16 @@
 				</ul>
 			</dd>
 		</dl>
+		
+		<dl id="menu-article">
+			<dt><i class="Hui-iconfont">&#xe616;</i>借货管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a _href="$!base/borrowGoodsInfo" data-title="借货管理" href="javascript:void(0)">借货管理</a></li>
+					<li><a _href="$!base/addBorrowGoodsInfo" data-title="借货管理" href="javascript:void(0)">新增借货</a></li>
+				</ul>
+			</dd>
+		</dl>
 	</div>
 </aside>
 	

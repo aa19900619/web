@@ -30,7 +30,7 @@ public class GoodsInfo extends BaseInfo {
 	@NotNull(message = "收货数量不能为空", profiles = { MODIFY, ADD })
 	@NotEmpty(message = "收货数量不能为空", profiles = { MODIFY, ADD })
 	@Min(value = 1, message = "收货数量不能为0", profiles = { MODIFY, ADD })
-	private BigDecimal goodsNum;
+	private Long goodsNum;
 
 	@NotNull(message = "进货价不能为空", profiles = { MODIFY, ADD })
 	@NotEmpty(message = "进货价不能为空", profiles = { MODIFY, ADD })
@@ -47,7 +47,7 @@ public class GoodsInfo extends BaseInfo {
 	@Min(value = 1, message = "运费格式错误", profiles = { MODIFY, ADD })
 	private BigDecimal goodsFreight;
 	
-	/*默认新增为0，1物流对数，2物流结款，3供应商对数，4供应商结款，删除-1*/
+	/*默认新增为0，1物流对数，2物流结款，3供应商对数默认结款，删除-1*/
 	private Integer goodsStatus;
 	private Long suppliersId;
 	private Long remitId;
@@ -58,10 +58,11 @@ public class GoodsInfo extends BaseInfo {
 	private String userName;
 	private String goodsCategory;
 	private String goodsCategorys;
-	private String remitType;
-	private String remitMoney;
+	private Integer remitType;
+	private BigDecimal remitMoney;
 	private String remitImg;
 	private Date remitCreateTime;
+	private Long goodsNumed;
 	
 
 	public Long getId() {
@@ -88,11 +89,11 @@ public class GoodsInfo extends BaseInfo {
 		this.goodsCounts = goodsCounts;
 	}
 
-	public BigDecimal getGoodsNum() {
+	public Long getGoodsNum() {
 		return goodsNum;
 	}
 
-	public void setGoodsNum(BigDecimal goodsNum) {
+	public void setGoodsNum(Long goodsNum) {
 		this.goodsNum = goodsNum;
 	}
 
@@ -200,19 +201,19 @@ public class GoodsInfo extends BaseInfo {
 		this.goodsCategorys = goodsCategorys;
 	}
 
-	public String getRemitType() {
+	public Integer getRemitType() {
 		return remitType;
 	}
 
-	public void setRemitType(String remitType) {
+	public void setRemitType(Integer remitType) {
 		this.remitType = remitType;
 	}
 
-	public String getRemitMoney() {
+	public BigDecimal getRemitMoney() {
 		return remitMoney;
 	}
 
-	public void setRemitMoney(String remitMoney) {
+	public void setRemitMoney(BigDecimal remitMoney) {
 		this.remitMoney = remitMoney;
 	}
 
@@ -230,6 +231,14 @@ public class GoodsInfo extends BaseInfo {
 
 	public void setRemitCreateTime(Date remitCreateTime) {
 		this.remitCreateTime = remitCreateTime;
+	}
+
+	public Long getGoodsNumed() {
+		return goodsNumed;
+	}
+
+	public void setGoodsNumed(Long goodsNumed) {
+		this.goodsNumed = goodsNumed;
 	}
 
 }

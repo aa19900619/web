@@ -53,4 +53,11 @@ public interface IProductDao {
 	
 	@Select(value = "select * from " + TableConstanst.TB_PRODUCT + " where goods_name like concat('%',#{name},'%')  or goods_name_initial like concat('%',#{name},'%') limit 5")
 	public List<ProductInfo> getProductInfoByName(String name);
+	
+	/**
+	 * 增加商品库存
+	 * @param @param
+	 */
+	@UpdateProvider(type = ProductProvider.class , method = "updateProduct")
+	public void updateProduct(Map<String,Object> param);
 }
