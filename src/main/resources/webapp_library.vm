@@ -405,7 +405,7 @@ function page(pageNum){
 	queryData("$!base/$!param.url",$!key,function(result){
 		if( result.code == 0 ){
 			#if( "$!param.queryResultFun" != "" )
-				$!{param.queryResultFun}(result);
+				$!{param.queryResultFun}(result["data"]);
 			#end
 			var html = template("tpl$!rand",result["data"]);
 			$("#show$!rand").html(html);
