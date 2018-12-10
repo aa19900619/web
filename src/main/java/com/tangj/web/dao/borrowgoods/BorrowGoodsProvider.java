@@ -28,21 +28,22 @@ public class BorrowGoodsProvider {
 		if( param.get("name") != null && !"".equals(param.get("name"))){
 			sql.WHERE("b.goods_name = #{name}");
 		}
-		if( param.get("goodsCounts") != null && !"".equals(param.get("goodsCounts"))){
-			sql.WHERE("a.goods_counts >= #{goodsCounts} and a.goods_counts < #{goodsCounts} + 1");
+		if( param.get("counts") != null && !"".equals(param.get("counts"))){
+			sql.WHERE("a.nums = #{counts}");
+			sql.WHERE("or a.nums/b.goods_specifications >= #{counts}");
+			sql.WHERE("a.nums/b.goods_specifications < #{counts} +1");
+		}
+		if( param.get("suppliersId") != null && !"".equals(param.get("suppliersId"))){
+			sql.WHERE("a.suppliers_id = #{suppliersId}");
 		}
 		if( param.get("createId") != null && !"".equals(param.get("createId"))){
 			sql.WHERE("a.create_user_id = #{createId}");
 		}
-		
 		if( param.get("startDate") != null ){
 			sql.WHERE("a.create_time > #{startDate}");
 		}
 		if( param.get("endDate") != null ){
 			sql.WHERE("a.create_time <= #{endDate}");
-		}
-		if(param.get("remitId") != null && !"".equals(param.get("remitId"))) {
-			sql.WHERE("a.remit_id = #{remitId}");
 		}
 		sql.ORDER_BY(" a.create_time desc ");
 		return sql.toString();
