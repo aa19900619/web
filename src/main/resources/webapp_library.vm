@@ -409,6 +409,9 @@ function page(pageNum){
 			#end
 			var html = template("tpl$!rand",result["data"]);
 			$("#show$!rand").html(html);
+			#if( "$!param.loaded" != "" )
+				$!{param.loaded}();	
+			#end
 		}else{
 			Jq.MessageBox.error(result.msg);
 		}
@@ -421,7 +424,7 @@ function reloadData(){
 </script>
 
 <script id="tpl$!rand" type="text/html">
-<table class="table table-border table-bordered table-hover table-bg table-sort">
+<table class="table table-border table-bordered table-hover table-bg table-sort" id="table">
 	<thead>
 		<tr class="text-c">
 			#foreach($!obj in $!param.colums)
