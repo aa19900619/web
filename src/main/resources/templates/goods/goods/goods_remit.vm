@@ -16,14 +16,16 @@
 			{"colType":"text","length":"9","name":"productName","value":"$!obj.productName","readonly":"true"}
 		]},
 		{"cols":[
+			{"colType":"label","length":"2","colRequired":true,"text":"商品分类"},
+			{"colType":"text","length":"2","name":"dicVal","value":"$!obj.dicVal","readonly":"true"},
 			{"colType":"label","length":"2","colRequired":true,"text":"商品规格"},
-			{"colType":"text","length":"9","name":"goodsSpecificationsmsg","value":"$!obj.goodsSpecifications$!obj.goodsCategory","readonly":"true"}
+			{"colType":"text","length":"2","name":"goodsSpecificationsmsg","value":"$!obj.goodsSpecifications $!obj.goodsCategorys / $!obj.goodsCategory","readonly":"true"}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","text":"收货数量"},
-			{"colType":"text","length":"2","name":"goodsCounts","value":"$!obj.goodsCounts", "readonly":"true"},
+			{"colType":"text","length":"2","name":"counts","value":"$!obj.goodsCounts", "readonly":"true"},
 			{"colType":"text","length":"2","name":"","value":"$!obj.goodsCategory","readonly":"true" },
-			{"colType":"text","length":"2","name":"goodsNum","value":"$!obj.goodsNum","readonly":"true" },
+			{"colType":"text","length":"2","name":"nums","value":"$!obj.goodsNum","readonly":"true" },
 			{"colType":"text","length":"2","name":"","value":"$!obj.goodsCategorys","readonly":"true"}
 		]},
 		{"cols":[

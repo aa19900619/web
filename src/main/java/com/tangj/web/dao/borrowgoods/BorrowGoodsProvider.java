@@ -45,6 +45,15 @@ public class BorrowGoodsProvider {
 		if( param.get("endDate") != null ){
 			sql.WHERE("a.create_time <= #{endDate}");
 		}
+		if( param.get("initStatus") != null && !"".equals(param.get("initStatus"))){
+			if("1".equals(param.get("initStatus"))) {
+				sql.WHERE(" a.status != -1 ");
+			} else {
+				sql.WHERE(" a.status = #{initStatus} ");
+			}
+		} else {
+			sql.WHERE(" a.status != -1 ");
+		}
 		sql.ORDER_BY(" a.create_time desc ");
 		return sql.toString();
 	}
@@ -61,7 +70,7 @@ public class BorrowGoodsProvider {
 		sql.SELECT(" b.goods_specifications_desc as goodsSpecificationsDesc ");
 		sql.SELECT(" b.goods_category as goodsCategory ");
 		sql.SELECT(" b.goods_categorys as goodsCategorys ");
-		sql.SELECT(" c.name as suppliersName ");
+		sql.SELECT(" c.name as supName ");
 		sql.SELECT(" e.user_name as userName ");
 		sql.SELECT(" f.user_name as upUserName ");
 		sql.FROM(TableConstanst.TB_BORROW_GOODS + " a ");
@@ -96,18 +105,21 @@ public class BorrowGoodsProvider {
 	public String update(){
 		SQL sql = new SQL();
 		sql.UPDATE(TableConstanst.TB_BORROW_GOODS);
-		sql.SET("goods_num = #{goodsNum}");
-		sql.SET("goods_buy_price = #{goodsBuyPrice}");
-		sql.SET("goods_selling_price = #{goodsSellingPrice}");
-		sql.SET("goods_freight = #{goodsFreight}");
-		sql.SET("goods_status = #{goodsStatus}");
-		sql.SET("remit_id = #{remitId}");
-		sql.SET("create_user_id = #{createUserId}");
-		sql.SET("create_time = #{createTime}");
-		sql.SET("update_user_id = #{updateUserId}");
-		sql.SET("update_time = #{updateTime}");
+		sql.SET("nums = #{nums}");
+		sql.SET("type = #{type}");
 		sql.WHERE("id = #{id}");
 		return sql.toString();
 	}
 	
+	public String delet(Map<String,Object> param){
+		SQL sql = new SQL();
+		sql.UPDATE(TableConstanst.TB_BORROW_GOODS);
+		if( param.get("status") != null && !"".equals(param.get("status"))){
+			sql.SET("status = #{status}");
+			sql.SET("update_user_id=#{updateId}");
+			sql.SET("update_time=#{updateTime}");
+		}
+		sql.WHERE("id = #{id}");
+		return sql.toString();
+	}
 }

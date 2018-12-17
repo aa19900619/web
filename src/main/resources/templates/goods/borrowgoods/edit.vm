@@ -1,40 +1,111 @@
 #detail({
-	"id":"form-product-edit",
+	"id":"form-borrowgoods-edit",
 	"hiddens":[
-		{"name":"id","value":"$!obj.id"}
+		{"name":"id","value":"$!obj.id"},
+		{"name":"productId","value":"$!obj.productId"},
+		{"name":"goodsSpecifications","value":"$!obj.goodsSpecifications"},
+		{"name":"goodsSpecifications","value":"$!obj.goodsSpecifications"},
+		{"name":"numsed","value":"$!obj.nums"},
+		{"name":"typs","value":"$!typs"}
 	],
 	"rows":[
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"商品名称"},
-			{"colType":"text","length":"9","name":"goodsName","value":"$!obj.goodsName","placeholder":"请输入商品名称"}
+			{"colType":"text","length":"9","name":"goodsName","value":"$!obj.productName","placeholder":"请输入商品名称","readonly":"true"}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"商品分类"},
-			{"colType":"select","length":"9","name":"goodsType","value":"$!obj.goodsType","placeholder":"请输入商品分类","dataSource":$!goodsFL,"getValueMethod":"getDicVal","getNameMethod":"getDicVal"}
-		]},
-		{"cols":[
-			{"colType":"label","length":"2","text":"商品类别"},
-			{"colType":"text","length":"9","name":"goodsCategory","value":"$!obj.goodsCategory","placeholder":"请输入商品类别"}
-		]},
-		{"cols":[
+			{"colType":"text","length":"2","name":"dicVal","value":"$!obj.dicVal","readonly":"true"},
 			{"colType":"label","length":"2","colRequired":true,"text":"商品规格"},
-			{"colType":"select","length":"9","name":"goodsSpecifications","value":"$!obj.goodsSpecifications","placeholder":"请输入商品规格","dataSource":$!goodsGG,"getValueMethod":"getDicVal","getNameMethod":"getDicVal"}
+			{"colType":"text","length":"2","name":"goodsSpecificationsmsg","value":"$!obj.goodsSpecifications $!obj.goodsCategorys / $!obj.goodsCategory","readonly":"true"}
 		]},
 		{"cols":[
-			{"colType":"label","length":"2","text":"商品规格信息"},
-			{"colType":"text","length":"9","name":"goodsSpecificationsDesc","value":"$!obj.goodsSpecificationsDesc","placeholder":"请输入商品规格信息"}
+			{"colType":"label","length":"2","text":"商品数量"},
+			{"colType":"text","length":"0","name":"counts","value":"$!obj.counts"},
+			{"colType":"text","length":"0","name":"goodsCategory","value":"$!obj.goodsCategory","readonly":"true"},
+			{"colType":"text","length":"0","name":"nums","value":"$!obj.nums"},
+			{"colType":"text","length":"0","name":"goodsCategorys","value":"$!obj.goodsCategorys","readonly":"true"}
 		]},
 		{"cols":[
-			{"colType":"label","length":"2","text":"条形码"},
-			{"colType":"text","length":"9","name":"goodsBarCode","value":"$!obj.goodsBarCode","placeholder":"请输入条形码"}
+			{"colType":"label","length":"2","colRequired":true,"text":"供应商名称"},
+			{"colType":"text","length":"0","name":"","value":"$!obj.supName","readonly":"true"}
 		]},
 		{"cols":[
-			{"colType":"label","length":"2","text":"产地"},
-			{"colType":"text","length":"9","name":"goodsPlaceOfOrigin","value":"$!obj.goodsPlaceOfOrigin","placeholder":"请输入产地"}
+			{"colType":"label","length":"2","colRequired":true,"text":"方式"},
+			{"colType":"select","length":"9","name":"status","value":"$!obj.type","placeholder":"请输入状态","options":[{"value":"0","text":"借进"},{"value":"1","text":"借出"}]}
 		]},
 		{"cols":[
-			{"colType":"label","length":"2","colRequired":true,"text":"状态"},
-			{"colType":"select","length":"9","name":"goodsStatus","value":"$!obj.goodsStatus","placeholder":"请输入状态","options":[{"value":"0","text":"有效"},{"value":"1","text":"无效"}]}
+			{"colType":"label","length":"2","colRequired":true,"text":"付款方式"},
+			{"colType":"select","length":"9","name":"moneyType","value":"0","placeholder":"请输入状态","options":[{"value":"0","text":"现金"},{"value":"1","text":"微信"},{"value":"2","text":"银行"},{"value":"3","text":"其他"}]}
+		]},
+		{"cols":[
+			{"colType":"label","length":"2","colRequired":true,"text":"金额"},
+			{"colType":"text","length":"9","name":"money","value":"$!obj.money","placeholder":"请输入金额"}
 		]}
 	]
 })
+<script type="text/javascript" src="$!base/static/js/product-goods.js"></script> 
+<script>
+$(function(){
+	var typs = $("#typs").val();
+	if(typs == 1) {
+		$("#form-borrowgoods-edit").find("div[class='row cl']:eq(-1)").hide();
+		$("#form-borrowgoods-edit").find("div[class='row cl']:eq(-2)").hide();
+	} else if(typs == 2) {
+		$("#form-borrowgoods-edit").find("div[class='row cl']:eq(-1)").show();
+		$("#form-borrowgoods-edit").find("div[class='row cl']:eq(-2)").show();
+		var status = $("#status");
+		var counts = $("#counts");
+		var nums = $("#nums");
+		counts.before("<p>"+ counts.val()+"</p>");
+		nums.before("<p>"+ nums.val()+"</p>")
+		alert(status.val())
+		status.before("<p>"+ bgtype[status.val()] +"</p>");
+		status.hide();
+		counts.hide();
+		nums.hide();
+		
+		
+	} else if(typs == 3) {
+		
+	}
+	
+	
+	var sp = $("#goodsSpecifications").val();
+	$("#counts").keyup(function(){
+		isDoubles(this);
+		var val = $(this).val();
+		$("#nums").val(Math.ceil(val*sp));
+	});
+	
+	$("#nums").keyup(function(){
+		isNum(this);
+		var val =  $(this).val();
+		var num2 = val/sp;
+		$("#counts").val(num2.toFixed(2));
+	});
+
+	$("#form-borrowgoods-edit").validate({
+		rules:{
+			"counts":{
+				maxlength:10,
+				required:true,
+				number: true
+			},
+			"nums":{
+				maxlength:10,
+				required:true,
+				digits: true
+			},
+			"status":{
+				maxlength:10,
+				required:true,
+				digits: true
+			}
+		}
+	});
+})
+
+
+
+</script>

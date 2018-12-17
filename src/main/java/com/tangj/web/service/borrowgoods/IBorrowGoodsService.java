@@ -41,7 +41,7 @@ public interface IBorrowGoodsService {
 	public void add(BorrowGoodsInfo obj);
 
 	/**
-	 * 修改收货信息
+	 * 修改借货信息
 	 * 
 	 * @param obj
 	 */
@@ -52,5 +52,12 @@ public interface IBorrowGoodsService {
 	 * @param list
 	 */
 	public void addList(List<BorrowGoodsInfo> list);
+	
+	/**
+	 * 删除借货信息（逻辑删除）
+	 * 
+	 * @param param
+	 */
+	public void delet(Map<String, Object> param);
 
 }

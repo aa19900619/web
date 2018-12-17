@@ -1,5 +1,6 @@
 package com.tangj.web.controller.base;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tangj.web.Exception.BaseException;
 import com.tangj.web.enums.DictionaryEnum;
 import com.tangj.web.pojo.base.BaseInfo;
+import com.tangj.web.pojo.base.BaseProInfo;
 import com.tangj.web.pojo.sys.DictionaryInfo;
 import com.tangj.web.pojo.sys.RegionInfo;
 import com.tangj.web.pojo.sys.UserInfo;
@@ -185,5 +187,21 @@ public class BaseController {
 			param.put("area", "430281");
 		}
 		view.addObject("supList", iSupplierService.getSupList(param));
+	}
+	
+	/**初始化操作人列表
+	 * @param param
+	 */
+	public void initQueryStatus(ModelAndView view){
+		List<BaseProInfo> list = new ArrayList<BaseProInfo>();
+		BaseProInfo obj = new BaseProInfo();
+		obj.setInitStatus("1");
+		obj.setInitStatusDesc("有效");
+		list.add(obj);
+		BaseProInfo obj1 = new BaseProInfo();
+		obj1.setInitStatus("-1");
+		obj1.setInitStatusDesc("失效");
+		list.add(obj1);
+		view.addObject("qStatus", list);
 	}
 }

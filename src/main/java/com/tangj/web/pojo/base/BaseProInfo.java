@@ -19,6 +19,12 @@ public class BaseProInfo extends BaseInfo{
 	private String goodsCategory;
 	
 	private String goodsCategorys;
+	
+	private Long numsed;
+	
+	private String initStatus;
+	
+	private String initStatusDesc;
 
 	public Long getSuppliersId() {
 		return suppliersId;
@@ -90,5 +96,29 @@ public class BaseProInfo extends BaseInfo{
 
 	public void setGoodsCategorys(String goodsCategorys) {
 		this.goodsCategorys = goodsCategorys;
+	}
+
+	public Long getNumsed() {
+		return numsed;
+	}
+
+	public void setNumsed(Long numsed) {
+		this.numsed = numsed;
+	}
+
+	public String getInitStatus() {
+		return initStatus;
+	}
+
+	public void setInitStatus(String initStatus) {
+		this.initStatus = initStatus;
+	}
+
+	public String getInitStatusDesc() {
+		return initStatusDesc;
+	}
+
+	public void setInitStatusDesc(String initStatusDesc) {
+		this.initStatusDesc = initStatusDesc;
 	}
 }

@@ -1,20 +1,28 @@
 #queryDetail({
 	"showHeader":"true",
 	"nav":[
-			{"title":"商品管理"},{"title":"商品管理"}
+			{"title":"借货管理"},{"title":"借货管理"}
 	],
 	"url":"borrowGoodsInfo",
 	"query":[
 				{"type":"text","label":"商品名称","id":"name","name":"name","placeholder":"商品名称","style":"width:150px"},
-				{"type":"button","value":"查询","clickFun":"query()","iclass":"Hui-iconfont-search2"},
-				{"type":"button","value":"添加商品","clickFun":"add()","hasPermission":"goodsInfo:add","classes":"btn btn-primary size-M radius","iclass":"Hui-iconfont-add","style":"float:right;"}
+				{"type":"text","label":"数量","id":"counts","name":"counts","placeholder":"数量","style":"width:150px"},
+				{"type":"date","label":"时间","id":"startDate","name":"startDate","placeholder":"收货时间","style":"width:150px"},
+				{"type":"date","label":"至","id":"endDate","name":"endDate","placeholder":"收货时间","style":"width:150px"},
+				{"type":"selected","label":"供应商","id":"suppliersId","name":"suppliersId","placeholder":"供应商","style":"width:150px","dataSource":$!supList,"getValueMethod":"getId","getNameMethod":"getName"},
+				{"type":"selected","label":"收货人","id":"createId","name":"createId","placeholder":"收货人","style":"width:150px","dataSource":$!usersInfo,"getValueMethod":"getId","getNameMethod":"getUserName"},
+				{"type":"selected","label":"状态","id":"initStatus","name":"initStatus","placeholder":"状态","style":"width:150px","dataSource":$!qStatus,"getValueMethod":"getInitStatus","getNameMethod":"getInitStatusDesc"},
+				
+				{"type":"button","value":"查询","clickFun":"query()","iclass":"Hui-iconfont-search2"}
 	],
+	"queryResultFun":"myQueryResultFun",
 	"colums":[
 		{"text":"商品名称","type":"text","key":"productName"},
 		{"text":"供应商名字","type":"text","key":"supName"},
 		{"text":"商品规格","colType":"multistation","keys":[{"type":"text","key":"goodsSpecifications"},{"type":"text","key":"goodsCategorys"},{"type":"custom","key":"/"},{"type":"text","key":"goodsCategory"}]},
 		{"text":"数量","colType":"multistation","keys":[{"type":"text","key":"counts"},{"type":"text","key":"goodsCategory"},{"type":"custom","key":"/"},{"type":"text","key":"nums"}, {"type":"text","key":"goodsCategorys"}]},
-		{"text":"方式","type":"text","key":"type"}
+		{"text":"方式","type":"text","key":"type", "name":"types","property":"propertyType"},
+		{"text":"状态","type":"text","key":"status", "name":"types","property":"statusType"}
 	],
 	"operations":[
 		{"text":"编辑","click":"edit(this,1)","property":[{"key":"id","value":"id"}],
@@ -22,17 +30,17 @@
 			[{"key":"status","value":"0"}]
 			]
 		},
-		{"text":"归还","click":"edit(this,1)","property":[{"key":"id","value":"id"}],
+		{"text":"归还","click":"edit(this,2)","property":[{"key":"id","value":"id"}],
 			"judgement":[
 			[{"key":"status","value":"0"}]
 			]
 		},
-		{"text":"删除","click":"edit(this,1)","property":[{"key":"id","value":"id"}],
+		{"text":"删除","click":"edit(this,-1)","property":[{"key":"id","value":"id"}],
 			"judgement":[
 			[{"key":"status","value":"0"}]
 			]
 		},
-		{"text":"查看","click":"edit(this,1)","property":[{"key":"id","value":"id"}],
+		{"text":"查看","click":"edit(this,3)","property":[{"key":"id","value":"id"}],
 			"judgement":[
 			[{"key":"status","value":"1"}],
 			[{"key":"status","value":"-1"}]
@@ -41,49 +49,64 @@
 	]
 })
 #autocomplete("name" "0")
+<script type="text/javascript" src="$!base/static/js/product-goods.js"></script> 
 <script>
-function add(){
-	Jq.open({"url":"$!base/productInfo/add","title":"新增","height":"500px"},{},function(index){
-		
-		if( !parent.$("#form-product-edit").valid() ){
-			return;
-		}
-		
-		Jq.MessageBox.confirm("您确定保存该商品信息吗？",function(){
-			toSaved("$!base/productInfo/add",parent.$("#form-product-edit").serialize(),function(result){
-				if( result["code"] == 0 ){
-					Jq.closeLoading(index);
-					Jq.msg.success("操作成功");
-					page();
-				}else{
-					Jq.msg.error(result["msg"]);
-				}
-			});
-		});
-	});
+function myQueryResultFun(data){
+	data["propertyType"] = bgtype
+	data["statusType"] =  bgStatustype;
+	
 }
+$(function(){
+	
+});
 
-function edit(obj){
+function edit(obj,typs){
 	var modify = $(obj);
 	var id = modify.attr("id");
-	Jq.open({"url":"$!base/productInfo/edit","title":"修改","height":"500px"},{"id":id},function(index){
-	
-		if( !parent.$("#form-product-edit").valid() ){
-			return;
-		}
-	
-		Jq.MessageBox.confirm("您确定保存该商品信息吗？",function(){
-			toSaved("$!base/productInfo/edit",parent.$("#form-product-edit").serialize(),function(result){
-				if( result["code"] == 0 ){
-					Jq.closeLoading(index);
-					Jq.msg.success("操作成功");
-					page();
-				}else{
-					Jq.msg.error(result["msg"]);
-				}
+	if(typs == 1) {
+		Jq.open({"url":"$!base/borrowGoodsInfo/edit","title":"修改","height":"500px"},{"id":id,"typs":"1"},function(index){
+			if( !parent.$("#form-borrowgoods-edit").valid() ){
+				return;
+			}
+			Jq.MessageBox.confirm("您确定修改借货信息吗？",function(){
+				toSaved("$!base/borrowGoodsInfo/edit",parent.$("#form-borrowgoods-edit").serialize(),function(result){
+					if( result["code"] == 0 ){
+						Jq.closeLoading(index);
+						Jq.msg.success("操作成功");
+						page();
+					}else{
+						Jq.msg.error(result["msg"]);
+					}
+				});
 			});
 		});
-	});
+	} else if(typs == 2) {
+		Jq.open({"url":"$!base/borrowGoodsInfo/edit","title":"修改","height":"500px"},{"id":id,"typs":"2"},function(index){
+			if( !parent.$("#form-borrowgoods-edit").valid() ){
+				return;
+			}
+			Jq.MessageBox.confirm("您确定已归还商品吗？",function(){
+				toSaved("$!base/borrowGoodsInfo/edit",parent.$("#form-borrowgoods-edit").serialize(),function(result){
+					if( result["code"] == 0 ){
+						Jq.closeLoading(index);
+						Jq.msg.success("操作成功");
+						page();
+					}else{
+						Jq.msg.error(result["msg"]);
+					}
+				});
+			});
+		});
+	} else if(typs == 3) {
+		Jq.open({"url":"$!base/borrowGoodsInfo/edit","title":"查看明细","height":"500px"},{"id":id,"typs":"3"},function(index){
+		});
+	} else if(typs == -1) {
+		if(confirm("您是否删除该借货信息？")) {
+			toSaved("$!base/borrowGoodsInfo/delet",{"id":id},function(result){
+				window.location.reload()
+			});
+		}
+	}
 }
 
 

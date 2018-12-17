@@ -5,6 +5,8 @@ public class BaseQueryVO {
 	private int pageNum;
 	
 	private int pageSize;
+	
+	private String initStatus;
 
 	public int getPageNum() {
 		if( this.pageNum <= 0 ){
@@ -26,6 +28,14 @@ public class BaseQueryVO {
 
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public String getInitStatus() {
+		return initStatus;
+	}
+
+	public void setInitStatus(String initStatus) {
+		this.initStatus = initStatus;
 	}
 	
 }

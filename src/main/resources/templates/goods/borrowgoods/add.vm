@@ -12,7 +12,7 @@
 <br>
 	<table class="table table-border table-bordered table-hover table-bg table-sort" id="talbe_sup">
 		<tr>
-			<td onclick="changedir()" background="../images/borrow.png">$!hnpfb</td>
+			<td onclick="changedir(0)" background="../images/borrow.png">$!hnpfb</td>
 			<td align="right">
 				<select id='suppliersId' name='suppliersId'>
 					#foreach($item in $!supList)
@@ -47,7 +47,7 @@
 #footer
 #autocomplete("name" "1" "selectPro" "closeAjaxDo")
 
-
+<script type="text/javascript" src="$!base/static/js/product-goods.js"></script> 
 <script>
 	var row_name = 0;
 	var row_count = 0; 
@@ -136,7 +136,7 @@
 		}else{
 			name = "goodsNum";
 			addAndSub(name,nums,types);
-			obj1.val(Number(obj2.val()) / gs);
+			obj1.val((Number(obj2.val()) / gs).toFixed(2));
 		}
 	}
 	
@@ -173,7 +173,7 @@
 		} else {
 			name = "goodsCounts";
 			var inp = $("#tr" + nums).find("td:eq(2)").find("input[name="+ name +"]")
-			inp.val(Number($(obj).val()) / gs);
+			inp.val((Number($(obj).val()) / gs).toFixed(2));
 		}
 	}
 	
@@ -194,6 +194,7 @@
 			obj["status"] = 0;
 			gdata.push(obj);
 		});
+		alert(cdtyps+"接近接触")
 		console.log(gdata);
 		toJson("$!base/addBorrowGoodsInfo/addList",gdata,function(result) {
 			window.location.reload()
@@ -202,33 +203,22 @@
 	});
 
 	
-	function isNum(obj) {
-		var val =$(obj).val().trim();
-		if(isNaN(val)) {
-			val = val.replace(/[^\d.-]/g, '');
-			val = val.replace(/(^\s*)|(\s*$)/g,'');
-			$(obj).val(val);
-			$(obj).focus();
-			return;
-		}
-		$(obj).val(val);
-		return "";
-	}
+
 	
 	var cdtyps = 0;
 	function changedir() {
 		if(cdtyps == 1) {
-			alert("其他商行借货");
-			$("#talbe_sup tr:eq(-1) td:eq(-1)").after("<td onclick='changedir(1)'>" + $("#hnpfb").val() + "</td>")
-			$("#talbe_sup tr:eq(-1) td:eq(-2)").attr("background", "../images/borrow.png");
-			$("#talbe_sup tr:eq(-1) td:eq(-3)").remove();
-			cdtyps = 1;
-		} else {
 			alert("借进商品");
-			$("#talbe_sup tr:eq(-1) td:eq(-2)").before("<td onclick='changedir(1)' background='../images/borrow.png'>" + $("#hnpfb").val() + "</td>")
+			$("#talbe_sup tr:eq(-1) td:eq(-2)").before("<td onclick='changedir()' background='../images/borrow.png'>" + $("#hnpfb").val() + "</td>")
 			$("#talbe_sup tr:eq(-1) td:eq(-2)").attr("background", "");
 			$("#talbe_sup tr:eq(-1) td:eq(-1)").remove();
 			cdtyps = 0;
+		} else {
+			alert("其他商行借货");
+			$("#talbe_sup tr:eq(-1) td:eq(-2)").remove();
+			$("#talbe_sup tr:eq(-1) td:eq(-1)").after("<td onclick='changedir()' >" + $("#hnpfb").val() + "</td>")
+			$("#talbe_sup tr:eq(-1) td:eq(-2)").attr("background", "../images/borrow.png");
+			cdtyps = 1;
 		}
 	}
 	

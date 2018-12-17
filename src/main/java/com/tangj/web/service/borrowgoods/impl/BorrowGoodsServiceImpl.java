@@ -41,7 +41,13 @@ public class BorrowGoodsServiceImpl implements IBorrowGoodsService {
 
 	@Override
 	public void update(BorrowGoodsInfo obj) {
+		/** 修改借货信息 **/
 		bgoodsDao.update(obj);
+		/** 修改产品库存 **/
+		Map<String, Object> param = new HashMap<>();
+		param.put("pCounts", obj.getNums() - obj.getNumsed());
+		param.put("id", obj.getProductId());
+		productDao.updateProduct(param);
 	}
 
 	@Override
@@ -67,5 +73,17 @@ public class BorrowGoodsServiceImpl implements IBorrowGoodsService {
 				param.put("id", obj.getProductId());
 			}
 		}
+	}
+
+	@Override
+	public void delet(Map<String, Object> param) {
+		BorrowGoodsInfo obj = bgoodsDao.getInfoById((Long) param.get("id"));
+		param.put("status", "-1");
+		bgoodsDao.delet(param);
+		param.clear();
+		/**减去商品库存**/
+		param.put("pCounts", ~obj.getNums() + 1);
+		param.put("id", obj.getProductId());
+		productDao.updateProduct(param);
 	}
 }

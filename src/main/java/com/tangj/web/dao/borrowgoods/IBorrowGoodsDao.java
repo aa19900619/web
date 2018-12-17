@@ -47,5 +47,14 @@ public interface IBorrowGoodsDao {
 	 */
 	@UpdateProvider(type = BorrowGoodsProvider.class, method = "update")
 	public void update(BorrowGoodsInfo obj);
+	
+	/**
+	 * 修改
+	 * 
+	 * @param obj
+	 */
+	@UpdateProvider(type = BorrowGoodsProvider.class, method = "delet")
+	public void delet(Map<String, Object> param);
+	
 
 }
