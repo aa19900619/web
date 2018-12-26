@@ -1,7 +1,5 @@
 #header
 
-
-
 <link href="$!base/static/css/button-style.css" rel="stylesheet" type="text/css" />
 <form method="post" class="form form-horizontal" id="$formId">
 <div class="page-container">
@@ -14,13 +12,10 @@
 	<table id="table1" class="table table-border table-bordered table-hover table-bg table-sort">
 		<thead>
 			<tr class="text-c">
-				<th width="">商品名称</th>
-				<th width="">规格</th>
+				<th width="250px">商品名称</th>
+				<th width="150px">规格</th>
 				<th width="">收货数量</th>
-				<th width="">进货价</th>
-				<th width="">出货价</th>
-				<th width="">运费</th>
-				<th width="90px">操作</th>
+				<th width="50px">操作</th>
 			</tr>
 		</thead>
 		<tbody id="gitbody">
@@ -36,188 +31,13 @@
 </form>
 #footer
 #autocomplete("name" "1" "selectPro" "closeAjaxDo")
-
-
 <script>
-	var row_name = 0;
-	var row_count = 0; 
-	function selectPro(data) {
-		//console.log(data);	
-		//data.data.goodsName;
-		var obj = data.data;
-		var table1 = $('#table1'); 
-		var firstTr = table1.find('tbody>tr:first'); 
-		var row = $("<tr id=tr" + row_name + "></tr>");
-		var td2 = $("<td id=td" + row_name + ">"+"</td>"); 
-		var td3 = $("<td id=td" + row_name + ">"+"</td>"); 
-		var td4 = $("<td id=td" + row_name + ">"+"</td>"); 
-		var td5 = $("<td id=td" + row_name + ">"+"</td>"); 
-		var td6 = $("<td id=td" + row_name + ">"+"</td>"); 
-		var td7 = $("<td id=td" + row_name + ">"+"</td>"); 
-		var td8 = $("<td id=td" + row_name + ">"+"</td>"); 
-		td2.append("<label> "+ obj.goodsName + " </label>");
-		td2.append("<input type='hidden' id='productId' name='productId' value='"+ obj.id + "' >");
-		td3.append("<label> "+ obj.goodsSpecifications + obj.goodsCategory+" </label>");
-		td4.append("<button type='button' onclick='changeCounts(1,"+ obj.goodsSpecifications+ "," +row_name+",-1)' class='button button-box button-tiny'><i class='fa fa-plus'>-</i></button>");
-		td4.append("<input style='width:100px' onfocus='$(this).select()' onkeyup='changeKeyUp(this,"+ obj.goodsSpecifications+ "," +row_name+",1)'  class='input-text'  type='text' id='goodsCounts' name='goodsCounts' value=0>");
-		td4.append("<button type='button' onclick='changeCounts(1,"+ obj.goodsSpecifications+ "," +row_name+",1)' class='button button-box button-tiny'><i class='fa fa-plus'>+</i></button>");
-		td4.append("<center>" + obj.goodsCategory + "</center>");
-		td4.append("<button type='button' onclick='changeCounts(2,"+ obj.goodsSpecifications+ "," +row_name+",-1)' class='button button-box button-tiny'><i class='fa fa-plus'>-</i></button>");
-		td4.append("<input style='width:100px' onfocus='$(this).select()' onkeyup='changeKeyUp(this,"+ obj.goodsSpecifications+ "," +row_name+",-1)' class='input-text' size=1 type='text' id='goodsNum' name='goodsNum' value=0>") ;
-		td4.append("<button type='button' onclick='changeCounts(2,"+ obj.goodsSpecifications + "," +row_name+",1)' class='button button-box button-tiny'><i class='fa fa-plus'>+</i></button>");
-		td4.append("<center>" + obj.goodsCategorys + "</center>");
-		td5.append("<input  style='width:100px' class='input-text' type='text' id='goodsBuyPrice' name='goodsBuyPrice'  value="+ obj.productBuyPrice+" onkeyup='isNum(this)'>") ;
-		td6.append("<input style='width:100px' class='input-text' type='text' id='goodsSellingPrice' name='goodsSellingPrice' value="+ obj.productSellingPrice+" onkeyup='isNum(this)'>") ;
-		td7.append("<input style='width:100px' class='input-text' type='text' id='goodsFreight' name='goodsFreight' value="+ obj.productFreight+" onkeyup='isNum(this)'>") ;
-		td8.append("<a onclick='delRow(this,1)'>删除</a>") ;
-		row.append(td2); 
-		row.append(td3); 
-		row.append(td4); 
-		row.append(td5); 
-		row.append(td6); 
-		row.append(td7); 
-		row.append(td8); 
-		table1.append(row);
-		row_count++;
-		row_name++;
-		//alert("#name").val();
+	function pageSelectPro(td,obj) {
+		td.append("<input type='hidden' id='goodsBuyPrice' name='goodsBuyPrice'  value="+ obj.productBuyPrice+">");
+		td.append("<input type='hidden' id='goodsSellingPrice' name='goodsSellingPrice'  value="+ obj.productSellingPrice+">");
+		td.append("<input type='hidden' id='goodsFreight' name='goodsFreight'  value="+ obj.productFreight+">");
 	}
-	
-	function closeAjaxDo() {
-		$("#name").val("");
-		$("#name").select();
-		$("#name").focus();
-		$("#div_btn").show();
-	}
-
-	function delRow(obj,types) 
-	{ 
-		if(types == 1) {
-			if(confirm("是否删除该条收货？")) {
-				$(obj).parent().parent().remove(); 
-				if($("#gitbody").find("tr").size() == 0 ){
-					$("#div_btn").hide();
-				}
-			}
-			
-		} else {
-			if(row_count > 0) {
-				if(confirm("是否删除全部收货信息？")) {
-					$("#gitbody").find("tr").remove();
-					row_count = 0;
-					row_name = 0;
-					$("#div_btn").hide();
-				}
-			}
-		}
-	}
-	function del() 
-	{ 
-	var checked = $("input[type='checkbox'][name='count']"); 
-	$(checked).each(function(){ 
-	if($(this).attr("checked")==true) //注意：此处判断不能用$(this).attr("checked")==‘true'来判断。 
-	{ 
-	$(this).parent().parent().remove(); 
-	} 
-	}); 
-	} 
-	
-	function changeCounts(t1,gs,nums,types) {
-		var name = "";
-		gs= Number(gs);
-		var obj1 = $("#tr" + nums).find("td:eq(2)").find("input[name='goodsCounts']");
-		var obj2 = $("#tr" + nums).find("td:eq(2)").find("input[name='goodsNum']");
-		if(t1== 1) {
-			name = "goodsCounts";
-			addAndSub(name,nums,types);
-			obj2.val(Number(obj1.val()) * gs);
-			
-		}else{
-			name = "goodsNum";
-			addAndSub(name,nums,types);
-			obj1.val(Number(obj2.val()) / gs);
-		}
-	}
-	
-	function addAndSub(name,nums,types) {
-		var obj = $("#tr" + nums).find("td:eq(2)").find("input[name="+ name +"]");
-		var val = Number(obj.val());
-		$(obj).val($(obj).val().replace(/[^\d.-]/g, '').replace(/(^\s*)|(\s*$)/g,''));
-		//if(val == 0) {
-		//	$($("#tr" + nums).find("td:eq(2)").find("button").index(0)).attr("disabled",false);
-		//} else {
-		//	$($("#tr" + nums).find("td:eq(2)").find("button").index(0)).removeAttr("disabled"); 
-		//}
-		val = ~~val;
-		if(types == 1) {
-			obj.val(val + 1);
-		}else {
-			var counts = val;
-			if(counts <= 0) {
-				obj.val(0)
-			} else {
-				obj.val(val - 1);
-			}
-		}
-	}
-	
-	function changeKeyUp(obj,gs,nums,types) {
-		gs = Number(gs);
-		$(obj).val($(obj).val().replace(/[^\d.-]/g, '').replace(/(^\s*)|(\s*$)/g,''));
-		var name = "";
-		if(types == 1) {
-			name = "goodsNum";
-			var inp = $("#tr" + nums).find("td:eq(2)").find("input[name="+ name +"]")
-			inp.val(Number($(obj).val()) * gs);
-		} else {
-			name = "goodsCounts";
-			var inp = $("#tr" + nums).find("td:eq(2)").find("input[name="+ name +"]")
-			inp.val(Number($(obj).val()) / gs);
-		}
-	}
-	
-	$("#btnSend").click(function() {
-		if($("#gitbody").find("input[name='productId']").size() == 0) {
-			alert("请录入收货信息！");
-			return;
-		}
-		var gdata = new Array();
-		$("#gitbody").find("tr").each(function() {
-			var obj = {};
-			var info = $(this);
-			obj["productId"] = info.find("input[name='productId']").val();
-			obj["goodsNum"] = info.find("input[name='goodsNum']").val();
-			obj["goodsBuyPrice"] = info.find("input[name='goodsBuyPrice']").val();
-			obj["goodsSellingPrice"] = info.find("input[name='goodsSellingPrice']").val();
-			obj["goodsFreight"] = info.find("input[name='goodsFreight']").val();
-			gdata.push(obj);
-		});
-		console.log(gdata);
-		toJson("$!base/addGoodsInfo/addList",gdata,function(result) {
-			window.location.reload()
-		});
-		
-	});
-
-	
-	function isNum(obj) {
-		var val =$(obj).val().trim();
-		if(isNaN(val)) {
-			val = val.replace(/[^\d.-]/g, '');
-			val = val.replace(/(^\s*)|(\s*$)/g,'');
-			$(obj).val(val);
-			$(obj).focus();
-			return;
-		}
-		$(obj).val(val);
-		return "";
-	}
-	
-	$(function(){
-		var len = $("input:hidden[name=productId]");
-		$.each(len,function(i,item){
-			
-		});
-		
-	});
-	</script>
+	var urlPath = "$!base/addGoodsInfo/addList";
+	var msgInfo = "收货信息";
+</script>
+#addprojs

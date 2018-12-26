@@ -63,4 +63,17 @@ public class ProductProvider {
 		sql.WHERE("id = #{id}");
 		return sql.toString();
 	}
+	
+	public String getProductInfoByName() {
+		SQL sql = new SQL();
+		sql.SELECT("a.*");
+		sql.SELECT(" b.name as goodsCategory ");
+		sql.SELECT(" c.name as goodsCategorys ");
+		sql.FROM(TableConstanst.TB_PRODUCT +" a ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_TYPE + " b on b.id = a.goods_category");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_TYPE + " c on c.id = a.goods_categorys");
+		sql.WHERE("a.goods_name like concat('%',#{name},'%')  or a.goods_name_initial like concat('%',#{name},'%') ");
+		
+		return sql.toString() + " limit 5";
+	}
 }

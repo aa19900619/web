@@ -46,13 +46,27 @@
 			[{"key":"status","value":"-1"}]
 			]
 		}
-	]
+	],
+	"loaded":"myloaded"
 })
 #autocomplete("name" "0")
-<script type="text/javascript" src="$!base/static/js/product-goods.js"></script> 
 <script>
+function myloaded() {
+	var table = $("#table");
+	table.find("tr").each(function() {
+		var td = $(this).children();
+		var ttype = td.eq(-3).text().trim();
+		var stype = td.eq(-2).text().trim();
+		if(stype.indexOf(bgStatustype[-1]) < 0) {
+			if(ttype.indexOf(bgtype[1]) >= 0 || ttype.indexOf(bgtype[3]) >= 0) {
+				//$(td.eq(-3)).attr("style","background:#FFC1C1; color:red");
+				$(this).attr("style","background:#FFC1C1; color:#FFC1C1");
+			}
+		}
+	});
+}
 function myQueryResultFun(data){
-	data["propertyType"] = bgtype
+	data["propertyType"] = bgtype;
 	data["statusType"] =  bgStatustype;
 	
 }

@@ -1,5 +1,7 @@
 package com.tangj.web.pojo.base;
 
+import java.math.BigDecimal;
+
 public class BaseProInfo extends BaseInfo{
 
 	private Long suppliersId;
@@ -14,11 +16,23 @@ public class BaseProInfo extends BaseInfo{
 	
 	private String goodsSpecificationsDesc;
 	
+	private BigDecimal productBuyPrice;
+	
+	private BigDecimal productSellingPrice;
+	
+	private BigDecimal productRetailPrice;
+	
+	private BigDecimal productFreight;
+	
 	private String dicVal;
 	
 	private String goodsCategory;
 	
+	private Integer category;
+	
 	private String goodsCategorys;
+	
+	private Integer categorys;
 	
 	private Long numsed;
 	
@@ -74,6 +88,38 @@ public class BaseProInfo extends BaseInfo{
 		this.goodsSpecificationsDesc = goodsSpecificationsDesc;
 	}
 
+	public BigDecimal getProductBuyPrice() {
+		return productBuyPrice;
+	}
+
+	public void setProductBuyPrice(BigDecimal productBuyPrice) {
+		this.productBuyPrice = productBuyPrice;
+	}
+
+	public BigDecimal getProductSellingPrice() {
+		return productSellingPrice;
+	}
+
+	public void setProductSellingPrice(BigDecimal productSellingPrice) {
+		this.productSellingPrice = productSellingPrice;
+	}
+
+	public BigDecimal getProductRetailPrice() {
+		return productRetailPrice;
+	}
+
+	public void setProductRetailPrice(BigDecimal productRetailPrice) {
+		this.productRetailPrice = productRetailPrice;
+	}
+
+	public BigDecimal getProductFreight() {
+		return productFreight;
+	}
+
+	public void setProductFreight(BigDecimal productFreight) {
+		this.productFreight = productFreight;
+	}
+
 	public String getDicVal() {
 		return dicVal;
 	}
@@ -81,7 +127,6 @@ public class BaseProInfo extends BaseInfo{
 	public void setDicVal(String dicVal) {
 		this.dicVal = dicVal;
 	}
-
 	public String getGoodsCategory() {
 		return goodsCategory;
 	}
@@ -90,12 +135,28 @@ public class BaseProInfo extends BaseInfo{
 		this.goodsCategory = goodsCategory;
 	}
 
+	public Integer getCategory() {
+		return category;
+	}
+
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
+
 	public String getGoodsCategorys() {
 		return goodsCategorys;
 	}
 
 	public void setGoodsCategorys(String goodsCategorys) {
 		this.goodsCategorys = goodsCategorys;
+	}
+
+	public Integer getCategorys() {
+		return categorys;
+	}
+
+	public void setCategorys(Integer categorys) {
+		this.categorys = categorys;
 	}
 
 	public Long getNumsed() {

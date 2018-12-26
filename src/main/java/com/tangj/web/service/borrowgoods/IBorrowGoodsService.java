@@ -59,5 +59,11 @@ public interface IBorrowGoodsService {
 	 * @param param
 	 */
 	public void delet(Map<String, Object> param);
+	
+	/**
+	 * 系统 对冲
+	 * @param id 经销商id
+	 */
+	public void systemHedging(Long id);
 
 }

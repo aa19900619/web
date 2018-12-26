@@ -14,8 +14,8 @@ public class BorrowGoodsProvider {
 		sql.SELECT(" b.goods_name as productName ");
 		sql.SELECT(" b.goods_specifications as goodsSpecifications ");
 		sql.SELECT(" b.goods_specifications_desc as goodsSpecificationsDesc ");
-		sql.SELECT(" b.goods_category as goodsCategory ");
-		sql.SELECT(" b.goods_categorys as goodsCategorys ");
+		sql.SELECT(" g.name as goodsCategory ");
+		sql.SELECT(" i.name as goodsCategorys ");
 		sql.SELECT(" c.name as supName ");
 		sql.SELECT(" e.user_name as userName ");
 		sql.SELECT(" f.user_name as upUserName ");
@@ -25,6 +25,8 @@ public class BorrowGoodsProvider {
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_DICTIONARY + " d on d.id = b.goods_type ");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_USER + " e on e.id = a.create_user_id ");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_USER + " f on f.id = a.update_user_id ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_TYPE + " g on g.id = b.goods_category");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_TYPE + " i on i.id = b.goods_categorys");
 		if( param.get("name") != null && !"".equals(param.get("name"))){
 			sql.WHERE("b.goods_name = #{name}");
 		}
@@ -47,7 +49,7 @@ public class BorrowGoodsProvider {
 		}
 		if( param.get("initStatus") != null && !"".equals(param.get("initStatus"))){
 			if("1".equals(param.get("initStatus"))) {
-				sql.WHERE(" a.status != -1 ");
+				sql.WHERE(" a.status > -1 ");
 			} else {
 				sql.WHERE(" a.status = #{initStatus} ");
 			}
@@ -68,8 +70,12 @@ public class BorrowGoodsProvider {
 		sql.SELECT(" b.goods_name as productName ");
 		sql.SELECT(" b.goods_specifications as goodsSpecifications ");
 		sql.SELECT(" b.goods_specifications_desc as goodsSpecificationsDesc ");
-		sql.SELECT(" b.goods_category as goodsCategory ");
-		sql.SELECT(" b.goods_categorys as goodsCategorys ");
+		sql.SELECT(" g.name as goodsCategory ");
+		sql.SELECT(" i.name as goodsCategorys ");
+		sql.SELECT(" b.product_buy_price as productBuyPrice ");
+		sql.SELECT(" b.product_selling_price as productSellingPrice ");
+		sql.SELECT(" b.product_retail_price as productRetailPrice ");
+		sql.SELECT(" b.product_freight as productFreight ");
 		sql.SELECT(" c.name as supName ");
 		sql.SELECT(" e.user_name as userName ");
 		sql.SELECT(" f.user_name as upUserName ");
@@ -79,6 +85,8 @@ public class BorrowGoodsProvider {
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_DICTIONARY + " d on d.id = b.goods_type ");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_USER + " e on e.id = a.create_user_id ");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_USER + " f on f.id = a.update_user_id ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_TYPE + " g on g.id = b.goods_category");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_TYPE + " i on i.id = b.goods_categorys");
 		sql.WHERE("a.id=" + id);
 		return sql.toString();
 	}

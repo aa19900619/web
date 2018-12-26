@@ -31,4 +31,10 @@ public class TableConstanst {
 	
 	//上传文件表
 	public static final String TB_UPLOAD_FILE = "tb_upload_file";
+	
+	//客户表
+	public static final String TB_CLIENT = "tb_client";
+	
+	//类型表
+	public static final String TB_TYPE = "tb_type";
 }

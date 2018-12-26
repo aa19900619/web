@@ -3,7 +3,7 @@ package com.tangj.web.pojo.goods;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-import com.tangj.web.pojo.base.BaseInfo;
+import com.tangj.web.pojo.base.BaseProInfo;
 
 import net.sf.oval.constraint.Min;
 import net.sf.oval.constraint.NotEmpty;
@@ -15,7 +15,7 @@ import net.sf.oval.constraint.NotNull;
  * @author sisimiemie
  *
  */
-public class GoodsInfo extends BaseInfo {
+public class GoodsInfo extends BaseProInfo {
 	public static final String ADD = "ADD";
 	public static final String MODIFY = "MODIFY";
 
@@ -49,196 +49,108 @@ public class GoodsInfo extends BaseInfo {
 	
 	/*默认新增为0，1物流对数，2物流结款，3供应商对数默认结款，删除-1*/
 	private Integer goodsStatus;
-	private Long suppliersId;
 	private Long remitId;
-	private String productName;
-	private Long goodsSpecifications;
-	private String goodsSpecificationsDesc;
 	private String dicVal;
 	private String userName;
-	private String goodsCategory;
-	private String goodsCategorys;
 	private Integer remitType;
 	private BigDecimal remitMoney;
 	private String remitImg;
 	private Date remitCreateTime;
 	private Long goodsNumed;
-	
-
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public Long getProductId() {
 		return productId;
 	}
-
 	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
-
 	public BigDecimal getGoodsCounts() {
 		return goodsCounts;
 	}
-
 	public void setGoodsCounts(BigDecimal goodsCounts) {
 		this.goodsCounts = goodsCounts;
 	}
-
 	public Long getGoodsNum() {
 		return goodsNum;
 	}
-
 	public void setGoodsNum(Long goodsNum) {
 		this.goodsNum = goodsNum;
 	}
-
 	public BigDecimal getGoodsBuyPrice() {
 		return goodsBuyPrice;
 	}
-
 	public void setGoodsBuyPrice(BigDecimal goodsBuyPrice) {
 		this.goodsBuyPrice = goodsBuyPrice;
 	}
-
 	public BigDecimal getGoodsSellingPrice() {
 		return goodsSellingPrice;
 	}
-
 	public void setGoodsSellingPrice(BigDecimal goodsSellingPrice) {
 		this.goodsSellingPrice = goodsSellingPrice;
 	}
-
 	public BigDecimal getGoodsFreight() {
 		return goodsFreight;
 	}
-
 	public void setGoodsFreight(BigDecimal goodsFreight) {
 		this.goodsFreight = goodsFreight;
 	}
-
 	public Integer getGoodsStatus() {
 		return goodsStatus;
 	}
-
 	public void setGoodsStatus(Integer goodsStatus) {
 		this.goodsStatus = goodsStatus;
 	}
-
-	public Long getSuppliersId() {
-		return suppliersId;
-	}
-
-	public void setSuppliersId(Long suppliersId) {
-		this.suppliersId = suppliersId;
-	}
-
 	public Long getRemitId() {
 		return remitId;
 	}
-
 	public void setRemitId(Long remitId) {
 		this.remitId = remitId;
 	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public Long getGoodsSpecifications() {
-		return goodsSpecifications;
-	}
-
-	public void setGoodsSpecifications(Long goodsSpecifications) {
-		this.goodsSpecifications = goodsSpecifications;
-	}
-
-	public String getGoodsSpecificationsDesc() {
-		return goodsSpecificationsDesc;
-	}
-
-	public void setGoodsSpecificationsDesc(String goodsSpecificationsDesc) {
-		this.goodsSpecificationsDesc = goodsSpecificationsDesc;
-	}
-
 	public String getDicVal() {
 		return dicVal;
 	}
-
 	public void setDicVal(String dicVal) {
 		this.dicVal = dicVal;
 	}
-
 	public String getUserName() {
 		return userName;
 	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
-	public String getGoodsCategory() {
-		return goodsCategory;
-	}
-
-	public void setGoodsCategory(String goodsCategory) {
-		this.goodsCategory = goodsCategory;
-	}
-
-	public String getGoodsCategorys() {
-		return goodsCategorys;
-	}
-
-	public void setGoodsCategorys(String goodsCategorys) {
-		this.goodsCategorys = goodsCategorys;
-	}
-
 	public Integer getRemitType() {
 		return remitType;
 	}
-
 	public void setRemitType(Integer remitType) {
 		this.remitType = remitType;
 	}
-
 	public BigDecimal getRemitMoney() {
 		return remitMoney;
 	}
-
 	public void setRemitMoney(BigDecimal remitMoney) {
 		this.remitMoney = remitMoney;
 	}
-
 	public String getRemitImg() {
 		return remitImg;
 	}
-
 	public void setRemitImg(String remitImg) {
 		this.remitImg = remitImg;
 	}
-
 	public Date getRemitCreateTime() {
 		return remitCreateTime;
 	}
-
 	public void setRemitCreateTime(Date remitCreateTime) {
 		this.remitCreateTime = remitCreateTime;
 	}
-
 	public Long getGoodsNumed() {
 		return goodsNumed;
 	}
-
 	public void setGoodsNumed(Long goodsNumed) {
 		this.goodsNumed = goodsNumed;
 	}
-
 }

@@ -3,8 +3,9 @@
  * 
  * 
  * **/
-var bgtype= {"0":"借进","1":"借出"};
-var bgStatustype = {"0":"正常","-1":"已删除","1":"系统对冲"};
+var bgtype = {"0":"借进","1":"借出","2":"对冲借进","3":"对冲借出"};
+var bgStatustype = {"0":"正常","-1":"失效","1":"已归还","2":"系统对冲"};
+var bgmoneytype = {"0":"现金","1":"微信","2":"银行","3":"其他"};
 
 function isDoubles(obj) {
 	var val =$(obj).val().trim();

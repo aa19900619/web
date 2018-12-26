@@ -35,6 +35,7 @@
 			<dd>
 				<ul>
 					<li><a _href="$!base/supplier" data-title="供应商管理" href="javascript:void(0)">供应商管理</a></li>
+					<li><a _href="$!base/clientInfo" data-title="客户管理" href="javascript:void(0)">客户管理</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -73,6 +74,7 @@
 				<ul>
 					<li><a _href="$!base/borrowGoodsInfo" data-title="借货管理" href="javascript:void(0)">借货管理</a></li>
 					<li><a _href="$!base/addBorrowGoodsInfo" data-title="借货管理" href="javascript:void(0)">新增借货</a></li>
+					<li><a _href="$!base/sysHedging" data-title="借货管理" href="javascript:void(0)">系统对冲</a></li>
 				</ul>
 			</dd>
 		</dl>

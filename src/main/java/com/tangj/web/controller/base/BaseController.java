@@ -22,6 +22,7 @@ import com.tangj.web.pojo.sys.UserInfo;
 import com.tangj.web.service.sys.IDictionaryService;
 import com.tangj.web.service.sys.IRegionService;
 import com.tangj.web.service.sys.ISupplierService;
+import com.tangj.web.service.sys.ITypeService;
 import com.tangj.web.service.sys.IUserService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.SessionUtils;
@@ -43,6 +44,9 @@ public class BaseController {
 	
 	@Autowired
 	protected ISupplierService iSupplierService;
+	
+	@Autowired
+	protected ITypeService iTypeService ;
 	
 	@Value("${file.root}")
 	protected String rootpath;
@@ -196,12 +200,25 @@ public class BaseController {
 		List<BaseProInfo> list = new ArrayList<BaseProInfo>();
 		BaseProInfo obj = new BaseProInfo();
 		obj.setInitStatus("1");
-		obj.setInitStatusDesc("有效");
+		obj.setInitStatusDesc("正常");
 		list.add(obj);
 		BaseProInfo obj1 = new BaseProInfo();
 		obj1.setInitStatus("-1");
 		obj1.setInitStatusDesc("失效");
 		list.add(obj1);
 		view.addObject("qStatus", list);
+	}
+	
+	/**
+	 * 初始化类型（1商品单位列表，2支付类型列表）
+	 * @param view
+	 */
+	public void initType(ModelAndView view, Integer type){
+		if(type == 1) {
+			view.addObject("cgList", iTypeService.getListByType(1));
+			view.addObject("cgsList", iTypeService.getListByType(2));
+		} else {
+			view.addObject("pyList", iTypeService.getListByType(3));
+		}
 	}
 }

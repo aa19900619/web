@@ -4,8 +4,10 @@
 		{"name":"id","value":"$!obj.id"},
 		{"name":"productId","value":"$!obj.productId"},
 		{"name":"goodsSpecifications","value":"$!obj.goodsSpecifications"},
-		{"name":"goodsSpecifications","value":"$!obj.goodsSpecifications"},
+		{"name":"productBuyPrice","value":"$!obj.productBuyPrice"},
+		{"name":"productFreight","value":"$!obj.productFreight"},
 		{"name":"numsed","value":"$!obj.nums"},
+		{"name":"moneyType","value":"$!obj.moneyType"},
 		{"name":"typs","value":"$!typs"}
 	],
 	"rows":[
@@ -31,8 +33,12 @@
 			{"colType":"text","length":"0","name":"","value":"$!obj.supName","readonly":"true"}
 		]},
 		{"cols":[
+			{"colType":"label","length":"2","colRequired":true,"text":"状态"},
+			{"colType":"select","length":"9","name":"status","value":"$!obj.status","placeholder":"请输入状态","options":[{"value":"0","text":"新增"},{"value":"1","text":"归还"},{"value":"-1","text":"失效"}],"readonly":"true"}
+		]},
+		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"方式"},
-			{"colType":"select","length":"9","name":"status","value":"$!obj.type","placeholder":"请输入状态","options":[{"value":"0","text":"借进"},{"value":"1","text":"借出"}]}
+			{"colType":"select","length":"9","name":"type","value":"$!obj.type","placeholder":"请输入状态","options":[{"value":"0","text":"借进"},{"value":"1","text":"借出"}]}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"付款方式"},
@@ -44,34 +50,64 @@
 		]}
 	]
 })
-<script type="text/javascript" src="$!base/static/js/product-goods.js"></script> 
 <script>
 $(function(){
+	var sp = $("#goodsSpecifications").val();
 	var typs = $("#typs").val();
 	if(typs == 1) {
 		$("#form-borrowgoods-edit").find("div[class='row cl']:eq(-1)").hide();
 		$("#form-borrowgoods-edit").find("div[class='row cl']:eq(-2)").hide();
 	} else if(typs == 2) {
+		$(".layui-layer-btn0").text("归还");
+		$(".layui-layer-btn0").prepend("<i class='Hui-iconfont Hui-iconfont-save'></i>");
 		$("#form-borrowgoods-edit").find("div[class='row cl']:eq(-1)").show();
 		$("#form-borrowgoods-edit").find("div[class='row cl']:eq(-2)").show();
+		var pbp = Number($("#productBuyPrice").val());
+		var pf = Number($("#productFreight").val());
 		var status = $("#status");
 		var counts = $("#counts");
 		var nums = $("#nums");
+		var type = $("#type");
+		var sumnums = Number(nums.val());
+		$("#money").val(Number((sumnums / sp) * (pbp + pf)).toFixed(2));
 		counts.before("<p>"+ counts.val()+"</p>");
 		nums.before("<p>"+ nums.val()+"</p>")
-		alert(status.val())
-		status.before("<p>"+ bgtype[status.val()] +"</p>");
+		status.before("<p>"+ bgStatustype[status.val()] +"</p>");
+		type.before("<p>"+ bgtype[type.val()] +"</p>");
 		status.hide();
 		counts.hide();
 		nums.hide();
-		
-		
+		type.hide();
 	} else if(typs == 3) {
-		
+		$(".layui-layer-btn0").hide();
+		var status = $("#status");
+		var counts = $("#counts");
+		var nums = $("#nums");
+		var type = $("#type");
+		counts.before("<p>"+ counts.val()+"</p>");
+		nums.before("<p>"+ nums.val()+"</p>")
+		status.before("<p>"+ bgStatustype[status.val()] +"</p>");
+		type.before("<p>"+ bgtype[type.val()] +"</p>");
+		status.hide();
+		counts.hide();
+		nums.hide();
+		type.hide();
+		var moneyType = $("#moneyType").val().trim();
+		if(moneyType == ""){
+			$("#form-borrowgoods-edit").find("div[class='row cl']:eq(-1)").hide();
+			$("#form-borrowgoods-edit").find("div[class='row cl']:eq(-2)").hide();
+		} else {
+			var money = $("#money");
+			var moneyType = $("#moneyType");
+			money.before("<p>" + money.val().trim() + "</p>");
+			moneyType.before("<p> "+ bgmoneytype[moneyType.val()] +" </p>");
+			money.hide();
+			moneyType.hide();
+			alert()
+		}
 	}
 	
 	
-	var sp = $("#goodsSpecifications").val();
 	$("#counts").keyup(function(){
 		isDoubles(this);
 		var val = $(this).val();

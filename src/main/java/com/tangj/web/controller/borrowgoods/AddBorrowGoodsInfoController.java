@@ -18,7 +18,7 @@ import com.tangj.web.pojo.borrowgoods.BorrowGoodsInfo;
 import com.tangj.web.service.borrowgoods.IBorrowGoodsService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.UIPage;
-import com.tangj.web.vo.good.goodsInfo.QueryVO;
+import com.tangj.web.vo.good.borrowInfo.QueryVO;
 
 @Controller
 @RequestMapping(value = "addBorrowGoodsInfo")
@@ -36,34 +36,34 @@ public class AddBorrowGoodsInfoController extends BaseController{
 		view.addObject("hnpfb", "一一批发");
 		return view;
 	}
+	
 	@RequiresPermissions(values = "addBorrowGoodsInfo:add")
-	@ResponseBody
-	@RequestMapping(value = "" , method = RequestMethod.POST)
-	public ApiCommonResultVo index(QueryVO vo){
-		Map<String,Object> param = new HashMap<>();
-		//param.put("name", vo.getName());
-		UIPage page = bgoodsService.page(param, vo.getPageNum(), vo.getPageSize());
-		return success(page);
-	}
-	
-	
+		@ResponseBody
+		@RequestMapping(value = "" , method = RequestMethod.POST)
+		public ApiCommonResultVo index(QueryVO vo){
+			Map<String,Object> param = new HashMap<>();
+			//param.put("name", vo.getName());
+			UIPage page = bgoodsService.page(param, vo.getPageNum(), vo.getPageSize());
+			return success(page);
+		}
+
 	//添加
-			@RequiresPermissions(values = "addBorrowGoodsInfo:addList")
-			@RequestMapping(value = "addList" , method = RequestMethod.GET)
-			public ModelAndView addList(){
-				ModelAndView view = new ModelAndView("templates/goods/borrowgoods/add");
-				return view;
-			}
-			@RequiresPermissions(values = "addBorrowGoodsInfo:addList")
-			@ResponseBody
-			@RequestMapping(value = "addList" , method = RequestMethod.POST)
-			public ApiCommonResultVo addList(@RequestBody  List<BorrowGoodsInfo> lst){
-				for (BorrowGoodsInfo obj : lst) {
-					super.validator(obj, BorrowGoodsInfo.ADD);
-					initInfo(obj);
-				}
-				bgoodsService.addList(lst);
-				return success("操作成功！");
-			}
+	@RequiresPermissions(values = "addBorrowGoodsInfo:addList")
+	@RequestMapping(value = "addList" , method = RequestMethod.GET)
+	public ModelAndView addList(){
+		ModelAndView view = new ModelAndView("templates/goods/borrowgoods/add");
+		return view;
+	}
+	@RequiresPermissions(values = "addBorrowGoodsInfo:addList")
+	@ResponseBody
+	@RequestMapping(value = "addList" , method = RequestMethod.POST)
+	public ApiCommonResultVo addList(@RequestBody  List<BorrowGoodsInfo> lst){
+		for (BorrowGoodsInfo obj : lst) {
+			super.validator(obj, BorrowGoodsInfo.ADD);
+			initInfo(obj);
+		}
+		bgoodsService.addList(lst);
+		return success("操作成功！");
+	}
 	
 }

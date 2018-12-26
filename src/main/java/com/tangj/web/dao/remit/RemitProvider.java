@@ -45,8 +45,6 @@ public class RemitProvider {
 		sql.SET("remit_money = #{remitMoney}");
 		sql.SET("remit_img = #{remit_img}");
 		sql.SET("remit_status = #{goodsSpecifications}");
-		sql.SET("create_user_id = #{goodsSpecificationsDesc}");
-		sql.SET("create_time = #{goodsBarCode}");
 		sql.SET("update_user_id = #{goodsPlaceOfOrigin}");
 		sql.SET("update_time = #{goodsStatus}");
 		sql.WHERE("id = #{id}");

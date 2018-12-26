@@ -50,7 +50,10 @@ public class BorrowGoodsInfoController extends BaseController{
 		return success(page);
 	}
 	
-	//添加
+	/**
+	 * 添加
+	 * @return
+	 */
 	@RequiresPermissions(values = "borrowGoodsInfo:add")
 	@RequestMapping(value = "add" , method = RequestMethod.GET)
 	public ModelAndView add(){
@@ -68,7 +71,12 @@ public class BorrowGoodsInfoController extends BaseController{
 	}
 	
 	
-	//修改
+	/**
+	 * 修改
+	 * @param id
+	 * @param typs
+	 * @return
+	 */
 		@RequiresPermissions(values = "borrowGoodsInfo:edit")
 		@RequestMapping(value = "edit" , method = RequestMethod.GET)
 		public ModelAndView edit(Long id, Integer typs){
@@ -88,6 +96,11 @@ public class BorrowGoodsInfoController extends BaseController{
 			return success("操作成功！");
 		}
 		
+		/**
+		 * 删除
+		 * @param id
+		 * @return
+		 */
 		@RequiresPermissions(values = "borrowGoodsInfo:delet")
 		@ResponseBody
 		@RequestMapping(value = "delet" , method = RequestMethod.POST)
@@ -103,4 +116,5 @@ public class BorrowGoodsInfoController extends BaseController{
 			return success("操作成功！");
 		}
 
+		
 }

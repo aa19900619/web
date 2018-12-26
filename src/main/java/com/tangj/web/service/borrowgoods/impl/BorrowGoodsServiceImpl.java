@@ -86,4 +86,14 @@ public class BorrowGoodsServiceImpl implements IBorrowGoodsService {
 		param.put("id", obj.getProductId());
 		productDao.updateProduct(param);
 	}
+
+	@Override
+	public void systemHedging(Long id) {
+		System.out.println("service经销商id：" + id);
+		if(id == -1) {/**对冲所有经销商借货 未完成**/
+			
+		} else {/**对冲选中经销商借货 未完成**/
+			
+		}
+	}
 }

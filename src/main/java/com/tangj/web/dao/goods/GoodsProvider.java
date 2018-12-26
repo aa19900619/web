@@ -13,14 +13,16 @@ public class GoodsProvider {
 		sql.SELECT(" b.goods_name as productName ");
 		sql.SELECT(" b.goods_specifications as goodsSpecifications ");
 		sql.SELECT(" b.goods_specifications_desc as goodsSpecificationsDesc ");
-		sql.SELECT(" b.goods_category as goodsCategory ");
-		sql.SELECT(" b.goods_categorys as goodsCategorys ");
+		sql.SELECT(" e.name as goodsCategory ");
+		sql.SELECT(" f.name as goodsCategorys ");
 		sql.SELECT(" c.dic_val as dicVal ");
 		sql.SELECT(" d.user_name as userName ");
 		sql.FROM(TableConstanst.TB_GOODS + " a ");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_PRODUCT + " b on a.product_id = b.id ");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_DICTIONARY  + " c on b.goods_type = c.id ");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_USER + " d on d.id=a.create_user_id ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_TYPE + " e on e.id = b.goods_category");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_TYPE + " f on f.id = b.goods_categorys");
 		if( param.get("name") != null && !"".equals(param.get("name"))){
 			sql.WHERE("b.goods_name = #{name}");
 		}
@@ -53,8 +55,8 @@ public class GoodsProvider {
 		sql.SELECT(" b.goods_name as productName ");
 		sql.SELECT(" b.goods_specifications as goodsSpecifications ");
 		sql.SELECT(" b.goods_specifications_desc as goodsSpecificationsDesc ");
-		sql.SELECT(" b.goods_category as goodsCategory ");
-		sql.SELECT(" b.goods_categorys as goodsCategorys ");
+		sql.SELECT(" f.name as goodsCategory ");
+		sql.SELECT(" g.name as goodsCategorys ");
 		sql.SELECT(" c.dic_val as dicVal ");
 		sql.SELECT(" d.user_name as userName ");
 		sql.SELECT(" e.remit_type as remitType ");
@@ -66,6 +68,8 @@ public class GoodsProvider {
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_DICTIONARY  + " c on b.goods_type = c.id ");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_USER + " d on d.id=a.create_user_id ");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_REMIT + " e on a.remit_id = e.id ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_TYPE + " f on f.id = b.goods_category");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_TYPE + " g on g.id = b.goods_categorys");
 		sql.WHERE("a.id=" + id);
 		return sql.toString();
 	}
@@ -98,8 +102,6 @@ public class GoodsProvider {
 		sql.SET("goods_freight = #{goodsFreight}");
 		sql.SET("goods_status = #{goodsStatus}");
 		sql.SET("remit_id = #{remitId}");
-		sql.SET("create_user_id = #{createUserId}");
-		sql.SET("create_time = #{createTime}");
 		sql.SET("update_user_id = #{updateUserId}");
 		sql.SET("update_time = #{updateTime}");
 		sql.WHERE("id = #{id}");
