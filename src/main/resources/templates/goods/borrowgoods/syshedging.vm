@@ -1,0 +1,37 @@
+#queryDetail({
+	"showHeader":"true",
+	"nav":[
+			{"title":"借货管理"},{"title":"系统对冲"}
+	],
+	"url":"sysHedging",
+	"query":[
+		{"type":"selected","label":"供应商","id":"suppliersId","name":"suppliersId","placeholder":"供应商","style":"width:150px","dataSource":$!supList,"getValueMethod":"getId","getNameMethod":"getName"},
+		{"type":"button","value":"自动对冲","clickFun":"hedging()","iclass":"Hui-iconfont-search2"}
+	],
+	"loaded":"myloaded"
+})
+
+<script>
+function myloaded() {
+	$("#suppliersId").find("option:first").text("所有经销商");
+}
+function hedging() {
+	var sup = $("#suppliersId");
+	var id=0;
+	if(sup.get(0).selectedIndex == 0) {
+		if(!confirm("是否自动对冲所有经销商借货？")) {
+			return;
+		}
+		id = -1;
+	} else {
+		if(!confirm("是否对冲" + sup.find("option:selected").text().trim() + "借货？")) {
+			return;
+		}
+		id = sup.val().trim();
+	}
+	toSaved("$!base/sysHedging/hegding",{"id":id},function(result){
+		alert("对冲已完成！");
+		window.location.reload()
+	});
+}
+</script>
