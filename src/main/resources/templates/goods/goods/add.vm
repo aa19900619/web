@@ -1,7 +1,7 @@
 #header
 
 <link href="$!base/static/css/button-style.css" rel="stylesheet" type="text/css" />
-<form method="post" class="form form-horizontal" id="$formId">
+<form method="post" class="form form-horizontal" id="$formId" onsubmit="return false">
 <div class="page-container">
 
 <div class="cl mt-20">
