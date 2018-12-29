@@ -44,10 +44,12 @@
 </form>
 #footer
 #autocomplete("name" "1" "selectPro" "closeAjaxDo")
+#addprojs
 <script>
 	var urlPath = "$!base/addBorrowGoodsInfo/addList";
 	var msgInfo = "借货信息";
-
+	function pageSelectPro(tbl,tr,td,obj) {
+	}
 	
 	var cdtyps = 0;
 	function changedir() {
@@ -67,4 +69,3 @@
 	}
 	
 	</script>
-#addprojs

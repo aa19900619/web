@@ -612,6 +612,13 @@ $(function(){
 		$("#div_btn").show();
 	}
 	
+	$(document).keyup(function(event){
+		if(event.keyCode ==13){
+	    	alert("回车了");
+	  	}
+		return;
+	});
+	
 	function delRow(obj,types) { 
 		if(types == 1) {
 			if(confirm("是否删除该条" + msgInfo + "？")) {
@@ -684,6 +691,8 @@ $(function(){
 		
 	});
 	
+	
+	
 	var row_name = 0;
 	var row_count = 0; 
 	function selectPro(data) {
@@ -716,19 +725,16 @@ $(function(){
 			td3.append(obj.goodsCategorys);
 		}
 		td4.append("<a onclick='delRow(this,1)'>删除</a>");
-		pageSelectPro(td2,obj);
 		row.append(td1); 
 		row.append(td2); 
 		row.append(td3); 
+		pageSelectPro(table1,row,td2,obj);
 		row.append(td4); 
 		table1.append(row);
 		$($("#tr" + row_name).find("button").eq(0)).attr("disabled","disabled");
 		$($("#tr" + row_name).find("button").eq(2)).attr("disabled","disabled");
 		row_count++;
 		row_name++;
-	}
-	
-	function pageSelectPro(td,obj) {
 	}
 	
 	function changeCounts(t1,gs,nums,types) {

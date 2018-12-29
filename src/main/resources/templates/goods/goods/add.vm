@@ -31,13 +31,19 @@
 </form>
 #footer
 #autocomplete("name" "1" "selectPro" "closeAjaxDo")
+#addprojs
 <script>
-	function pageSelectPro(td,obj) {
+	function pageSelectPro(tbl,tr,td,obj) {
 		td.append("<input type='hidden' id='goodsBuyPrice' name='goodsBuyPrice'  value="+ obj.productBuyPrice+">");
 		td.append("<input type='hidden' id='goodsSellingPrice' name='goodsSellingPrice'  value="+ obj.productSellingPrice+">");
 		td.append("<input type='hidden' id='goodsFreight' name='goodsFreight'  value="+ obj.productFreight+">");
 	}
 	var urlPath = "$!base/addGoodsInfo/addList";
 	var msgInfo = "收货信息";
+	
+
+	//$("#btnSend").unbind('click');
+	//$("#btnSend").click(function() {
+	//	
+	//});
 </script>
-#addprojs
