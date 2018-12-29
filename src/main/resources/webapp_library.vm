@@ -569,6 +569,7 @@ function reloadData(){
 <script>
 $(function(){
     $( "#$!id" ).autocomplete({
+    	autoFocus:true,
 		source: function( request, response ) {
 			toAjax("$!base/autocomplete",{"type":$type,"name":request.term},function(result){
 				response( 
