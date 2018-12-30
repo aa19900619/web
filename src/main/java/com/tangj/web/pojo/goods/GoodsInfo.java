@@ -47,8 +47,12 @@ public class GoodsInfo extends BaseProInfo {
 	@Min(value = 1, message = "运费格式错误", profiles = { MODIFY, ADD })
 	private BigDecimal goodsFreight;
 	
-	/*默认新增为0，1物流对数，2物流结款，3供应商对数默认结款，删除-1*/
+	/**默认新增为0，删除-1*/
 	private Integer goodsStatus;
+	/**0新增，1物流对数，2本地送货*/
+	private Integer logisticsStauts;
+	/**0新增，1物流结款，2供应商结款*/
+	private Integer paymentStatus;
 	private Long remitId;
 	private String dicVal;
 	private String userName;
@@ -104,6 +108,18 @@ public class GoodsInfo extends BaseProInfo {
 	}
 	public void setGoodsStatus(Integer goodsStatus) {
 		this.goodsStatus = goodsStatus;
+	}
+	public Integer getLogisticsStauts() {
+		return logisticsStauts;
+	}
+	public void setLogisticsStauts(Integer logisticsStauts) {
+		this.logisticsStauts = logisticsStauts;
+	}
+	public Integer getPaymentStatus() {
+		return paymentStatus;
+	}
+	public void setPaymentStatus(Integer paymentStatus) {
+		this.paymentStatus = paymentStatus;
 	}
 	public Long getRemitId() {
 		return remitId;

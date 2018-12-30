@@ -69,10 +69,14 @@ public class ProductProvider {
 		sql.SELECT("a.*");
 		sql.SELECT(" b.name as goodsCategory ");
 		sql.SELECT(" c.name as goodsCategorys ");
+		sql.SELECT(" d.suppliers_id as suppliersId ");
+		sql.SELECT(" e.name as suppName");
 		sql.FROM(TableConstanst.TB_PRODUCT +" a ");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_TYPE + " b on b.id = a.goods_category");
 		sql.LEFT_OUTER_JOIN(TableConstanst.TB_TYPE + " c on c.id = a.goods_categorys");
-		sql.WHERE("a.goods_name like concat('%',#{name},'%')  or a.goods_name_initial like concat('%',#{name},'%') ");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_SUPPLIERS_DETAIL + " d on a.id = d.product_id");
+		sql.LEFT_OUTER_JOIN(TableConstanst.TB_SUPPLIERS + " e on e.id = d.suppliers_id ");
+		sql.WHERE("a.goods_name like concat('%',#{name},'%')  or a.goods_name_initial like concat('%',#{name},'%') and d.is_check = 1 ");
 		
 		return sql.toString() + " limit 5";
 	}

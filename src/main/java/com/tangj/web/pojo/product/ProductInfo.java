@@ -86,6 +86,8 @@ public class ProductInfo extends BaseInfo{
 	private BigDecimal productFreight;
 	
 	private List<SupplierInfo> slist;
+	private Long suppliersId;
+	private String suppName;
 
 	public Long getId() {
 		return id;
@@ -221,6 +223,22 @@ public class ProductInfo extends BaseInfo{
 
 	public void setSlist(List<SupplierInfo> slist) {
 		this.slist = slist;
+	}
+
+	public Long getSuppliersId() {
+		return suppliersId;
+	}
+
+	public void setSuppliersId(Long suppliersId) {
+		this.suppliersId = suppliersId;
+	}
+
+	public String getSuppName() {
+		return suppName;
+	}
+
+	public void setSuppName(String suppName) {
+		this.suppName = suppName;
 	}
 	
 	

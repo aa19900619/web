@@ -1,3 +1,6 @@
+<link href="$!base/static/lib/cityPicker/css/city-picker.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="$!base/static/lib/cityPicker/js/city-picker.data.js"></script> 
+<script type="text/javascript" src="$!base/static/lib/cityPicker/js/city-picker.js"></script> 
 #detail({
 	"id":"form-supplier-edit",
 	"hiddens":[

@@ -6,7 +6,7 @@
 	"url":"sysHedging",
 	"query":[
 		{"type":"selected","label":"供应商","id":"suppliersId","name":"suppliersId","placeholder":"供应商","style":"width:150px","dataSource":$!supList,"getValueMethod":"getId","getNameMethod":"getName"},
-		{"type":"button","value":"自动对冲","clickFun":"hedging()","iclass":"Hui-iconfont-search2"}
+		{"type":"button","value":"查询","clickFun":"hedging()","iclass":"Hui-iconfont-search2"}
 	],
 	"loaded":"myloaded"
 })

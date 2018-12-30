@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tangj.web.pojo.product.ProductInfo;
+import com.tangj.web.pojo.supplier.SupplierDetailInfo;
 import com.tangj.web.pojo.sys.RegionInfo;
 import com.tangj.web.service.product.IProductService;
+import com.tangj.web.service.sys.ISupplierDetailService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.SessionUtils;
 import com.tangj.web.vo.base.AutoCompleteVO;
@@ -60,4 +62,12 @@ public class IndexController extends BaseController{
 		return success(result);
 	}
 	
+	@Autowired
+	private ISupplierDetailService iSupplierDetailService; 
+	@ResponseBody
+	@RequestMapping(value = "autocompleteSuppd")
+	public ApiCommonResultVo getSuppDetailList(Long pid){
+		List<SupplierDetailInfo> list = iSupplierDetailService.getListByPid(pid);
+		return success(list);
+	}
 }

@@ -15,6 +15,7 @@
 				<th width="250px">商品名称</th>
 				<th width="150px">规格</th>
 				<th width="">收货数量</th>
+				<th width="150px">供应商</th>
 				<th width="50px">操作</th>
 			</tr>
 		</thead>
@@ -33,14 +34,47 @@
 #autocomplete("name" "1" "selectPro" "closeAjaxDo")
 #addprojs
 <script>
-	function pageSelectPro(tbl,tr,td,obj) {
+	function pageSelectPro(tbl,tr,td,obj,row_name) {
 		td.append("<input type='hidden' id='goodsBuyPrice' name='goodsBuyPrice'  value="+ obj.productBuyPrice+">");
 		td.append("<input type='hidden' id='goodsSellingPrice' name='goodsSellingPrice'  value="+ obj.productSellingPrice+">");
 		td.append("<input type='hidden' id='goodsFreight' name='goodsFreight'  value="+ obj.productFreight+">");
+		var td1 = $("<td id=td" + row_name + ">"+"</td>");
+		td1.append("<select id='' name='' panelHeight='auto' onclick='getSuppList(this," + 
+					obj.id + ")'><option value=" + 
+					obj.suppliersId + "> " + 
+					obj.suppName + " </option></select>");
+		
+		tr.append(td1);
 	}
 	var urlPath = "$!base/addGoodsInfo/addList";
 	var msgInfo = "收货信息";
 	
+	function getSuppList(ths,pid) {
+		 $.ajax({
+		        url:"$!base/autocompleteSuppd",
+		        type:"post",
+		        data:{from:"$formId",pid:pid},
+		        success:function(data){
+		             try {
+		            	 	$(ths).text("");
+		            	 	$(ths).empty();
+		            	 	$.each(data.data, function(i,item){
+		            			$(ths).append("<option value=" + item.suppliersId + ">" + item.name  + "</option>");
+		            		});
+		            	 	$(ths).removeAttr("onclick");
+		            	 	$(ths).attr("panelHeight","auto");
+		                } catch (e) {
+		                    return false;
+		                }
+		                setTimeout(function () {
+		                    try {
+		                       
+		                    } catch (e) {
+		                    }
+		                }, 200);
+		        }
+		    });
+	}
 
 	//$("#btnSend").unbind('click');
 	//$("#btnSend").click(function() {

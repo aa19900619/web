@@ -84,6 +84,9 @@ public class GoodsProvider {
 		sql.INTO_COLUMNS("goods_selling_price").INTO_VALUES("#{goodsSellingPrice}");
 		sql.INTO_COLUMNS("goods_freight").INTO_VALUES("#{goodsFreight}");
 		sql.INTO_COLUMNS("goods_status").INTO_VALUES("#{goodsStatus}");
+		sql.INTO_COLUMNS("logistics_stauts").INTO_VALUES("0");
+		sql.INTO_COLUMNS("payment_status").INTO_VALUES("0");
+		sql.INTO_COLUMNS("suppliers_id").INTO_VALUES("#{suppliersId}");
 		sql.INTO_COLUMNS("remit_id").INTO_VALUES("#{remitId}");
 		sql.INTO_COLUMNS("create_user_id").INTO_VALUES("#{createUserId}");
 		sql.INTO_COLUMNS("create_time").INTO_VALUES("#{createTime}");
@@ -113,6 +116,12 @@ public class GoodsProvider {
 		sql.UPDATE(TableConstanst.TB_GOODS);
 		if( param.get("remitId") != null && !"".equals(param.get("remitId"))){
 			sql.SET("remit_id = #{remitId}");
+		}
+		if( param.get("logisticsStauts") != null && !"".equals(param.get("logisticsStauts"))){
+			sql.SET("logistics_stauts = #{logisticsStauts}");
+		}
+		if( param.get("paymentStatus") != null && !"".equals(param.get("paymentStatus"))){
+			sql.SET("payment_status = #{paymentStatus}");
 		}
 		sql.WHERE("id = #{id}");
 		return sql.toString();

@@ -613,12 +613,6 @@ $(function(){
 		$("#div_btn").show();
 	}
 	
-	$(document).keyup(function(event){
-		if(event.keyCode ==13){
-	    	alert("回车了");
-	  	}
-		return;
-	});
 	
 	function delRow(obj,types) { 
 		if(types == 1) {
@@ -729,7 +723,7 @@ $(function(){
 		row.append(td1); 
 		row.append(td2); 
 		row.append(td3); 
-		pageSelectPro(table1,row,td2,obj);
+		pageSelectPro(table1,row,td2,obj,row_name);
 		row.append(td4); 
 		table1.append(row);
 		$($("#tr" + row_name).find("button").eq(0)).attr("disabled","disabled");

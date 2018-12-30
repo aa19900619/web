@@ -58,7 +58,6 @@ public class AddGoodsInfoController extends BaseController{
 				for (GoodsInfo obj : lst) {
 					super.validator(obj, GoodsInfo.ADD);
 					initInfo(obj);
-					obj.setGoodsStatus(0);/*新增状态*/
 				}
 				goodsService.addList(lst);
 				return success("操作成功！");

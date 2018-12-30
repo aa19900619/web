@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.tangj.web.dao.goods.IGoodsDao;
 import com.tangj.web.dao.product.IProductDao;
+import com.tangj.web.dao.supplier.ISupplierDao;
 import com.tangj.web.pojo.goods.GoodsInfo;
+import com.tangj.web.pojo.supplier.SupplierInfo;
 import com.tangj.web.service.goods.IGoodsService;
+import com.tangj.web.util.MyUtil;
 import com.tangj.web.util.UIPage;
 
 @Service
@@ -22,6 +25,9 @@ public class GoodsServiceImpl implements IGoodsService {
 	
 	@Autowired
 	private IProductDao productDao;
+	
+	@Autowired
+	private ISupplierDao supplierDao ;
 
 	@Override
 	public GoodsInfo getGoodsInfoBy(Long id) {
@@ -49,6 +55,13 @@ public class GoodsServiceImpl implements IGoodsService {
 	public void addList(List<GoodsInfo> lst) {
 		Map<String,Object> param = new HashMap<>();
 		for (GoodsInfo obj : lst) {
+			/**判断是否为本地经销商送货，新增状态为0，本地经销商为2**/
+			SupplierInfo suppInfo = supplierDao.getSupplierBy(obj.getSuppliersId());
+			if(MyUtil.isLocal(suppInfo) == 1) {
+				obj.setGoodsStatus(2);
+			} else {
+				obj.setGoodsStatus(0);
+			}
 			goodsDao.add(obj);
 			/**新增收货信息，增加商品库存**/
 			param.put("pCounts", obj.getGoodsNum());
