@@ -2,38 +2,247 @@
 
 <link href="$!base/static/css/button-style.css" rel="stylesheet" type="text/css" />
 <form method="post" class="form form-horizontal" id="$formId" onsubmit="return false">
-<div class="page-container">
+	<div class="page-container">
+		<div class="cl mt-20">
+			商品名称：<input type="text" id="name" name="name" style="width:150px" class="input-text" />
+			<br><br>
 
-<div class="cl mt-20">
-商品名称：<input type="text" id="name" name="name" style="width:150px" class="input-text" />
-<br>
-<br>
-
-	<table id="table1" class="table table-border table-bordered table-hover table-bg table-sort">
-		<thead>
-			<tr class="text-c">
-				<th width="250px">商品名称</th>
-				<th width="150px">规格</th>
-				<th width="">收货数量</th>
-				<th width="150px">供应商</th>
-				<th width="50px">操作</th>
-			</tr>
-		</thead>
-		<tbody id="gitbody">
-			</tbody>
-		</table>
-		
+			<table id="table1" class="table table-border table-bordered table-hover table-bg table-sort">
+				<thead>
+					<tr class="text-c">
+						<th width="250px">商品名称</th>
+						<th width="150px">规格</th>
+						<th width="">收货数量</th>
+						<th width="150px">供应商</th>
+						<th width="50px">操作</th>
+					</tr>
+				</thead>
+				<tbody id="gitbody">
+	
+				</tbody>
+			</table>
 		</div>
-		</div>
-		<div align="center" id="div_btn" hidden="hidden">
-		<input type="button" id="btnSend" name="btnSend" class="button button-primary button-rounded button-small" value=" 提   交"> 
-		<input type="button" class="button button-primary button-rounded button-small" value=" 删   除" onclick="delRow(this,-1)"> 
-		</div>
+	</div>
+	<div align="center" id="div_btn" hidden="hidden">
+		<input type="button" id="btnSend" name="btnSend" class="button button-primary button-rounded button-small" value=" 提   交" onclick="submitData()"> 
+		<input type="button" class="button button-primary button-rounded button-small" value=" 删   除" onclick="delAll()"> 
+	</div>
 </form>
 #footer
 #autocomplete("name" "1" "selectPro" "closeAjaxDo")
-#addprojs
+##addprojs
 <script>
+function selectPro(data){
+	var obj = data.data;
+	toSaved("$!base/autocompleteSuppd",{pid:obj["id"]},function(result){
+		var list = result.data;
+		obj["suppliers"] = list;
+		var html = template("selectProTpl",obj);
+		$("#gitbody").append(html);
+	});
+}
+function closeAjaxDo(){
+	$("#name").val("");
+	$("#name").select();
+	$("#name").focus();
+	$("#div_btn").show();
+}
+function delRow(obj){
+	Jq.MessageBox.confirm("是否删除该条" + msgInfo + "？",function(){
+		$(obj).parent().parent().remove();
+	});
+}
+function delAll(){
+	Jq.MessageBox.confirm("是否删除该条" + msgInfo + "？",function(){
+		$("#gitbody").find("tr").each(function(){
+			$(this).remove();
+		});
+		$("#div_btn").hide();
+	});
+}
+
+function changeKeyUp(obj,gs,obj,types) {
+	var tr = $(obj).parents("tr:first");
+	
+	gs = Number(gs);
+	$(obj).val($(obj).val().replace(/[^\d.-]/g, '').replace(/(^\s*)|(\s*$)/g,''));
+	$(obj).val($(obj).val() * 1);
+	
+	var name = "";
+	if(types == 1) {
+		var inp = tr.find("input[name='goodsNum']");
+		inp.val(Number($(obj).val()) * gs);
+	} else {
+		name = "";
+		var inp = tr.find("input[name='goodsCounts']");
+		inp.val((Number($(obj).val()) / gs).toFixed(2));
+	}
+	
+	var gspt = tr.find("input[name='gspt']").val();
+	var o = tr.find("input[name=goodsNum]") 
+	
+	if(gspt.indexOf("克") >= 0) {
+		tr.find("label[name='catejin']").text(" = " + o.val() / 500 + " 市斤");
+	}
+	if($(obj).val() == 0) {
+		tr.find("button").eq(0).attr("disabled","disabled");
+		tr.find("button").eq(2).attr("disabled","disabled");
+	} else {
+		tr.find("button").eq(0).removeAttr("disabled"); 
+		tr.find("button").eq(2).removeAttr("disabled"); 
+	}
+	tr.attr("style","background:#F8F8FF; color:#F8F8FF");
+}
+function changeCounts(t1,gs,obj,types) {
+	var tr = $(obj).parents("tr:first");
+	
+	var name = "";
+	gs= Number(gs);
+	var obj1 = tr.find("input[name='goodsCounts']");
+	var obj2 = tr.find("input[name='goodsNum']");
+	var gspt = tr.find("input[name='gspt']").val();
+	
+	if(t1== 1) {
+		name = "goodsCounts";
+		addAndSub(name,tr,types);
+		obj2.val(Number(obj1.val()) * gs);
+		if(gspt.indexOf("克") >= 0) {
+			tr.find("label[name='catejin']").text(" = " + obj2.val() / 500 + " 市斤");
+		}
+	}else{
+		name = "goodsNum";
+		if(gspt.indexOf("克") >= 0) {
+			addAndSubByG(name,tr,types);
+		} else {
+			addAndSub(name,tr,types);
+		}
+		obj1.val((Number(obj2.val()) / gs).toFixed(2));
+	}
+	tr.attr("style","background:#F8F8FF; color:#F8F8FF");
+}
+function addAndSub(name,tr,types) {
+	var obj = tr.find("input[name="+ name +"]");
+	var val = Number(obj.val());
+	$(obj).val($(obj).val().replace(/[^\d.-]/g, '').replace(/(^\s*)|(\s*$)/g,''));
+	
+	val = ~~val;
+	if(types == 1) {
+		obj.val(val + 1);
+	}else {
+		var counts = val;
+		if(counts <= 0) {
+			obj.val(0);
+		} else {
+			obj.val(val - 1);
+		}
+	}
+	if(obj.val() == 0) {
+		tr.find("button").eq(0).attr("disabled","disabled");
+		tr.find("button").eq(2).attr("disabled","disabled");
+	} else {
+		tr.find("button").eq(0).removeAttr("disabled"); 
+		tr.find("button").eq(2).removeAttr("disabled"); 
+	}
+}
+
+function addAndSubByG(name,tr,types) {
+	var obj = tr.find("input[name="+ name +"]");
+	var val = Number(obj.val());
+	$(obj).val($(obj).val().replace(/[^\d.-]/g, '').replace(/(^\s*)|(\s*$)/g,''));
+	var p1 = Math.floor(val/10) *10 + 5  + "";
+	var p2 = Math.floor(val/10) *10 + 5;
+	if(p1.length > 1) {
+		if(val > p2) {
+			val = Math.ceil(val/10) * 10;
+		} else if (val < p2) {
+			val = p2 -5;
+		}
+	} else {
+		if(val < 5) {
+			val = 0;
+		}
+	}
+	if(types == 1) {
+		obj.val(val + 5);
+	}else {
+		var counts = val;
+		if(counts <= 0) {
+			obj.val(0);
+		} else {
+			if(obj.val() <= 4) {
+				obj.val(0);
+			} else {
+				obj.val(val - 5);
+			}
+			
+		}
+	}
+	tr.find("label[name='catejin']").text(" = " + obj.val() / 500 + " 市斤");
+	if(obj.val() == 0) {
+		tr.find("button").eq(0).attr("disabled","disabled");
+		tr.find("button").eq(2).attr("disabled","disabled");
+	} else {
+		tr.find("button").eq(0).removeAttr("disabled"); 
+		tr.find("button").eq(2).removeAttr("disabled"); 
+	}
+}
+function submitData() {
+	if($("#gitbody").find("input[name='productId']").size() == 0) {
+		Jq.MessageBox.error("请录入" + msgInfo + "！");
+		return;
+	}
+	
+	var iszero = 0;
+	var gdata = new Array();
+	$("#gitbody").find("tr").each(function() {
+		var obj = {};
+		var info = $(this);
+		info.attr("style","background:#F8F8FF; color:#F8F8FF");
+		var gnums = info.find("input[name='goodsNum']").val() * 1;
+		var gcounts = info.find("input[name='goodsCounts']").val() * 1;
+		if(isNaN(gnums)) {
+			iszero++;
+			info.find("input[name='goodsNum']").val(0);
+			info.find("input[name='goodsCounts']").val(0);
+			info.attr("style","background:#FFC1C1; color:#FFC1C1");
+			if(info.find("input[name='gspt']").val().indexOf("克") >= 0) {
+				info.find("label[name='catejin']").text(" = 0市斤");
+			}
+		}
+		if(gcounts == 0 && gnums == 0) {
+			info.attr("style","background:#FFC1C1; color:#FFC1C1");
+			iszero++;
+		}
+		obj["productId"] = info.find("input[name='productId']").val();
+		obj["goodsNum"] = gnums;
+		obj["goodsBuyPrice"] = info.find("input[name='goodsBuyPrice']").val();
+		obj["goodsSellingPrice"] = info.find("input[name='goodsSellingPrice']").val();
+		obj["goodsFreight"] = info.find("input[name='goodsFreight']").val();
+		obj["suppliersId"] = info.find("select[name='suppliersId'] option:selected").val();
+		gdata.push(obj);
+	});
+	if(iszero > 0) {
+		Jq.MessageBox.error("商品数量不能为0！");
+		return;
+	}
+	Jq.MessageBox.confirm("您确定提交收货信息吗？",function(){
+		toJson("$!base/addGoodsInfo/addList",gdata,function(result) {
+			Jq.msg.success("操作成功！");
+			window.location.reload()
+		});	
+	});
+};
+
+
+
+
+
+
+
+
+
+
+
 	function pageSelectPro(tbl,tr,td,obj,row_name) {
 		td.append("<input type='hidden' id='goodsBuyPrice' name='goodsBuyPrice'  value="+ obj.productBuyPrice+">");
 		td.append("<input type='hidden' id='goodsSellingPrice' name='goodsSellingPrice'  value="+ obj.productSellingPrice+">");
@@ -81,3 +290,54 @@
 	//	
 	//});
 </script>
+
+<script id="selectProTpl" type="text/html">
+<tr>
+	<td>
+		<label>{{goodsName}}</label>
+		<input type="hidden" id="productId" name="productId" value="{{id}}">
+		<input type="hidden" id="gspt" name="gspt" value="{{goodsCategorys}}">
+	</td>
+	<td>
+		<label>
+			{{if goodsCategorys.indexOf('克') >= 0 }}
+				{{ goodsSpecifications / 1000 }} kg（千克）
+			{{else}}
+				{{ goodsSpecifications }}{{ goodsCategorys }} 
+			{{/if}}
+			/ {{goodsCategory}}
+		</label>
+		<input type="hidden" id="goodsBuyPrice" name="goodsBuyPrice" value="{{productBuyPrice}}">
+		<input type="hidden" id="goodsSellingPrice" name="goodsSellingPrice" value="{{productSellingPrice}}">
+		<input type="hidden" id="goodsFreight" name="goodsFreight" value="{{productFreight}}">
+	</td>
+	<td>
+		<button type="button" onclick="changeCounts(1,'{{ goodsSpecifications }}',this,-1)" class="button button-box button-tiny"><i class="fa fa-plus">-</i></button>
+		<input maxlength="8" style="width:100px" onfocus="$(this).select()" onkeyup="changeKeyUp(this,'{{ goodsSpecifications }}',0,1)"  class="input-text"  type="text" id="goodsCounts" name="goodsCounts" value=0>
+		<button type="button" onclick="changeCounts(1,'{{goodsSpecifications}}',this,1)" class="button button-box button-tiny"><i class='fa fa-plus'>+</i></button>
+
+		{{goodsCategory}}
+
+		<button type="button" onclick="changeCounts(2,'{{goodsSpecifications}}',this,-1)" class="button button-box button-tiny"><i class="fa fa-plus">-</i></button>
+		<input maxlength="8" style="width:100px" onfocus="$(this).select()" onkeyup="changeKeyUp(this,'{{goodsSpecifications}}',0,-1)" class="input-text" size=1 type="text" id="goodsNum" name="goodsNum" value=0>
+		<button type="button" onclick="changeCounts(2,'{{goodsSpecifications}}',this,1)" class="button button-box button-tiny"><i class="fa fa-plus">+</i></button>
+
+		{{if goodsCategorys.indexOf('克') >= 0 }}
+			{{goodsCategorys}}<label id='catejin' name='catejin'> = 0 市斤</label>
+		{{else}}
+			{{goodsCategorys}}
+		{{/if}}
+	</td>
+	<td>
+		<select id="suppliersId" name="suppliersId" class="select select-box">
+		{{each suppliers as item i}}
+			<option value="{{item.suppliersId}}">{{item.name}}</option>
+		{{/each}}
+		</select>
+	</td>
+	<td>
+		<a onclick="delRow(this)">删除</a>
+	</td>
+</tr>	
+</script>
+
