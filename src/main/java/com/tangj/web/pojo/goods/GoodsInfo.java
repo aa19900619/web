@@ -23,7 +23,6 @@ public class GoodsInfo extends BaseProInfo {
 	@NotEmpty(message = "ID不能为空", profiles = { MODIFY })
 	@Min(value = 1, message = "ID格式错误", profiles = { MODIFY })
 	private Long id;
-	private Long productId;
 
 	private BigDecimal goodsCounts;
 
@@ -66,12 +65,6 @@ public class GoodsInfo extends BaseProInfo {
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public Long getProductId() {
-		return productId;
-	}
-	public void setProductId(Long productId) {
-		this.productId = productId;
 	}
 	public BigDecimal getGoodsCounts() {
 		return goodsCounts;

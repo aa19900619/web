@@ -65,5 +65,11 @@ public interface IGoodsService {
 	 * @param obj
 	 */
 	public void updateGoodsProductInfo(GoodsInfo obj);
+	
+	/**
+	 * 修改订单状态（物流对数，供应商结款）
+	 * @param obj
+	 */
+	public void updateOrderStatus(GoodsInfo obj);
 
 }

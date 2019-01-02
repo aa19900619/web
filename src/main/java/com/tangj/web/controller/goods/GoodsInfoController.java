@@ -1,6 +1,5 @@
 package com.tangj.web.controller.goods;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,9 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tangj.web.annotation.RequiresPermissions;
 import com.tangj.web.controller.base.BaseController;
 import com.tangj.web.pojo.goods.GoodsInfo;
-import com.tangj.web.pojo.remit.RemitInfo;
 import com.tangj.web.service.goods.IGoodsService;
-import com.tangj.web.service.remit.IRemitService;
 import com.tangj.web.util.ApiCommonResultVo;
 import com.tangj.web.util.DateUtils;
 import com.tangj.web.util.UIPage;
@@ -27,9 +24,6 @@ import com.tangj.web.vo.good.goodsInfo.QueryVO;
 public class GoodsInfoController extends BaseController{
 	@Autowired
 	private IGoodsService goodsService;
-	
-	@Autowired
-	private IRemitService remitService;
 	
 	@RequiresPermissions(values = "goodsInfo:index")
 	@RequestMapping(value = "" , method = RequestMethod.GET)
@@ -102,11 +96,15 @@ public class GoodsInfoController extends BaseController{
 					GoodsInfo obj = goodsService.getGoodsInfoBy(id);
 					if(stype == 1) {//物流对数
 						obj.setGoodsStatus(1);
+						obj.setLogisticsStauts(1);
 					} else if(stype == 2) {//供应商对数
 						obj.setGoodsStatus(3);
+						obj.setPaymentStatus(2);
 					} else if(stype == 3) {//查看
 						obj.setGoodsStatus(4);
 					}
+
+					initType(view, 2);
 					view.addObject("obj", obj);
 					return view;
 				}
@@ -114,35 +112,8 @@ public class GoodsInfoController extends BaseController{
 				@ResponseBody
 				@RequestMapping(value = "ediremit" , method = RequestMethod.POST)
 				public ApiCommonResultVo ediremit(GoodsInfo obj){
-					RemitInfo rInfo = new RemitInfo();
-					Map<String,Object> param = new HashMap<>();
-					initInfo(rInfo);
-					if(obj.getGoodsStatus() == 2) {/**物流对数改状态**/
-						if(obj.getRemitMoney() == null || "".equals(obj.getRemitMoney())) {
-							param.put("id", obj.getId());
-							param.put("goodsStatus", "1");
-							//goodsService.updateRemit(param);
-						} else {/**物流结款 新增汇款信息，修改收货表汇款id**/
-							rInfo.setGoodsId(obj.getId());
-							rInfo.setRemitType(obj.getRemitType());
-							rInfo.setRemitMoney(obj.getRemitMoney());
-							rInfo.setGoodsStatus(2);
-							remitService.update(rInfo);
-						}
-							
-					} else if(obj.getGoodsStatus() == 3) {/**供应商对数，默认已结款**/
-						rInfo.setGoodsId(obj.getId());
-						rInfo.setRemitType(obj.getRemitType());
-						rInfo.setGoodsStatus(3);
-						if(obj.getRemitMoney() == null || "".equals(obj.getRemitMoney())) {
-							Long remitMoney = obj.getGoodsNum() / obj.getGoodsSpecifications() * obj.getGoodsBuyPrice().longValue();
-							rInfo.setRemitMoney(new BigDecimal(remitMoney));
-							remitService.update(rInfo);
-						}
-						
-					}
-					
-					//remitService.updateRemit(obj);
+					initInfo(obj);
+					goodsService.updateOrderStatus(obj);
 					return success("操作成功！");
 				}
 }

@@ -674,12 +674,14 @@ $(function(){
 			obj["goodsBuyPrice"] = info.find("input[name='goodsBuyPrice']").val();
 			obj["goodsSellingPrice"] = info.find("input[name='goodsSellingPrice']").val();
 			obj["goodsFreight"] = info.find("input[name='goodsFreight']").val();
+			obj["suppliersId"] = info.find("select[name='suppliersId'] option:selected").val();
 			gdata.push(obj);
 		});
 		if(iszero > 0) {
 			alert("商品数量不能为0！");
 			return;
 		}
+		console.log(gdata);
 		toJson(urlPath,gdata,function(result) {
 			window.location.reload()
 		});

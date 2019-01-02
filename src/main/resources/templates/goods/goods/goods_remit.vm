@@ -7,7 +7,9 @@
 		{"name":"goodsNum","value":"$!obj.goodsNum"},
 		{"name":"goodsBuyPrice","value":"$!obj.goodsBuyPrice"},
 		{"name":"goodsStatus","value":"$!obj.goodsStatus"},
-		{"name":"gstau","value":"$!obj.goodsStatus"}
+		{"name":"gstau","value":"$!obj.goodsStatus"},
+		{"name":"logisticsStauts","value":"$!obj.logisticsStauts"},
+		{"name":"paymentStatus","value":"$!obj.paymentStatus"}
 		
 	],
 	"rows":[
@@ -102,9 +104,11 @@ $(function(){
 		//div_remit.show();
 		if(stau == 1) {
 			$("#goodsStatus").val("2");
+			$("#paymentStatus").val("1");
 			$("#remitMoney").val(Math.ceil(rm + (gnum * gf)));
 		} else if(stau == 3) {
-			$("#goodsStatus").val("3")
+			$("#goodsStatus").val("3");
+			$("#paymentStatus").val("2");
 			$("#remitMoney").val(Math.ceil(rm));
 		}
 	});
@@ -120,8 +124,9 @@ $(function(){
 		$("#remitMoney").val("");
 		if(stau == 1) {
 			$("#goodsStatus").val("1")
+			$("#paymentStatus").val("");
 		} else if(stau == 3) {
-			$("#goodsStatus").val("3")
+			$("#goodsStatus").val("3");
 		}
 	});
 	

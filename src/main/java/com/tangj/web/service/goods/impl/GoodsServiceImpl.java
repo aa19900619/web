@@ -1,5 +1,6 @@
 package com.tangj.web.service.goods.impl;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +11,10 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.tangj.web.dao.goods.IGoodsDao;
 import com.tangj.web.dao.product.IProductDao;
+import com.tangj.web.dao.remit.IRemitDao;
 import com.tangj.web.dao.supplier.ISupplierDao;
 import com.tangj.web.pojo.goods.GoodsInfo;
+import com.tangj.web.pojo.remit.RemitInfo;
 import com.tangj.web.pojo.supplier.SupplierInfo;
 import com.tangj.web.service.goods.IGoodsService;
 import com.tangj.web.util.MyUtil;
@@ -28,6 +31,9 @@ public class GoodsServiceImpl implements IGoodsService {
 	
 	@Autowired
 	private ISupplierDao supplierDao ;
+	
+	@Autowired
+	private IRemitDao remitDao;
 
 	@Override
 	public GoodsInfo getGoodsInfoBy(Long id) {
@@ -91,6 +97,40 @@ public class GoodsServiceImpl implements IGoodsService {
 			productDao.updateProduct(param);
 			param.clear();
 		}
+	}
+
+	@Override
+	public void updateOrderStatus(GoodsInfo obj) {
+		RemitInfo rInfo = new RemitInfo();
+		Map<String,Object> param = new HashMap<>();
+		rInfo.setCreateUserId(obj.getCreateUserId());
+		rInfo.setCreateTime(obj.getCreateTime());
+		if(obj.getGoodsStatus() == 2) {/**物流对数改状态**/
+			param.put("id", obj.getId());
+			if(obj.getPaymentStatus() == null || "".equals(obj.getPaymentStatus())) {
+				param.put("logisticsStauts", "1");
+			} else {/**物流结款 新增汇款信息，修改收货表汇款id**/
+				rInfo.setGoodsId(obj.getId());
+				rInfo.setRemitType(obj.getRemitType());
+				rInfo.setRemitMoney(obj.getRemitMoney());
+				rInfo.setGoodsStatus(1);
+				remitDao.add(rInfo);
+				param.put("remitId", rInfo.getId());
+				param.put("paymentStatus", "1");
+			}
+			goodsDao.updateRemit(param);
+				
+		} else if(obj.getGoodsStatus() == 3) {/**供应商对数，默认已结款**/
+			rInfo.setGoodsId(obj.getId());
+			rInfo.setRemitType(obj.getRemitType());
+			rInfo.setGoodsStatus(1);
+			Long remitMoney = obj.getGoodsNum() / obj.getGoodsSpecifications() * obj.getGoodsBuyPrice().longValue();
+			rInfo.setRemitMoney(new BigDecimal(remitMoney));
+			remitDao.add(rInfo);
+			
+		}
+		//remitService.updateRemit(obj);
+		
 	}
 
 }

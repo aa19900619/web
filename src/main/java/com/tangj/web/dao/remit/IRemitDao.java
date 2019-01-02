@@ -36,7 +36,7 @@ public interface IRemitDao {
 	 */
 	@InsertProvider(type = RemitProvider.class , method = "add")
 	@Options(useGeneratedKeys = true , keyProperty = "id" , keyColumn = "id")
-	public void add(RemitInfo obj);
+	public Long add(RemitInfo obj);
 	
 	/**
 	 * 修改

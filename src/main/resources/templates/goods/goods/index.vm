@@ -13,13 +13,10 @@
 				{"type":"button","value":"查询","clickFun":"query()","iclass":"Hui-iconfont-search2"}
 	],
 	"colums":[
-		{"text":"序号","type":"text","key":"id"},
 		{"text":"商品名称","type":"text","key":"productName"},
-		{"text":"商品分类","type":"text","key":"dicVal"},
 		{"text":"商品规格","colType":"multistation","keys":[{"type":"text","key":"goodsSpecifications"},{"type":"text","key":"goodsCategorys"},{"type":"custom","key":"/"},{"type":"text","key":"goodsCategory"}]},
 		{"text":"收货数量","colType":"multistation","keys":[{"type":"text","key":"goodsCounts"},{"type":"custom","key":"/"},{"type":"text","key":"goodsCategory"}]},
-		{"text":"收货数量","colType":"multistation","keys":[{"type":"text","key":"goodsNum"},{"type":"text","key":"goodsCategorys"}]},
-		{"text":"运费","colType":"multistation","keys":[{"type":"text","key":"goodsFreight"},{"type":"custom","key":"/ 元"}]}
+		{"text":"收货数量","colType":"multistation","keys":[{"type":"text","key":"goodsNum"},{"type":"text","key":"goodsCategorys"}]}
 	],
 	"operations":[
 		{"text":"编辑","click":"edit(this,1)","property":[{"key":"id","value":"id"}],
@@ -31,25 +28,25 @@
 		},
 		{"text":"物流","click":"edit(this,2)","property":[{"key":"id","value":"id"}],
 			"judgement":[
-			[{"key":"goodsStatus","value":"0"}],
-			[{"key":"goodsStatus","value":"1"}]
+			[{"key":"logisticsStauts","value":"0"},{"key":"goodsStatus","value":"0"}]
 			]
 		},
 		{"text":"供应商","click":"edit(this,3)","property":[{"key":"id","value":"id"}],
 			"judgement":[
-			[{"key":"goodsStatus","value":"1"}]
+			[{"key":"paymentStatus","value":"0"},{"key":"goodsStatus","value":"0"}]
 			]
 		},
 		{"text":"查看","click":"edit(this,4)","property":[{"key":"id","value":"id"}],
 			"judgement":[
-			[{"key":"goodsStatus","value":"2"}],
-			[{"key":"goodsStatus","value":"3"}]
+			[{"key":"goodsStatus","value":"-1"}],
+			[{"key":"logisticsStauts","value":"1"},{"key":"payment_status","value":"1"}],
+			[{"key":"logisticsStauts","value":"1"},{"key":"payment_status","value":"2"}],
+			[{"key":"logisticsStauts","value":"2"},{"key":"payment_status","value":"2"}]
 			]
 		},
 		{"text":"删除","click":"edit(this,5)","property":[{"key":"id","value":"id"}],
 			"judgement":[
-			[{"key":"goodsStatus","value":"0"}],
-			[{"key":"goodsStatus","value":"1"}]
+			[{"key":"goodsStatus","value":"0"}]
 			]
 		}
 	]
@@ -63,11 +60,9 @@ $(function(){
 })
 function add(){
 	Jq.open({"url":"$!base/goodsInfo/add","title":"新增","height":"500px"},{},function(index){
-		
 		if( !parent.$("#form-goods-add").valid() ){
 			return;
 		}
-		
 		Jq.MessageBox.confirm("您确定保存该收货信息吗？",function(){
 			toSaved("$!base/goodsInfo/add",parent.$("#form-goods-add").serialize(),function(result){
 				if( result["code"] == 0 ){
@@ -92,7 +87,6 @@ function edit(obj,sty){
 			if( !parent.$("#form-goods-edit").valid() ){
 				return;
 			}
-		
 			Jq.MessageBox.confirm("您确定保存该收货信息吗？",function(){
 				toSaved("$!base/goodsInfo/edit",parent.$("#form-goods-edit").serialize(),function(result){
 					if( result["code"] == 0 ){

@@ -39,7 +39,7 @@
 		td.append("<input type='hidden' id='goodsSellingPrice' name='goodsSellingPrice'  value="+ obj.productSellingPrice+">");
 		td.append("<input type='hidden' id='goodsFreight' name='goodsFreight'  value="+ obj.productFreight+">");
 		var td1 = $("<td id=td" + row_name + ">"+"</td>");
-		td1.append("<select id='' name='' panelHeight='auto' onclick='getSuppList(this," + 
+		td1.append("<select id='suppliersId' name='suppliersId' panelHeight='auto' onclick='getSuppList(this," + 
 					obj.id + ")'><option value=" + 
 					obj.suppliersId + "> " + 
 					obj.suppName + " </option></select>");
@@ -62,7 +62,7 @@
 		            			$(ths).append("<option value=" + item.suppliersId + ">" + item.name  + "</option>");
 		            		});
 		            	 	$(ths).removeAttr("onclick");
-		            	 	$(ths).attr("panelHeight","auto");
+		            	 	$(ths).attr("class","select select-box");
 		                } catch (e) {
 		                    return false;
 		                }
