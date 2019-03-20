@@ -66,8 +66,8 @@ public class IndexController extends BaseController{
 	private ISupplierDetailService iSupplierDetailService; 
 	@ResponseBody
 	@RequestMapping(value = "autocompleteSuppd")
-	public ApiCommonResultVo getSuppDetailList(Long pid){
-		List<SupplierDetailInfo> list = iSupplierDetailService.getListByPid(pid);
+	public ApiCommonResultVo getSuppDetailList(Long id){
+		List<SupplierDetailInfo> list = iSupplierDetailService.getListByPid(id);
 		return success(list);
 	}
 }

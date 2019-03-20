@@ -23,6 +23,14 @@ public interface IRemitDao {
 	public RemitInfo getRemitInfoBy(Long id);
 	
 	/**
+	 * 根据订单编号ID查询汇款信息
+	 * @param id
+	 * @return
+	 */
+	@Select(value = "select * from " + TableConstanst.TB_REMIT + " where goods_id = #{id} and remit_status != -1")
+	public RemitInfo getRemitInfoByGid(Long id);
+	
+	/**
 	 * 条件查询汇款信息
 	 * @param name
 	 * @return
@@ -36,7 +44,7 @@ public interface IRemitDao {
 	 */
 	@InsertProvider(type = RemitProvider.class , method = "add")
 	@Options(useGeneratedKeys = true , keyProperty = "id" , keyColumn = "id")
-	public Long add(RemitInfo obj);
+	public void add(RemitInfo obj);
 	
 	/**
 	 * 修改

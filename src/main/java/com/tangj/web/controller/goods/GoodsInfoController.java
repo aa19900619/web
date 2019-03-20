@@ -95,15 +95,12 @@ public class GoodsInfoController extends BaseController{
 					ModelAndView view = new ModelAndView("templates/goods/goods/goods_remit");
 					GoodsInfo obj = goodsService.getGoodsInfoBy(id);
 					if(stype == 1) {//物流对数
-						obj.setGoodsStatus(1);
-						obj.setLogisticsStauts(1);
+						obj.setGoodsStatus(2);
 					} else if(stype == 2) {//供应商对数
 						obj.setGoodsStatus(3);
-						obj.setPaymentStatus(2);
 					} else if(stype == 3) {//查看
 						obj.setGoodsStatus(4);
 					}
-
 					initType(view, 2);
 					view.addObject("obj", obj);
 					return view;

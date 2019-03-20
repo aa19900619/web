@@ -25,8 +25,10 @@ public class RemitProvider {
 	public String add(){
 		SQL sql = new SQL();
 		sql.INSERT_INTO(TableConstanst.TB_REMIT);
+		sql.INTO_COLUMNS("goods_id").INTO_VALUES("#{goodsId}");
 		sql.INTO_COLUMNS("remit_type").INTO_VALUES("#{remitType}");
 		sql.INTO_COLUMNS("remit_money").INTO_VALUES("#{remitMoney}");
+		sql.INTO_COLUMNS("freight").INTO_VALUES("#{freight}");
 		sql.INTO_COLUMNS("remit_img").INTO_VALUES("#{remitImg}");
 		sql.INTO_COLUMNS("remit_status").INTO_VALUES("#{remitStatus}");
 		sql.INTO_COLUMNS("create_user_id").INTO_VALUES("#{createUserId}");
@@ -43,10 +45,11 @@ public class RemitProvider {
 		sql.UPDATE(TableConstanst.TB_REMIT);
 		sql.SET("remit_type = #{remitType}");
 		sql.SET("remit_money = #{remitMoney}");
-		sql.SET("remit_img = #{remit_img}");
-		sql.SET("remit_status = #{goodsSpecifications}");
-		sql.SET("update_user_id = #{goodsPlaceOfOrigin}");
-		sql.SET("update_time = #{goodsStatus}");
+		sql.SET("remit_img = #{remitImg}");
+		sql.SET("freight = #{freight}");
+		sql.SET("remit_status = #{remitStatus}");
+		sql.SET("update_user_id = #{updateUserId}");
+		sql.SET("update_time = #{updateTime}");
 		sql.WHERE("id = #{id}");
 		return sql.toString();
 	}

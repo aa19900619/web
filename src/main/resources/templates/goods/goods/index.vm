@@ -15,15 +15,12 @@
 	"colums":[
 		{"text":"商品名称","type":"text","key":"productName"},
 		{"text":"商品规格","colType":"multistation","keys":[{"type":"text","key":"goodsSpecifications"},{"type":"text","key":"goodsCategorys"},{"type":"custom","key":"/"},{"type":"text","key":"goodsCategory"}]},
-		{"text":"收货数量","colType":"multistation","keys":[{"type":"text","key":"goodsCounts"},{"type":"custom","key":"/"},{"type":"text","key":"goodsCategory"}]},
-		{"text":"收货数量","colType":"multistation","keys":[{"type":"text","key":"goodsNum"},{"type":"text","key":"goodsCategorys"}]}
+		{"text":"收货数量","colType":"multistation","keys":[{"type":"text","key":"goodsCounts"},{"type":"custom","key":"/"},{"type":"text","key":"goodsCategory"},{"type":"text","key":"goodsNum"},{"type":"text","key":"goodsCategorys"}]}
 	],
 	"operations":[
 		{"text":"编辑","click":"edit(this,1)","property":[{"key":"id","value":"id"}],
 			"judgement":[
-			[{"key":"goodsStatus","value":"0"}],
-			[{"key":"goodsStatus","value":"1"}],
-			[{"key":"goodsStatus","value":"3"}]
+			[{"key":"logisticsStauts","value":"0"},{"key":"goodsStatus","value":"0"},{"key":"paymentStatus","value":"0"}]
 			]
 		},
 		{"text":"物流","click":"edit(this,2)","property":[{"key":"id","value":"id"}],
@@ -39,14 +36,15 @@
 		{"text":"查看","click":"edit(this,4)","property":[{"key":"id","value":"id"}],
 			"judgement":[
 			[{"key":"goodsStatus","value":"-1"}],
-			[{"key":"logisticsStauts","value":"1"},{"key":"payment_status","value":"1"}],
-			[{"key":"logisticsStauts","value":"1"},{"key":"payment_status","value":"2"}],
-			[{"key":"logisticsStauts","value":"2"},{"key":"payment_status","value":"2"}]
+			[{"key":"logisticsStauts","value":"1"},{"key":"paymentStatus","value":"1"}],
+			[{"key":"logisticsStauts","value":"1"},{"key":"paymentStatus","value":"2"}],
+			[{"key":"logisticsStauts","value":"2"},{"key":"paymentStatus","value":"2"}]
 			]
 		},
 		{"text":"删除","click":"edit(this,5)","property":[{"key":"id","value":"id"}],
 			"judgement":[
-			[{"key":"goodsStatus","value":"0"}]
+			[{"key":"logisticsStauts","value":"0"}],
+			[{"key":"paymentStatus","value":"0"}]
 			]
 		}
 	]
