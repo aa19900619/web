@@ -9,6 +9,12 @@
 			{"colType":"text","length":"9","name":"goodsName","value":"$!obj.goodsName","placeholder":"请输入商品名称"}
 		]},
 		{"cols":[
+			{"colType":"label","length":"2","colRequired":true,"text":"商品名称"},
+			{"colType":"text","length":"9","name":"goodsName","value":"$!obj.goodsName","placeholder":"请输入商品名称"}
+		]},
+		
+		
+		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"商品分类"},
 			{"colType":"select","length":"9","name":"goodsType","value":"$!obj.goodsType","placeholder":"请输入商品分类","dataSource":$!goodsFL,"getValueMethod":"getDicVal","getNameMethod":"getDicVal"}
 		]},

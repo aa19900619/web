@@ -33,12 +33,18 @@ public class ProductInfo extends BaseInfo{
 	@MaxLength(value = 150 , message = "商品名称最大长度为150个字符" , profiles = {ADD,MODIFY})
 	private String goodsName;
 	
+	@NotNull(message = "商品字母名称不能为空" , profiles = {ADD,MODIFY})
+	@NotEmpty(message = "商品字母名称不能为空" , profiles = {ADD,MODIFY})
+	@MaxLength(value = 150 , message = "商品字母名称最大长度为150个字符" , profiles = {ADD,MODIFY})
+	private String goodsNameInitial;
+	
 	@NotNull(message = "商品分类不能为空" , profiles = {ADD,MODIFY})
 	@NotEmpty(message = "商品分类不能为空" , profiles = {ADD,MODIFY})
-	@MaxLength(value = 20 , message = "商品分类最大长度为20个字符" , profiles = {ADD,MODIFY})
-	private String goodsType;
-	
-	@MaxLength(value = 100 , message = "商品类别1最大长度为100个字符" , profiles = {ADD,MODIFY})
+	@Min(value = 1, message = "商品分类格式错误" , profiles = {ADD,MODIFY})
+	private Long goodsType;
+
+	//@MemberOf(value = Constanst.GOODS_CATEGORY , message = "商品类别格式错误" , profiles = {ADD,MODIFY})
+	@MaxLength(value = 100 , message = "商品类别最大长度为100个字符" , profiles = {ADD,MODIFY})
 	private String goodsCategory;
 	
 	@MaxLength(value = 100 , message = "商品类别2最大长度为100个字符" , profiles = {ADD,MODIFY})
@@ -105,11 +111,11 @@ public class ProductInfo extends BaseInfo{
 		this.goodsName = goodsName;
 	}
 
-	public String getGoodsType() {
+	public Long getGoodsType() {
 		return goodsType;
 	}
 
-	public void setGoodsType(String goodsType) {
+	public void setGoodsType(Long goodsType) {
 		this.goodsType = goodsType;
 	}
 

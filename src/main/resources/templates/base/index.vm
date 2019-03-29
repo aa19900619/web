@@ -26,6 +26,7 @@
 			<dd>
 				<ul>
 					<li><a _href="$!base/dictionary" data-title="字典管理" href="javascript:void(0)">字典管理</a></li>
+					<li><a _href="$!base/productCategoryInfo" data-title="商品分类管理" href="javascript:void(0)">商品分类管理</a></li>
 				</ul>
 			</dd>
 		</dl>

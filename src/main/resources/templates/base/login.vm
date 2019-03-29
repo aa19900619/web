@@ -93,7 +93,7 @@ function login(){
 	
 	toSaved("$!base/login",{"username":username,"password":password,"code":yzm},function(result){
 		if( result.code == 0 ){
-			window.location.href = "$!base/" + result.data;
+			parent.window.location.href = "$!base/" + result.data;
 		}
 	});
 }

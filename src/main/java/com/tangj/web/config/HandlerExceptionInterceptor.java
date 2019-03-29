@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,6 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.tangj.web.Exception.BaseException;
 import com.tangj.web.Exception.UnauthorizedException;
 import com.tangj.web.util.ApiCommonResultVo;
+import com.tangj.web.util.ApplicationContextHolder;
 
 /**
  * Created by lee on 06/08/2017.
@@ -20,8 +23,10 @@ import com.tangj.web.util.ApiCommonResultVo;
 @Component
 public class HandlerExceptionInterceptor implements HandlerExceptionResolver {
 	
+	protected Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,Exception e) {
-		e.printStackTrace();
+		log.error(String.format("请求地址%s异常，异常信息：", ApplicationContextHolder.getRequest().getRequestURI()), e);
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=utf-8");
     	try {

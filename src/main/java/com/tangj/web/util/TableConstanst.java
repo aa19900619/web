@@ -20,6 +20,9 @@ public class TableConstanst {
 	//商品表
 	public static final String TB_PRODUCT = "tb_product";
 	
+	//商品分类表
+	public static final String TB_PRODUCT_CATEGORY = "tb_product_category";
+	
 	//收货表
 	public static final String TB_GOODS = "tb_goods";
 	

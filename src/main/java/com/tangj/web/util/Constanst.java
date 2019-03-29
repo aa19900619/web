@@ -1,5 +1,8 @@
 package com.tangj.web.util;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 
  * 静态常量类
@@ -29,7 +32,10 @@ public class Constanst {
 	 */
 	public static final String TELEPHONE_REG = "[1]{1}[0-9]{10}";
 	
+	//商品单位
+	public static final String[] GOODS_CATEGORY = {"件","箱","袋"};
 	
-	
+	//商品单位
+	public static final String[] GOODS_CATEGORYS = {"斤","瓶","包","个","盒"};
 	
 }
