@@ -59,6 +59,7 @@ public class BorrowGoodsServiceImpl implements IBorrowGoodsService {
 	public void addList(List<BorrowGoodsInfo> list) {
 		Map<String, Object> param = new HashMap<>();
 		for (BorrowGoodsInfo obj : list) {
+			obj.setStatus(0);
 			bgoodsDao.add(obj);
 			if(obj.getType() == 0) {
 				/**新增借货信息，增加商品库存**/

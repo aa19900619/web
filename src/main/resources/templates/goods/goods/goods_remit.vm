@@ -21,14 +21,14 @@
 			{"colType":"label","length":"2","colRequired":true,"text":"商品分类"},
 			{"colType":"text","length":"2","name":"dicVal","value":"$!obj.dicVal","readonly":"true"},
 			{"colType":"label","length":"2","colRequired":true,"text":"商品规格"},
-			{"colType":"text","length":"2","name":"goodsSpecificationsmsg","value":"$!obj.goodsSpecifications $!obj.goodsCategorys / $!obj.goodsCategory","readonly":"true"}
+			{"colType":"text","length":"5","name":"goodsSpecificationsmsg","value":"$!obj.goodsSpecifications $!obj.goodsCategorys / $!obj.goodsCategory","readonly":"true"}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","text":"收货数量"},
-			{"colType":"text","length":"2","name":"counts","value":"$!obj.goodsCounts", "readonly":"true"},
-			{"colType":"text","length":"2","name":"","value":"$!obj.goodsCategory","readonly":"true" },
-			{"colType":"text","length":"2","name":"nums","value":"$!obj.goodsNum","readonly":"true" },
-			{"colType":"text","length":"2","name":"","value":"$!obj.goodsCategorys","readonly":"true"}
+			{"colType":"text","length":"0","name":"counts","value":"$!obj.goodsCounts", "readonly":"true"},
+			{"colType":"text","length":"0","name":"","value":"$!obj.goodsCategory","readonly":"true" },
+			{"colType":"text","length":"0","name":"nums","value":"$!obj.goodsNum","readonly":"true" },
+			{"colType":"text","length":"","name":"","value":"$!obj.goodsCategorys","readonly":"true"}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","text":"运费"},
@@ -40,15 +40,13 @@
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"状态"},
-			{"colType":"select","length":"9","name":"goodsStatus","value":"$!obj.goodsStatus","placeholder":"请输入状态","options":[{"value":"0","text":"新增"},{"value":"1","text":"物流对数"},{"value":"2","text":"物流结款"},{"value":"3","text":"供应商对数"},{"value":"4","text":"供应商结款"},{"value":"5","text":"已完成"}],"readonly":"true"}
+			{"colType":"text","length":"9","name":"goodsStatusMsg"}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"汇款金额"},
-			{"colType":"text","length":"9","name":"remitMoney","value":"$!obj.remitMoney","placeholder":"请输入汇款金额"}
-		]},
-		{"cols":[
+			{"colType":"text","length":"3","name":"remitMoney","value":"$!obj.remitMoney","placeholder":"请输入汇款金额"},
 			{"colType":"label","length":"2","colRequired":true,"text":"汇款方式"},
-			{"colType":"select","length":"9","name":"remitType","value":"0","placeholder":"请输入状态","options":[{"value":"0","text":"现金"},{"value":"1","text":"微信"},{"value":"2","text":"银行"},{"value":"3","text":"其他"}]}
+			{"colType":"select","length":"3","name":"remitType","value":"0","placeholder":"请输入状态","options":[{"value":"0","text":"现金"},{"value":"1","text":"微信"},{"value":"2","text":"银行"},{"value":"3","text":"其他"}]}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"汇款时间"},
@@ -56,7 +54,7 @@
 		]}
 	]
 })
-<div id="div_img" style="text-align:center;">汇款图片：#upload("testFile" "uploadResult" "jpg,gif" "test")</div>
+<div id="div_img" style="text-align:center;">汇款图片：#upload("remitImg" "uploadResult" "jpg,gif" "test")</div>
 <br>
 <div id="div_frmbtn" style="text-align:center;"><input type="button" id="frmbtn" name="frmbtn" class="button button-primary button-rounded button-small" value="汇款信息" /></div>
 <div id="div_frmbtnre" style="text-align:center;DISPLAY: none;"><input type="button" id="frmbtnre" name="frmbtn" class="button button-primary button-rounded button-small" value="取消" /></div>
@@ -69,13 +67,24 @@
 $(function(){
 	$("#form-goods-ediremit").find("div[class='row cl']:eq(-1)").hide();
 	$("#form-goods-ediremit").find("div[class='row cl']:eq(-2)").hide();
-	$("#form-goods-ediremit").find("div[class='row cl']:eq(-3)").hide();
+	//$("#form-goods-ediremit").find("div[class='row cl']:eq(-3)").hide();
 	$("#div_img").hide();
 	var stau = $("#gstau").val();
 	var gnum =  Number($("#goodsNum").val()) / Number($("#goodsSpecifications").val());
 	var rm = Number($("#goodsBuyPrice").val()) * gnum;
 	var gf = Number($("#goodsFreight").val());
 	$("#goodsFreight").val(Math.ceil(gnum * gf));
+	if(stau == 3) {
+		$("#form-goods-ediremit").find("div[class='row cl']:eq(-2)").show();
+		$("#form-goods-ediremit").find("div[class='row cl']:eq(-3)").show();
+		$("#div_img").show();
+		$("#div_frmbtnre").hide();
+		$("#div_frmbtn").hide();
+		$("#remitMoney").val(rm);
+		var gfiht = $("#goodsFreight");
+		gfiht.hide();
+		gfiht.before("<p>"+ Math.ceil(gnum * gf) +"元</p>");
+	}
 	if(stau == 4) {
 		//$("#remitMoney").attr("disabled","disabled");
 		var gfiht = $("#goodsFreight");
@@ -92,20 +101,24 @@ $(function(){
 		$("#div_img").hide();
 		$("#form-goods-ediremit").find("div[class='row cl']:eq(-1)").show();
 		$("#form-goods-ediremit").find("div[class='row cl']:eq(-2)").show();
-		$("#form-goods-ediremit").find("div[class='row cl']:eq(-3)").show();
+		//$("#form-goods-ediremit").find("div[class='row cl']:eq(-3)").show();
+		$(".layui-layer-btn0").hide();
 	}
+	
+	
 	$("#frmbtn").click(function() {
 		$("#div_frmbtnre").show();
 		$("#div_frmbtn").hide();
 		$("#form-goods-ediremit").find("div[class='row cl']:eq(-1)").hide();
 		$("#form-goods-ediremit").find("div[class='row cl']:eq(-2)").show();
-		$("#form-goods-ediremit").find("div[class='row cl']:eq(-3)").show();
+		//$("#form-goods-ediremit").find("div[class='row cl']:eq(-3)").show();
 		$("#div_img").show();
 		//div_remit.show();
-		if(stau == 1) {
+		if(stau == 2) {
 			$("#goodsStatus").val("2");
 			$("#paymentStatus").val("1");
-			$("#remitMoney").val(Math.ceil(rm + (gnum * gf)));
+			//$("#remitMoney").val(Math.ceil(rm + (gnum * gf)));
+			$("#remitMoney").val(Math.ceil(rm));
 		} else if(stau == 3) {
 			$("#goodsStatus").val("3");
 			$("#paymentStatus").val("2");
@@ -119,7 +132,7 @@ $(function(){
 		//div_remit.hide();
 		$("#form-goods-ediremit").find("div[class='row cl']:eq(-1)").hide();
 		$("#form-goods-ediremit").find("div[class='row cl']:eq(-2)").hide();
-		$("#form-goods-ediremit").find("div[class='row cl']:eq(-3)").hide();
+		//$("#form-goods-ediremit").find("div[class='row cl']:eq(-3)").hide();
 		$("#div_img").hide();
 		$("#remitMoney").val("");
 		if(stau == 1) {
@@ -160,6 +173,25 @@ $(function(){
 		$(obj).val(val);
 		return "";
 	}
+	
+	var lgtsta = $("#logisticsStauts").val().trim();
+	var pmtsta = $("#paymentStatus").val().trim();
+	var stamsg = $("#goodsStatusMsg");
+	
+	if(lgtsta == 1) {
+		stamsg.before("物流对数");
+	} else if(lgtsta == 2) {
+		stamsg.before("本地供应商");
+	} 
+	if(pmtsta == 1) {
+		stamsg.before("，物流结款");
+	} else if(pmtsta == 2) {
+		stamsg.before("，供应商结款");
+	} 
+	if(lgtsta == 0 && pmtsta == 0) {
+		stamsg.before("新增收货");
+	}
+	stamsg.hide();
 
 })
 </script>

@@ -101,36 +101,58 @@ public class GoodsServiceImpl implements IGoodsService {
 
 	@Override
 	public void updateOrderStatus(GoodsInfo obj) {
-		RemitInfo rInfo = new RemitInfo();
 		Map<String,Object> param = new HashMap<>();
-		rInfo.setCreateUserId(obj.getCreateUserId());
-		rInfo.setCreateTime(obj.getCreateTime());
+		System.out.println(" .............id:" + obj.getId());
+		param.put("id", obj.getId());
+		RemitInfo rInfo = new RemitInfo();
+		RemitInfo remitInfo = remitDao.getRemitInfoByGid(obj.getId());
+		rInfo.setGoodsId(obj.getId());
 		if(obj.getGoodsStatus() == 2) {/**物流对数改状态**/
-			param.put("id", obj.getId());
-			if(obj.getPaymentStatus() == null || "".equals(obj.getPaymentStatus())) {
-				param.put("logisticsStauts", "1");
-			} else {/**物流结款 新增汇款信息，修改收货表汇款id**/
-				rInfo.setGoodsId(obj.getId());
+			param.put("logisticsStauts", "1");
+			rInfo.setFreight(obj.getGoodsFreight());
+			System.out.println("物流对数");
+			if(obj.getPaymentStatus() == 1) {
+				System.out.println("物流汇款。。。。");
+				/**物流结款 新增汇款信息，修改收货表汇款id**/
 				rInfo.setRemitType(obj.getRemitType());
 				rInfo.setRemitMoney(obj.getRemitMoney());
-				rInfo.setGoodsStatus(1);
-				remitDao.add(rInfo);
-				param.put("remitId", rInfo.getId());
+				rInfo.setRemitImg(obj.getRemitImg());
 				param.put("paymentStatus", "1");
 			}
-			goodsDao.updateRemit(param);
-				
 		} else if(obj.getGoodsStatus() == 3) {/**供应商对数，默认已结款**/
-			rInfo.setGoodsId(obj.getId());
+			System.out.println("供应商啊啊啊 。。。。。。。");
 			rInfo.setRemitType(obj.getRemitType());
-			rInfo.setGoodsStatus(1);
 			Long remitMoney = obj.getGoodsNum() / obj.getGoodsSpecifications() * obj.getGoodsBuyPrice().longValue();
 			rInfo.setRemitMoney(new BigDecimal(remitMoney));
-			remitDao.add(rInfo);
-			
+			rInfo.setRemitImg(obj.getRemitImg());
+			param.put("paymentStatus", "2");
 		}
-		//remitService.updateRemit(obj);
-		
+		/**判断是否有汇款信息记录**/
+		if(remitInfo == null) {
+			/**新增汇款记录信息**/
+			System.out.println("新增汇款记录········");
+			rInfo.setCreateUserId(obj.getCreateUserId());
+			rInfo.setCreateTime(obj.getCreateTime());
+			rInfo.setRemitStatus(0);
+			remitDao.add(rInfo);
+		} else {
+			/**修改汇款记录信息**/
+			rInfo.setUpdateUserId(obj.getCreateUserId());
+			rInfo.setUpdateTime(obj.getCreateTime());
+			rInfo.setId(remitInfo.getId());
+			if(obj.getGoodsStatus() == 3) {
+				rInfo.setRemitType(remitInfo.getRemitType());
+				rInfo.setRemitMoney(remitInfo.getRemitMoney());
+				rInfo.setRemitImg(remitInfo.getRemitImg());
+			} else {
+				rInfo.setFreight(remitInfo.getFreight());
+			}
+			rInfo.setRemitStatus(remitInfo.getRemitStatus());
+			remitDao.update(rInfo);
+		}
+		param.put("remitId", rInfo.getId());/**获得新增汇款id**/
+		/**修改收货表物流对数，供应商结款，汇款id**/
+		goodsDao.updateRemit(param);
 	}
 
 }

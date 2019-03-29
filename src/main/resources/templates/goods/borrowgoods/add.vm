@@ -38,7 +38,7 @@
 		</div>
 		</div>
 		<div align="center" id="div_btn" hidden="hidden">
-		<input type="button" id="btnSend" name="btnSend" class="button button-primary button-rounded button-small" value=" 提   交"> 
+		<input type="button" id="btnSend" name="btnSend" class="button button-primary button-rounded button-small" value=" 提   交" onclick="submitData()"> 
 		<input type="button" class="button button-primary button-rounded button-small" value=" 删   除" onclick="delRow(this,-1)"> 
 		</div>
 </form>
@@ -48,8 +48,6 @@
 <script>
 	var urlPath = "$!base/addBorrowGoodsInfo/addList";
 	var msgInfo = "借货信息";
-	function pageSelectPro(tbl,tr,td,obj) {
-	}
 	
 	var cdtyps = 0;
 	function changedir() {
@@ -68,4 +66,50 @@
 		}
 	}
 	
+	function subData(obj,info) {
+		obj["productId"] = info.find("input[name='productId']").val();
+		obj["nums"] = info.find("input[name='goodsNum']").val();
+		obj["suppliersId"] = $("#suppliersId option:selected").val();
+		obj["type"] = cdtyps;
+	}
 	</script>
+
+<script id="selectProTpl" type="text/html">
+<tr>
+	<td>
+		<label>{{goodsName}}</label>
+		<input type="hidden" id="productId" name="productId" value="{{id}}">
+		<input type="hidden" id="gspt" name="gspt" value="{{goodsCategorys}}">
+	</td>
+	<td>
+		<label>
+			{{if goodsCategorys.indexOf('克') >= 0 }}
+				{{ goodsSpecifications / 1000 }} kg（千克）
+			{{else}}
+				{{ goodsSpecifications }}{{ goodsCategorys }} 
+			{{/if}}
+			/ {{goodsCategory}}
+		</label>
+	</td>
+	<td>
+		<button type="button" onclick="changeCounts(1,'{{ goodsSpecifications }}',this,-1)" class="button button-box button-tiny" disabled><i class="fa fa-plus">-</i></button>
+		<input maxlength="8" style="width:100px" onfocus="$(this).select()" onkeyup="changeKeyUp(this,'{{ goodsSpecifications }}',0,1)"  class="input-text"  type="text" id="goodsCounts" name="goodsCounts" value=0>
+		<button type="button" onclick="changeCounts(1,'{{goodsSpecifications}}',this,1)" class="button button-box button-tiny"><i class='fa fa-plus'>+</i></button>
+
+		{{goodsCategory}}
+
+		<button type="button" onclick="changeCounts(2,'{{goodsSpecifications}}',this,-1)" class="button button-box button-tiny" disabled><i class="fa fa-plus">-</i></button>
+		<input maxlength="8" style="width:100px" onfocus="$(this).select()" onkeyup="changeKeyUp(this,'{{goodsSpecifications}}',0,-1)" class="input-text" size=1 type="text" id="goodsNum" name="goodsNum" value=0>
+		<button type="button" onclick="changeCounts(2,'{{goodsSpecifications}}',this,1)" class="button button-box button-tiny"><i class="fa fa-plus">+</i></button>
+
+		{{if goodsCategorys.indexOf('克') >= 0 }}
+			{{goodsCategorys}}<label id='catejin' name='catejin'> = 0 市斤</label>
+		{{else}}
+			{{goodsCategorys}}
+		{{/if}}
+	</td>
+	<td>
+		<a onclick="delRow(this)">删除</a>
+	</td>
+</tr>	
+</script>

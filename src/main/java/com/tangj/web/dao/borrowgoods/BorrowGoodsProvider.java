@@ -115,6 +115,8 @@ public class BorrowGoodsProvider {
 		sql.UPDATE(TableConstanst.TB_BORROW_GOODS);
 		sql.SET("nums = #{nums}");
 		sql.SET("type = #{type}");
+		sql.SET("update_user_id = #{updateUserId}");
+		sql.SET("update_time = #{updateTime}");
 		sql.WHERE("id = #{id}");
 		return sql.toString();
 	}

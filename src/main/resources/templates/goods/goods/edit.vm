@@ -33,10 +33,6 @@
 			{"colType":"text","length":"3","name":"goodsBuyPrice","value":"$!obj.goodsBuyPrice","placeholder":"请输入进货价"},
 			{"colType":"label","length":"2","text":"出货价"},
 			{"colType":"text","length":"3","name":"goodsSellingPrice","value":"$!obj.goodsSellingPrice","placeholder":"请输入出货价"}
-		]},
-		{"cols":[
-			{"colType":"label","length":"2","colRequired":true,"text":"状态"},
-			{"colType":"select","length":"9","name":"goodsStatus","value":"$!obj.goodsStatus","placeholder":"请输入状态","options":[{"value":"0","text":"新增"},{"value":"1","text":"物流对数"},{"value":"2","text":"物流结款"},{"value":"3","text":"供应商对数"},{"value":"4","text":"供应商结款"}],"readonly":"true"}
 		]}
 	]
 })
