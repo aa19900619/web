@@ -1,0 +1,13 @@
+#detail({
+	"id":"form-product-category",
+	"hiddens":[
+		{"name":"id","value":"$!obj.id"},
+		{"name":"parentId","value":"$!obj.parentId"}
+	],
+	"rows":[
+		{"cols":[
+			{"colType":"label","length":"2","colRequired":true,"text":"分类名称"},
+			{"colType":"text","length":"9","name":"name","value":"$!obj.name","placeholder":"请输入分类名称"}
+		]}
+	]
+})

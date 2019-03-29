@@ -1,0 +1,92 @@
+#header
+
+<div class="page-container">
+	<div class="cl mt-20">
+	
+		<div class="panel panel-secondary">
+			<div class="panel-header">分类列表</div>
+			<div class="panel-body">
+				<div>
+					<input class="btn btn-primary radius" type="button" value="新增" onclick="add()">
+					<input class="btn btn-warning radius" type="button" value="修改" onclick="edit()">
+				</div>
+				<div id="trees" class="mt-20 ztree">ddd</div>
+			</div>
+		</div>
+		
+	</div>
+</div>	
+
+#footer
+<script>
+var setting = {
+	check: {
+		enable: false
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	}
+};
+
+$(function(){
+	
+	initData();
+	
+});	
+
+
+function initData(){
+	toSaved("$!base/productCategoryInfo",{},function(result){
+		if( result.code == 0 ){
+			ztree.init("trees",setting,result.data);
+		}
+	});
+}
+
+function add(){
+	var obj = ztree.getData("trees");
+	var parentId = 0;
+	if( obj ){
+		parentId = obj["id"];
+	}
+	Jq.open({"url":"$!base/productCategoryInfo/add","title":"新增分类","width":"600px","height":"200px"},{"parentId":parentId},function(index){
+		Jq.MessageBox.confirm("您确定保存吗?",function(){
+			toSaved("$!base/productCategoryInfo/add",parent.$("#form-product-category").serialize(),function(result){
+				if( result.code == 0 ){
+					Jq.closeLoading(index);
+					Jq.msg.success("操作成功！");
+					initData();
+				}else{
+					Jq.MessageBox.error(result.msg);
+				}
+			});
+		})
+	});
+}
+
+
+function edit(){
+	var obj = ztree.getData("trees");
+	if( !obj ){
+		Jq.msg.error("请选择你要修改的商品分类信息！");
+		return;
+	}
+	Jq.open({"url":"$!base/productCategoryInfo/update","title":"新增分类","width":"600px","height":"200px"},{"id":obj["id"]},function(index){
+		Jq.MessageBox.confirm("您确定保存吗?",function(){
+			toSaved("$!base/productCategoryInfo/update",parent.$("#form-product-category").serialize(),function(result){
+				if( result.code == 0 ){
+					Jq.closeLoading(index);
+					Jq.msg.success("操作成功！");
+					initData();
+				}else{
+					Jq.MessageBox.error(result.msg);
+				}
+			});
+		})
+	});
+}
+
+
+</script>
