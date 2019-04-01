@@ -24,7 +24,6 @@ public class TreeUtils {
 	}
 	
 	private static void clearChildren(JSONObject json){
-		System.out.println(json);
 		if( json.getJSONArray("children").isEmpty() ){
 			json.remove("children");
 		}else{
@@ -32,7 +31,6 @@ public class TreeUtils {
 			for( int i = 0 ; i < jsonArray.size() ; i++ ){
 				clearChildren(jsonArray.getJSONObject(i));
 			}
-			
 		}
 	}
 	

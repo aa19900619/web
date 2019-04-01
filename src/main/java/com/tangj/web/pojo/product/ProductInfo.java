@@ -38,8 +38,8 @@ public class ProductInfo extends BaseInfo{
 	@MaxLength(value = 150 , message = "商品字母名称最大长度为150个字符" , profiles = {ADD,MODIFY})
 	private String goodsNameInitial;
 	
-	@NotNull(message = "商品分类不能为空" , profiles = {ADD,MODIFY})
-	@NotEmpty(message = "商品分类不能为空" , profiles = {ADD,MODIFY})
+	//@NotNull(message = "商品分类不能为空" , profiles = {ADD,MODIFY})
+	//@NotEmpty(message = "商品分类不能为空" , profiles = {ADD,MODIFY})
 	@Min(value = 1, message = "商品分类格式错误" , profiles = {ADD,MODIFY})
 	private Long goodsType;
 
@@ -50,8 +50,8 @@ public class ProductInfo extends BaseInfo{
 	@MaxLength(value = 100 , message = "商品类别2最大长度为100个字符" , profiles = {ADD,MODIFY})
 	private String goodsCategorys;
 	
-	@NotNull(message = "商品规格不能为空" , profiles = {ADD,MODIFY})
-	@NotEmpty(message = "商品规格不能为空" , profiles = {ADD,MODIFY})
+	//@NotNull(message = "商品规格不能为空" , profiles = {ADD,MODIFY})
+	//@NotEmpty(message = "商品规格不能为空" , profiles = {ADD,MODIFY})
 	@MaxLength(value = 20 , message = "商品规格最大长度为20个字符" , profiles = {ADD,MODIFY})
 	private String goodsSpecifications;
 	
@@ -68,7 +68,9 @@ public class ProductInfo extends BaseInfo{
 	@NotEmpty(message = "状态不能为空" , profiles = {ADD,MODIFY})
 	@MemberOf(value = { Constanst.STATUS_YX_STRING,Constanst.STATUS_WX_STRING } , message = "状态类型错误" , profiles = {ADD,MODIFY})
 	private String goodsStatus;
+	
 	private Long productCounts;
+	
 	private BigDecimal productDisCounts;
 	
 	@NotNull(message = "进货价不能为空", profiles = { MODIFY, ADD })
@@ -246,7 +248,13 @@ public class ProductInfo extends BaseInfo{
 	public void setSuppName(String suppName) {
 		this.suppName = suppName;
 	}
-	
-	
 
+	public String getGoodsNameInitial() {
+		return goodsNameInitial;
+	}
+
+	public void setGoodsNameInitial(String goodsNameInitial) {
+		this.goodsNameInitial = goodsNameInitial;
+	}
+	
 }

@@ -1,7 +1,18 @@
+#**{"cols":[
+			{"colType":"label","length":"2","colRequired":true,"text":"商品分类"},
+			{"colType":"select","length":"9","name":"goodsType","value":"$!obj.goodsType","placeholder":"请输入商品分类","dataSource":$!goodsFL,"getValueMethod":"getDicVal","getNameMethod":"getDicVal"}
+		]},
+{"cols":[
+			{"colType":"label","length":"2","colRequired":true,"text":"商品规格"},
+			{"colType":"select","length":"9","name":"goodsSpecifications","value":"$!obj.goodsSpecifications","placeholder":"请输入商品规格","dataSource":$!goodsGG,"getValueMethod":"getDicVal","getNameMethod":"getDicVal"}
+		]},
+**#
+		
 #detail({
 	"id":"form-product-edit",
 	"hiddens":[
-		{"name":"id","value":"$!obj.id"}
+		{"name":"id","value":"$!obj.id"},
+		{"name":"goodsCategory","value":"$!obj.goodsCategory"}
 	],
 	"rows":[
 		{"cols":[
@@ -9,27 +20,35 @@
 			{"colType":"text","length":"9","name":"goodsName","value":"$!obj.goodsName","placeholder":"请输入商品名称"}
 		]},
 		{"cols":[
-			{"colType":"label","length":"2","colRequired":true,"text":"商品名称"},
-			{"colType":"text","length":"9","name":"goodsName","value":"$!obj.goodsName","placeholder":"请输入商品名称"}
-		]},
-		
-		
-		{"cols":[
-			{"colType":"label","length":"2","colRequired":true,"text":"商品分类"},
-			{"colType":"select","length":"9","name":"goodsType","value":"$!obj.goodsType","placeholder":"请输入商品分类","dataSource":$!goodsFL,"getValueMethod":"getDicVal","getNameMethod":"getDicVal"}
+			{"colType":"label","length":"2","colRequired":true,"text":"商品字母名称"},
+			{"colType":"text","length":"9","name":"goodsNameInitial","value":"$!obj.goodsNameInitial","placeholder":"请输入商品字母名称"}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","text":"商品类别"},
-			{"colType":"text","length":"9","name":"goodsCategory","value":"$!obj.goodsCategory","placeholder":"请输入商品类别"}
-		]},
-		{"cols":[
-			{"colType":"label","length":"2","colRequired":true,"text":"商品规格"},
-			{"colType":"select","length":"9","name":"goodsSpecifications","value":"$!obj.goodsSpecifications","placeholder":"请输入商品规格","dataSource":$!goodsGG,"getValueMethod":"getDicVal","getNameMethod":"getDicVal"}
+			{"colType":"text","length":"8","name":"goodsCategory","value":"$!obj.goodsCategory","placeholder":"请输入商品类别","readonly":"true","tail":"<a href='javascript:void(0)' onclick='changeCategory(this)'>选择</a>"}
 		]},
 		{"cols":[
 			{"colType":"label","length":"2","text":"商品规格信息"},
 			{"colType":"text","length":"9","name":"goodsSpecificationsDesc","value":"$!obj.goodsSpecificationsDesc","placeholder":"请输入商品规格信息"}
 		]},
+		
+		{"cols":[
+			{"colType":"label","length":"2","text":"进货价","colRequired":true},
+			{"colType":"text","length":"9","name":"productBuyPrice","value":"$!obj.productBuyPrice","placeholder":"请输入进货价"}
+		]},
+		{"cols":[
+			{"colType":"label","length":"2","text":"出货价","colRequired":true},
+			{"colType":"text","length":"9","name":"productSellingPrice","value":"$!obj.productSellingPrice","placeholder":"请输入出货价"}
+		]},
+		{"cols":[
+			{"colType":"label","length":"2","text":"零售价","colRequired":true},
+			{"colType":"text","length":"9","name":"productRetailPrice","value":"$!obj.productRetailPrice","placeholder":"请输入零售价"}
+		]},
+		{"cols":[
+			{"colType":"label","length":"2","text":"运费","colRequired":true},
+			{"colType":"text","length":"9","name":"productFreight","value":"$!obj.productFreight","placeholder":"请输入运费"}
+		]},
+		
 		{"cols":[
 			{"colType":"label","length":"2","text":"条形码"},
 			{"colType":"text","length":"9","name":"goodsBarCode","value":"$!obj.goodsBarCode","placeholder":"请输入条形码"}
@@ -38,9 +57,32 @@
 			{"colType":"label","length":"2","text":"产地"},
 			{"colType":"text","length":"9","name":"goodsPlaceOfOrigin","value":"$!obj.goodsPlaceOfOrigin","placeholder":"请输入产地"}
 		]},
+		
 		{"cols":[
 			{"colType":"label","length":"2","colRequired":true,"text":"状态"},
 			{"colType":"select","length":"9","name":"goodsStatus","value":"$!obj.goodsStatus","placeholder":"请输入状态","options":[{"value":"0","text":"有效"},{"value":"1","text":"无效"}]}
 		]}
 	]
 })
+
+<script>
+function changeCategory(node){
+	
+	Jq.open({"url":"$!base/productCategoryInfo/common","title":"选择商品分类","btn_save":"选择"},{},function(index){
+		
+		var obj = parent.ztree.getData("trees");
+		if( !obj ){
+			Jq.MessageBox.error("请选择一个商品分类");
+			return;
+		}
+		var data = getFilePath(obj);
+		$("#goodsCategory").val(data);
+		$(node).parent().html(data + "&nbsp;<a href='javascript:void(0)' onclick='changeCategory(this)'>选择</a>");
+		
+		Jq.closeLoading(index);
+	});
+	
+}
+</script>
+
+

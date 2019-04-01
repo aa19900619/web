@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONArray;
 import com.tangj.web.annotation.RequiresPermissions;
 import com.tangj.web.controller.base.BaseController;
 import com.tangj.web.pojo.product.ProductCategoryInfo;
@@ -89,5 +90,22 @@ public class ProductCategoryInfoController extends BaseController{
 		productCategoryService.update(obj);
 		return success("操作成功！");
 	}
+	
+	
+	@RequestMapping(value = "common" , method = RequestMethod.GET)
+	public ModelAndView common(){
+		ModelAndView view = new ModelAndView("/templates/products/productCategory/common");
+		List<ProductCategoryInfo> productCategoryInfoAll = productCategoryService.getProductCategoryInfoAll();
+		List<ZTreeInfo> list = productCategoryInfoAll.stream().map(obj -> {
+			return new ZTreeInfo(obj.getId(), obj.getName(), obj.getParentId());
+		}).collect(Collectors.toList());
+		JSONArray data = TreeUtils.createTree(list, Arrays.asList());
+		view.addObject("data", data);
+		return view;
+	}
+	
+	
+	
+	
 	
 }

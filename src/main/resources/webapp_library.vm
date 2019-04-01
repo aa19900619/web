@@ -96,7 +96,26 @@ a:active{
 <script type="text/javascript" src="$!base/static/upload/uploadHelper.js"></script> 
 <script type="text/javascript" src="$!base/static/lib/jquery-ui/jquery-ui.min.js"></script> 
 <script type="text/javascript" src="$!base/static/lib/cityPicker/js/city-picker.data.js"></script> 
-<script type="text/javascript" src="$!base/static/lib/cityPicker/js/city-picker.js"></script> 
+<script type="text/javascript" src="$!base/static/lib/cityPicker/js/city-picker.js"></script>
+ 
+<script type="text/javascript">
+//获取所有的上级父节点
+function getFilePath(treeObj){
+	if(treeObj == null){
+		return "";
+	}
+		
+	var filename = treeObj.name;
+	var pNode = treeObj.getParentNode();
+	
+	if(pNode!=null){
+		filename = getFilePath(pNode) + " " + filename;
+	}
+	return filename;
+}
+
+
+</script>
 #end
 
 #macro(nav $nav)
@@ -147,23 +166,27 @@ a:active{
 							<label class="form-label col-xs-$!col_length col-sm-$!col_length">#if( "$!_col.colRequired" == "true" )<span class="c-red">*</span>#end $!_col.text:</label>
 						#elseif( "$!_col.colType" == "text" )	
 							<div class="formControls col-xs-$!col_length col-sm-$!col_length">
-								#if( "$!_col.readonly" == "true" )
+								#if( "$!_col.readonly" == "true" || "$!detail.readonly" == "true")
 									$!_col.value
+									$!_col.tail
 								#else
 									<input type="text" class="input-text" value="$!_col.value" placeholder="$!_col.placeholder" id="$!_col.name" name="$!_col.name">
+									$!_col.tail
 								#end
 							</div>
 						#elseif( "$_col.colType" == "date" )
 							<div class="formControls col-xs-$!col_length col-sm-$!col_length">
-								#if( "$!_col.readonly" == "true" )
+								#if( "$!_col.readonly" == "true" || "$!detail.readonly" == "true" )
 									$!_col.value
+									$!_col.tail
 								#else
 									<input type="text" class="input-text Wdate" value="$!_col.value" placeholder="$!_col.placeholder" id="$!_col.name" name="$!_col.name" onfocus="WdatePicker()">
+									$!_col.tail
 								#end
 							</div>	
 						#elseif( "$!_col.colType" == "select" )	
 							<div class="formControls col-xs-$!col_length col-sm-$!col_length">
-								#if( "$!_col.readonly" == "true" )
+								#if( "$!_col.readonly" == "true" || "$!detail.readonly" == "true" )
 									#if( "$!_col.options" != "" )
 										#foreach($!opt in $!_col.options)
 											#if( "$!_col.value" == "$!opt.value" ) $!opt.text #end
@@ -177,6 +200,7 @@ a:active{
 											#if("$!_col.value" == "$!datasuurcevalue") $!opt.getClass().getMethod("$!_col.getNameMethod", null).invoke($!opt, null) #end
 										#end
 									#end
+									$!_col.tail
 								#else
 									<select class="select select-box" id="$!_col.name" name="$!_col.name">
 										<option value="">--请选择--</option>
@@ -196,6 +220,7 @@ a:active{
 											#end
 										#end
 									</select>
+									$!_col.tail
 								#end
 							</div>	
 						#elseif( "$!_col.colType" == "checkbox" )	
@@ -211,7 +236,7 @@ a:active{
 											#end
 										#end
 										<div class="check-box">
-											<input type="checkbox" id="$!_col.name$!seq" name="$!_col.name" value="$!opt.value" #if( $!bool ) checked #end #if("$!_col.readonly" == "true") disabled #end>
+											<input type="checkbox" id="$!_col.name$!seq" name="$!_col.name" value="$!opt.value" #if( $!bool ) checked #end #if("$!_col.readonly" == "true"  || "$!detail.readonly" == "true") disabled #end>
 											<label for="$!_col.name$!seq">$!opt.text</label>
 										</div>
 										#set($seq = $seq + 1)
@@ -230,12 +255,13 @@ a:active{
 											#end
 										#end
 										<div class="radio-box">
-											<input type="checkbox" id="$!_col.name$!seq" name="$!_col.name" value="$!datasuurcevalue" #if( $!bool ) checked #end #if("$!_col.readonly" == "true") disabled #end>
+											<input type="checkbox" id="$!_col.name$!seq" name="$!_col.name" value="$!datasuurcevalue" #if( $!bool ) checked #end #if("$!_col.readonly" == "true" || "$!detail.readonly" == "true") disabled #end>
 											<label for="$!_col.name$!seq">$!opt.getClass().getMethod("$!_col.getNameMethod", null).invoke($!opt, null)</label>
 										</div>
 										#set($seq = $seq + 1)
 									#end
 								#end
+								$!_col.tail
 							</div>
 						#elseif( "$!_col.colType" == "radiobox" )
 							<div class="formControls col-xs-$!col_length col-sm-$!col_length skin-minimal">
@@ -243,7 +269,7 @@ a:active{
 									#set($seq = 0)
 									#foreach( $opt in $!_col.options )
 										<div class="radio-box">
-											<input type="radio" id="$!_col.name$!seq" name="$!_col.name" value="$!opt.value" #if( "$!_col.value" == "$!opt.value" ) checked #end #if("$!_col.readonly" == "true") disabled #end>
+											<input type="radio" id="$!_col.name$!seq" name="$!_col.name" value="$!opt.value" #if( "$!_col.value" == "$!opt.value" ) checked #end #if("$!_col.readonly" == "true" || "$!detail.readonly" == "true") disabled #end>
 											<label for="$!_col.name$!seq">$!opt.text</label>
 										</div>
 										#set($seq = $seq + 1)
@@ -256,16 +282,17 @@ a:active{
 										#set($datasuurcevalue = "")
 										#set($datasuurcevalue = $!opt.getClass().getMethod("$!_col.getValueMethod", null).invoke($!opt, null))
 										<div class="radio-box">
-											<input type="radio" id="$!_col.name$!seq" name="$!_col.name" value="$!datasuurcevalue" #if( "$!_col.value" == "$!datasuurcevalue" ) checked #end #if("$!_col.readonly" == "true") disabled #end>
+											<input type="radio" id="$!_col.name$!seq" name="$!_col.name" value="$!datasuurcevalue" #if( "$!_col.value" == "$!datasuurcevalue" ) checked #end #if("$!_col.readonly" == "true" || "$!detail.readonly" == "true") disabled #end>
 											<label for="$!_col.name$!seq">$!opt.getClass().getMethod("$!_col.getNameMethod", null).invoke($!opt, null)</label>
 										</div>
 										#set($seq = $seq + 1)
 									#end
 								#end
+								$!_col.tail
 							</div>
 						#elseif( "$!_col.colType" == "textarea" )
 							<div class="formControls col-xs-$!col_length col-sm-$!col_length">
-								#if("$!_col.readonly" == "true")  
+								#if("$!_col.readonly" == "true" || "$!detail.readonly" == "true")  
 									$!_col.value
 								#else
 									#set($maxlength = 200)
@@ -279,6 +306,7 @@ a:active{
 									#end
 									<p class="textarea-numberbar"><em class="textarea-length">$textarea-numberbar</em>/$!maxlength</p>
 								#end
+								$!_col.tail
 							</div>
 						#elseif( "$!_col.colType" == "button" )
 							#if( "$!_col.readonly" != "true" )
